@@ -1,6 +1,6 @@
 
-Title: your project title 
-Team: names of project team members
+Title: Inventory Management Analytics Dashboard
+Team: Donna J. Harris (994042890) & Valter J. De Araujo Junior (195826730)
 WorkID: cp630oc-project
 Statement: We claim that the enclosed project submission is our team work.  
 
@@ -19,7 +19,7 @@ Item_ID [self-evaluation/total/marker-evaluation] Description
 
 1 Requirements
 
-R1.1 [0/30/*] Write a project proposal (2-3 pages).
+R1.1 [30/30/*] Write a project proposal (2-3 pages).
 
 R1.2 [0/30/*] Design data format, collect data, create dataset for the application.
 
@@ -39,4 +39,4 @@ R1.9 [0/30/*] Test your services, log your services, and document your term proj
 
 R1.10 [0/30/*] Demonstrate your term project in final project presentation, slides, short video.
 
-Total: [0/300/*]
+Total: [30/300/*]

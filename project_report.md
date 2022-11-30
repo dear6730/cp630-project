@@ -1,8 +1,8 @@
 # PROJECT Report
 
-Author: ??? 
+Author: Donna J. Harris (994042890) & Valter J. De Araujo Junior (195826730)
 
-Date: ??? 
+Date: Dec 20, 2022 
 
 Check [readme.txt](readme.txt) for course work statement and self-evaluation. 
   
@@ -12,12 +12,16 @@ Check [readme.txt](readme.txt) for course work statement and self-evaluation.
 ### R1 Write a project proposal (2-3 pages).
 
  
-Complete? (Yes/No) 
-
-If Yes, briefly describe: 
+Complete? Yes
 
 1. what you have done, 
+The proposed Inventory Management Analytics Dashboard (IMAD) application presents
+a high-level, no-input view of inventory for the desired scope, store, region, or entire
+organization. IMAD presents details that will detect trends, issues, and opportunities.
+
 2. what are the new features. 
+It handles transactional and analytical data and the dashboard uses modern UI which will consumes data using REST.
+
 3. Take some screen to demonstrate the features if applicable. 
 
 
