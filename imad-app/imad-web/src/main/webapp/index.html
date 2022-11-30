@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>A1 - stats-web</title>
+	</head>
+	<body>
+		<br>
+		<br>
+		StatsSingletonServlet - Input a number:
+		<form action="/stats-web/StatsSingletonServlet" method="GET">
+			 Value: <input type="text" name="value">
+			 <input type="submit" value="Submit"/>
+		</form>
+		<br>
+		<br>
+		StatsStatelessServlet:
+		<form action="/stats-web/StatsStatelessServlet" method="GET">
+			 <input type="submit" value="Get Summary"/>
+		</form>
+		<br>
+		<br>
+		StatsStatefulServlet - Input a number:
+		<form action="/stats-web/StatsStatefulServlet" method="GET">
+			 Value: <input type="text" name="value">
+			 <input type="submit" value="Submit"/>
+		</form>
+	</body>
+</html>

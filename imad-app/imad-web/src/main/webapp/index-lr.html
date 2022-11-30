@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>A3 - stats-web - LR</title>
+        <link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+        <div class="divTitle">
+            <h1>LR</h1>
+        </div>
+        <div class="divAdmin">
+            <form action="/stats-web/LRServlet" method="GET">
+                <div class="container">
+                    <label for="modelName"><b>Model name</b></label>
+                    <input type="text" id="modelName" name="modelName" value="weka-lr">
+                    <label for="unknownParams"><b>Unknown params (Example: 3198,9669,5,1,1,0)</b></label>
+                    <input type="text" id="unknownParams" name="unknownParams" value="3198,9669,5,1,1,0">
+                    <input type="submit" value="Submit"/>
+                </div>
+            </form>
+        </div>
+	</body>
+</html>
