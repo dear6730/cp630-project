@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="ec.laurier.imad.imadui.controller.Dashboard"
+    controllerName="ec.laurier.imad.controller.Dashboard"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m">

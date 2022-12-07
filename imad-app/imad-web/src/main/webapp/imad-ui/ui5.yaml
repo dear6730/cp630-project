@@ -2,7 +2,7 @@
 
 specVersion: "2.5"
 metadata:
-  name: ec.laurier.imad.imadui
+  name: ec.laurier.imad
 type: application
 server:
   customMiddleware:
@@ -28,5 +28,5 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: ec.laurier.imad.imadui
+        component: ec.laurier.imad
         ui5Theme: sap_fiori_3

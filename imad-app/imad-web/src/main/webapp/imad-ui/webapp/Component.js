@@ -1,11 +1,11 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
-        "ec/laurier/imad/imadui/model/models"
+        "ec/laurier/imad/model/models"
     ],
     function (UIComponent, models) {
         "use strict";
 
-        return UIComponent.extend("ec.laurier.imad.imadui.Component", {
+        return UIComponent.extend("ec.laurier.imad.Component", {
             metadata: {
                 manifest: "json"
             },

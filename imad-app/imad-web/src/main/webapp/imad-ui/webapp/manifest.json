@@ -1,7 +1,7 @@
 {
   "_version": "1.32.0",
   "sap.app": {
-    "id": "ec.laurier.imad.imadui",
+    "id": "ec.laurier.imad",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -42,7 +42,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "ec.laurier.imad.imadui.i18n.i18n"
+          "bundleName": "ec.laurier.imad.i18n.i18n"
         }
       }
     },
@@ -58,7 +58,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "viewPath": "ec.laurier.imad.imadui.view",
+        "viewPath": "ec.laurier.imad.view",
         "controlAggregation": "pages",
         "controlId": "app",
         "clearControlAggregation": false
@@ -83,7 +83,7 @@
       }
     },
     "rootView": {
-      "viewName": "ec.laurier.imad.imadui.view.Dashboard",
+      "viewName": "ec.laurier.imad.view.Dashboard",
       "type": "XML",
       "async": true,
       "id": "Dashboard"
