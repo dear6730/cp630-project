@@ -156,11 +156,11 @@
             </f:GridListItem>
 
             <f:GridListItem>
-                <mc:RadialMicroChart size="Responsive" percentage="93" alignContent="Right" valueColor="Good"/>
+                <mc:RadialMicroChart size="Responsive" percentage="47" alignContent="Right" valueColor="Error"/>
             </f:GridListItem>
 
             <f:GridListItem>
-                <mc:RadialMicroChart size="Responsive" percentage="93" alignContent="Right" valueColor="Good"/>
+                <mc:RadialMicroChart size="Responsive" percentage="50" alignContent="Right" valueColor="None"/>
             </f:GridListItem>
 
 
