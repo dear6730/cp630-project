@@ -255,6 +255,81 @@
             }
         }
     },
+    "overviewStockingIssues": {
+        "sap.app": {
+            "id": "adaptivecard.embedded",
+            "type": "card"
+        },
+        "sap.card": {
+            "header": {
+                "title": "Overview of Stocking Issues",
+                "subTitle": "Percentage of Products Currently...",
+                "icon": {
+                    "src": "sap-icon://error",
+                    "color": "critical"
+                }
+            },
+            "type": "AdaptiveCard",
+            "content": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "Out of Stock",
+                                "size": "medium"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "12%",
+                                "color": "error",
+                                "size": "extraLarge",
+                                "weight": "bolder"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "Nearly Out of Stock",
+                                "size": "medium"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": []
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "18%",
+                                "color": "error",
+                                "size": "extraLarge",
+                                "weight": "bolder"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
     "currentStateOfStock": {
         "sap.app": {
             "id": "card.explorer.table.card",
@@ -302,118 +377,6 @@
                             "visible": "{/columns/3/visibleFlag}"
                         }
                     ]
-                }
-            },
-            "data": {
-                "json": {
-                    "results": [
-                        {
-                            "productSKU": "5000010050",
-                            "productName": "Hawaiian Shirt",
-                            "quantity": "0",
-                            "status": "Out of Stock",
-                            "statusState": "Error"
-                        },
-                        {
-                            "productSKU": "5000010053",
-                            "productName": "Rubber Boots",
-                            "quantity": "0",
-                            "status": "Out of Stock",
-                            "statusState": "Error"
-                        },
-                        {
-                            "productSKU": "5000010054",
-                            "productName": "Overalls",
-                            "quantity": "0",
-                            "status": "Out of Stock",
-                            "statusState": "Error"
-                        },
-                        {
-                            "productSKU": "5000010051",
-                            "productName": "Winter Coat",
-                            "quantity": "4",
-                            "status": "Nearly Out",
-                            "statusState": "Warning"
-                        },
-                        {
-                            "productSKU": "5000010052",
-                            "productName": "Rain Coat",
-                            "quantity": "6",
-                            "status": "Nearly Out",
-                            "statusState": "Warning"
-                        }
-                    ],
-                    "columns": [
-                        {
-                            "title": "Product SKU",
-                            "visibleFlag": true,
-                            "identifier": true
-                        },
-                        {
-                            "title": "Product",
-                            "visibleFlag": true
-                        },
-                        {
-                            "title": "Quantity",
-                            "visibleFlag": true
-                        },
-                        {
-                            "title": "Status",
-                            "visibleFlag": true
-                        }
-                    ]
-                }
-            }
-        }
-    },
-    "currentStateOfStockNearlyOut": {
-        "sap.app": {
-            "id": "card.explorer.table.card",
-            "type": "card"
-        },
-        "sap.ui": {
-            "technology": "UI5",
-            "icons": {
-                "icon": "sap-icon://table-view"
-            }
-        },
-        "sap.card": {
-            "type": "Table",
-            "header": {
-                "title": "Current State of Stock",
-                "subTitle": "Today"
-            },
-            "content": {
-                "data": {
-                    "path": "/results"
-                },
-                "row": {
-                    "columns": [
-                        {
-                            "title": "{/columns/0/title}",
-                            "value": "{productSKU}",
-                            "identifier": "{/columns/0/identifier}",
-                            "visible": "{/columns/0/visibleFlag}"
-                        },
-                        {
-                            "title": "{/columns/1/title}",
-                            "value": "{productName}",
-                            "visible": "{/columns/1/visibleFlag}"
-                        },
-                        {
-                            "title": "{/columns/2/title}",
-                            "value": "{quantity}",
-                            "hAlign": "Center",
-                            "visible": "{/columns/2/visibleFlag}"
-                        }
-                    ]
-                },
-                "group": {
-                    "title": "{= ${quantity} > 0 ? 'Nearly Out' : 'Out of Stock'}",
-                    "order": {
-                        "path": "statusState",
-                        "dir": "ASC"
-                    }
                 }
             },
             "data": {

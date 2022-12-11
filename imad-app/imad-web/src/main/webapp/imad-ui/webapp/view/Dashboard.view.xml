@@ -42,19 +42,13 @@
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{manifests>/productsOutOfStockOrNearlyOutOfStock}" baseUrl="./">
-				<w:layoutData>
-					<f:GridContainerItemLayoutData rows="4" columns="12" />
-				</w:layoutData>
-			</w:Card>
-
 			<w:Card manifest="{manifests>/top5ProductsSold}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{manifests>/currentStateOfStockNearlyOut}" baseUrl="./">
+			<w:Card manifest="{manifests>/overviewStockingIssues}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>
@@ -63,6 +57,12 @@
 			<w:Card manifest="{manifests>/currentStateOfStock}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
+				</w:layoutData>
+			</w:Card>
+
+			<w:Card manifest="{manifests>/productsOutOfStockOrNearlyOutOfStock}" baseUrl="./">
+				<w:layoutData>
+					<f:GridContainerItemLayoutData rows="4" columns="12" />
 				</w:layoutData>
 			</w:Card>
 
