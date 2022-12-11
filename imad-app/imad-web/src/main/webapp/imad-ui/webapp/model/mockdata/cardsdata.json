@@ -1,7 +1,7 @@
 {
     "totalStockValue": {
         "sap.app": {
-            "id": "ec.laurier.imad.model.Analytical",
+            "id": "ec.imad.ui.totalStockValue",
             "type": "card"
         },
         "sap.card": {
@@ -115,9 +115,9 @@
             }
         }
     },
-    "donut": {
+    "totalStockValueByCategory": {
         "sap.app": {
-            "id": "ec.laurier.imad.model.donut",
+            "id": "ec.imad.ui.totalStockValueByCategory",
             "type": "card"
         },
         "sap.card": {
@@ -177,602 +177,456 @@
             }
         }
     },
-    "object": {
+    "top5ProductsSold": {
         "sap.app": {
-            "id": "sample.CardsLayout.model.object",
+            "id": "ec.imad.ui.top5ProductsSold",
             "type": "card"
         },
         "sap.card": {
-            "type": "Object",
-            "data": {
-                "json": {
-                    "firstName": "Donna",
-                    "lastName": "Mendez",
-                    "position": "Managing Partner",
-                    "mobile": "+1 202 34869-0",
-                    "phone": "+1 202 555 5555",
-                    "email": "donna@peachvalley.com"
-                }
-            },
+            "type": "Analytical",
             "header": {
-                "icon": {
-                    "text": "DM"
-                },
-                "title": "{firstName} {lastName}",
-                "subTitle": "{position}",
-                "actions": [
-                    {
-                        "type": "Navigation",
-                        "parameters": {
-                            "url": "users/donnaMendez"
-                        }
-                    }
-                ]
+                "title": "Stock Value of Top 5 Products"
             },
             "content": {
-                "groups": [
+                "chartType": "bar",
+                "chartProperties": {
+                    "title": {
+                        "visible": false
+                    },
+                    "legend": {
+                        "visible": false
+                    }
+                },
+                "dimensions": [
                     {
-                        "title": "Peach Valley Inc.",
-                        "items": [
-                            {
-                                "label": "Mobile",
-                                "value": "{mobile}",
-                                "actions": [
-                                    {
-                                        "type": "Navigation",
-                                        "parameters": {
-                                            "url": "tel:{mobile}"
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "label": "Phone",
-                                "value": "{phone}",
-                                "actions": [
-                                    {
-                                        "type": "Navigation",
-                                        "parameters": {
-                                            "url": "tel:{phone}"
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "label": "Email",
-                                "value": "{email}",
-                                "actions": [
-                                    {
-                                        "type": "Navigation",
-                                        "parameters": {
-                                            "url": "mailto:{email}"
-                                        }
-                                    }
-                                ]
-                            }
+                        "name": "Product",
+                        "value": "{Product}"
+                    }
+                ],
+                "measures": [
+                    {
+                        "name": "Stock Value",
+                        "value": "{Stock Value}"
+                    }
+                ],
+                "feeds": [
+                    {
+                        "type": "Dimension",
+                        "uid": "categoryAxis",
+                        "values": [
+                            "Product"
+                        ]
+                    },
+                    {
+                        "type": "Measure",
+                        "uid": "valueAxis",
+                        "values": [
+                            "Stock Value"
                         ]
                     }
                 ],
-                "actions": [
-                    {
-                        "type": "Navigation",
-                        "parameters": {
-                            "url": "users/donnaMendez"
-                        }
-                    }
-                ]
-            }
-        }
-    },
-    "list1": {
-        "sap.app": {
-            "id": "sample.CardsLayout.model.list",
-            "type": "card"
-        },
-        "sap.card": {
-            "type": "List",
-            "header": {
-                "title": "Incidents in the last 24 hours",
-                "status": {
-                    "text": "3 of 3"
-                }
-            },
-            "content": {
                 "data": {
-                    "json": [
-                        {
-                            "name": "Teico Inc.",
-                            "icon": "./test-resources/sap/ui/integration/demokit/sample/CardsLayout/images/Case1.png",
-                            "description": "Sun Valley, Idaho",
-                            "info": "2456",
-                            "infoState": "Error"
-                        },
-                        {
-                            "name": "Freshhh LTD.",
-                            "icon": "./test-resources/sap/ui/integration/demokit/sample/CardsLayout/images/Case2.png",
-                            "description": "Dayville, Oregon",
-                            "info": "1264",
-                            "infoState": "Warning"
-                        },
-                        {
-                            "name": "Lean Pulp",
-                            "icon": "./test-resources/sap/ui/integration/demokit/sample/CardsLayout/images/Case3.png",
-                            "description": "Raymond, Callifornia",
-                            "info": "236",
-                            "infoState": "None"
-                        }
-                    ]
-                },
-                "item": {
-                    "icon": {
-                        "src": "{icon}"
-                    },
-                    "title": {
-                        "value": "{name}"
-                    },
-                    "description": {
-                        "value": "{description}"
-                    },
-                    "info": {
-                        "value": "{info}",
-                        "state": "{infoState}"
-                    }
-                }
-            }
-        }
-    },
-    "component": "./componentCard/manifest.json",
-    "list2": {
-        "sap.app": {
-            "id": "sample.CardsLayout.model.list2",
-            "type": "card"
-        },
-        "sap.card": {
-            "type": "List",
-            "header": {
-                "title": "Incidents in the last 24 hours",
-                "subTitle": "Suddent storm wind damaged 3 polinating hives",
-                "icon": {
-                    "src": "./test-resources/sap/ui/integration/demokit/sample/CardsLayout/images/CompanyLogo.png"
-                }
-            },
-            "content": {
-                "data": {
-                    "json": [
-                        {
-                            "name": "Alain Chevalier",
-                            "icon": "./test-resources/sap/ui/integration/demokit/sample/CardsLayout/images/Avatar_1.png",
-                            "description": "On Site"
-                        },
-                        {
-                            "name": "Yolanda Barrueco",
-                            "icon": "./test-resources/sap/ui/integration/demokit/sample/CardsLayout/images/Avatar_2.png",
-                            "description": "Travelling to Idaho"
-                        },
-                        {
-                            "name": "Arend Pellewever",
-                            "icon": "./test-resources/sap/ui/integration/demokit/sample/CardsLayout/images/Avatar_3.png",
-                            "description": "Travelling to Idaho"
-                        },
-                        {
-                            "name": "Lean Pulp",
-                            "icon": "./test-resources/sap/ui/integration/demokit/sample/CardsLayout/images/Avatar_4.png",
-                            "description": "Headquaters Support"
-                        }
-                    ]
-                },
-                "item": {
-                    "icon": {
-                        "src": "{icon}"
-                    },
-                    "title": {
-                        "value": "{name}"
-                    },
-                    "description": {
-                        "value": "{description}"
-                    },
-                    "actions": [
-                        {
-                            "type": "Navigation",
-                            "parameters": {
-                                "url": "/users/{name}"
+                    "json": {
+                        "list": [
+                            {
+                                "Product": "Product 3",
+                                "Stock Value": 15500
+                            },
+                            {
+                                "Product": "Product 7",
+                                "Stock Value": 12000
+                            },
+                            {
+                                "Product": "Product 2",
+                                "Stock Value": 8000
+                            },
+                            {
+                                "Product": "Product 21",
+                                "Stock Value": 8000
+                            },
+                            {
+                                "Product": "Product 1",
+                                "Stock Value": 7600
                             }
-                        }
-                    ]
+                        ]
+                    },
+                    "path": "/list"
                 }
             }
         }
     },
-    "table": {
+    "currentStateOfStock": {
         "sap.app": {
-            "id": "sample.CardsLayout.model.table",
+            "id": "card.explorer.table.card",
             "type": "card"
+        },
+        "sap.ui": {
+            "technology": "UI5",
+            "icons": {
+                "icon": "sap-icon://table-view"
+            }
         },
         "sap.card": {
             "type": "Table",
-            "data": {
-                "json": [
-                    {
-                        "salesOrder": "5000010050",
-                        "customerName": "Robert Brown Entertainment",
-                        "netAmount": "2K USD",
-                        "status": "Delivered",
-                        "statusState": "Success"
-                    },
-                    {
-                        "salesOrder": "5000010051",
-                        "customerName": "Entertainment Argentinia",
-                        "netAmount": "127k USD",
-                        "status": "Canceled",
-                        "statusState": "Error"
-                    },
-                    {
-                        "salesOrder": "5000010052",
-                        "customerName": "Brazil Technologies",
-                        "netAmount": "8K USD",
-                        "status": "In Progress",
-                        "statusState": "Warning"
-                    },
-                    {
-                        "salesOrder": "5000010053",
-                        "customerName": "Quimica Madrilenos",
-                        "netAmount": "25K USD",
-                        "status": "Delivered",
-                        "statusState": "Success"
-                    },
-                    {
-                        "salesOrder": "5000010054",
-                        "customerName": "Development Para O Governo",
-                        "netAmount": "7K USD",
-                        "status": "Delivered",
-                        "statusState": "Success"
-                    },
-                    {
-                        "salesOrder": "5000010050",
-                        "customerName": "Robert Brown Entertainment",
-                        "netAmount": "2K USD",
-                        "status": "Delivered",
-                        "statusState": "Success"
-                    },
-                    {
-                        "salesOrder": "5000010051",
-                        "customerName": "Entertainment Argentinia",
-                        "netAmount": "127k USD",
-                        "status": "Canceled",
-                        "statusState": "Error"
-                    },
-                    {
-                        "salesOrder": "5000010052",
-                        "customerName": "Brazil Technologies",
-                        "netAmount": "8K USD",
-                        "status": "In Progress",
-                        "statusState": "Warning"
-                    },
-                    {
-                        "salesOrder": "5000010052",
-                        "customerName": "Brazil Technologies",
-                        "netAmount": "8K USD",
-                        "status": "In Progress",
-                        "statusState": "Warning"
-                    }
-                ]
-            },
             "header": {
-                "title": "Sales Orders for Key Accounts",
-                "subTitle": "Today",
-                "status": {
-                    "text": "{headerData/statusText}"
-                }
-            },
-            "content": {
-                "row": {
-                    "columns": [
-                        {
-                            "title": "Sales Order",
-                            "value": "{salesOrder}",
-                            "identifier": true
-                        },
-                        {
-                            "title": "Customer",
-                            "value": "{customerName}"
-                        },
-                        {
-                            "title": "Net Amount",
-                            "value": "{netAmount}"
-                        },
-                        {
-                            "title": "Status",
-                            "value": "{status}",
-                            "state": "{statusState}"
-                        }
-                    ]
-                }
-            }
-        }
-    },
-    "timeline": {
-        "sap.app": {
-            "id": "sample.CardsLayout.model.timeline",
-            "type": "card"
-        },
-        "sap.card": {
-            "type": "Timeline",
-            "header": {
-                "title": "Schedule for today",
-                "subTitle": "9:32 AM",
-                "status": {
-                    "text": "3 of 3"
-                },
-                "actions": [
-                    {
-                        "type": "Navigation",
-                        "parameters": {
-                            "url": "/quickLinks"
-                        }
-                    }
-                ]
+                "title": "Current State of Stock",
+                "subTitle": "Today"
             },
             "content": {
                 "data": {
-                    "json": [
+                    "path": "/results"
+                },
+                "row": {
+                    "columns": [
                         {
-                            "Title": "Call Donna Mendez",
-                            "Icon": "sap-icon://outgoing-call",
-                            "Time": "9:15 AM"
+                            "title": "{/columns/0/title}",
+                            "value": "{productSKU}",
+                            "identifier": "{/columns/0/identifier}",
+                            "visible": "{/columns/0/visibleFlag}"
                         },
                         {
-                            "Title": "Incidents Status - Online",
-                            "Icon": "sap-icon://my-view",
-                            "Time": "10:00 - 11:00"
+                            "title": "{/columns/1/title}",
+                            "value": "{productName}",
+                            "visible": "{/columns/1/visibleFlag}"
                         },
                         {
-                            "Title": "Site Visit - Peach Valley",
-                            "Description": "San Joaquin valley",
-                            "Icon": "sap-icon://appointment-2",
-                            "Time": "12:00 - 17:00"
+                            "title": "{/columns/2/title}",
+                            "value": "{quantity}",
+                            "hAlign": "Center",
+                            "visible": "{/columns/2/visibleFlag}"
+                        },
+                        {
+                            "title": "{/columns/3/title}",
+                            "value": "{status}",
+                            "state": "{statusState}",
+                            "visible": "{/columns/3/visibleFlag}"
                         }
                     ]
-                },
-                "item": {
-                    "dateTime": {
-                        "value": "{Time}"
-                    },
-                    "description": {
-                        "value": "{Description}"
-                    },
-                    "title": {
-                        "value": "{Title}"
-                    },
-                    "icon": {
-                        "src": "{Icon}"
-                    }
+                }
+            },
+            "data": {
+                "json": {
+                    "results": [
+                        {
+                            "productSKU": "5000010050",
+                            "productName": "Hawaiian Shirt",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010053",
+                            "productName": "Rubber Boots",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010054",
+                            "productName": "Overalls",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010051",
+                            "productName": "Winter Coat",
+                            "quantity": "4",
+                            "status": "Nearly Out",
+                            "statusState": "Warning"
+                        },
+                        {
+                            "productSKU": "5000010052",
+                            "productName": "Rain Coat",
+                            "quantity": "6",
+                            "status": "Nearly Out",
+                            "statusState": "Warning"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Product SKU",
+                            "visibleFlag": true,
+                            "identifier": true
+                        },
+                        {
+                            "title": "Product",
+                            "visibleFlag": true
+                        },
+                        {
+                            "title": "Quantity",
+                            "visibleFlag": true
+                        },
+                        {
+                            "title": "Status",
+                            "visibleFlag": true
+                        }
+                    ]
                 }
             }
         }
     },
-    "calendar": {
+    "currentStateOfStockNearlyOut": {
         "sap.app": {
-            "id": "sample.CardsLayout.model.calendar",
+            "id": "card.explorer.table.card",
             "type": "card"
         },
+        "sap.ui": {
+            "technology": "UI5",
+            "icons": {
+                "icon": "sap-icon://table-view"
+            }
+        },
         "sap.card": {
-            "type": "Calendar",
-            "data": {
-                "json": {
-                    "item": [
+            "type": "Table",
+            "header": {
+                "title": "Current State of Stock",
+                "subTitle": "Today"
+            },
+            "content": {
+                "data": {
+                    "path": "/results"
+                },
+                "row": {
+                    "columns": [
                         {
-                            "visualization": "blocker",
-                            "start": "2019-09-02T09:00",
-                            "end": "2019-09-02T10:00",
-                            "title": "Payment reminder",
-                            "icon": "sap-icon://desktop-mobile",
-                            "type": "Type06"
+                            "title": "{/columns/0/title}",
+                            "value": "{productSKU}",
+                            "identifier": "{/columns/0/identifier}",
+                            "visible": "{/columns/0/visibleFlag}"
                         },
                         {
-                            "visualization": "blocker",
-                            "start": "2019-09-02T17:00",
-                            "end": "2019-09-02T17:30",
-                            "title": "Private appointment",
-                            "icon": "sap-icon://desktop-mobile",
-                            "type": "Type07"
+                            "title": "{/columns/1/title}",
+                            "value": "{productName}",
+                            "visible": "{/columns/1/visibleFlag}"
                         },
                         {
-                            "visualization": "appointment",
-                            "start": "2019-09-02T12:00",
-                            "end": "2019-09-02T13:00",
-                            "title": "Lunch",
-                            "text": "working",
-                            "icon": "sap-icon://desktop-mobile",
-                            "type": "Type03"
-                        },
-                        {
-                            "visualization": "appointment",
-                            "start": "2019-09-01T08:30",
-                            "end": "2019-09-03T17:30",
-                            "title": "Workshop",
-                            "text": "Out of office",
-                            "icon": "sap-icon://sap-ui5",
-                            "type": "Type07"
-                        },
-                        {
-                            "visualization": "appointment",
-                            "start": "2019-09-02T14:00",
-                            "end": "2019-09-02T16:30",
-                            "title": "Discussion with clients",
-                            "text": "working",
-                            "icon": "sap-icon://desktop-mobile"
-                        },
-                        {
-                            "visualization": "appointment",
-                            "start": "2019-09-02T11:00",
-                            "end": "2019-09-02T12:00",
-                            "title": "Team meeting",
-                            "text": "online meeting",
-                            "icon": "sap-icon://sap-ui5",
-                            "type": "Type04"
-                        },
-                        {
-                            "visualization": "blocker",
-                            "start": "2019-09-03T17:00",
-                            "end": "2019-09-03T17:30",
-                            "title": "Private appointment",
-                            "icon": "sap-icon://desktop-mobile",
-                            "type": "Type07"
-                        },
-                        {
-                            "visualization": "appointment",
-                            "start": "2019-09-03T12:00",
-                            "end": "2019-09-03T13:00",
-                            "title": "Lunch",
-                            "text": "working",
-                            "icon": "sap-icon://desktop-mobile",
-                            "type": "Type03"
-                        },
-                        {
-                            "visualization": "appointment",
-                            "start": "2019-09-03T10:00",
-                            "end": "2019-09-03T12:30",
-                            "title": "Board meeting",
-                            "icon": "sap-icon://desktop-mobile"
-                        },
-                        {
-                            "visualization": "appointment",
-                            "start": "2019-09-04T12:00",
-                            "end": "2019-09-04T13:00",
-                            "title": "Lunch",
-                            "text": "working",
-                            "icon": "sap-icon://desktop-mobile",
-                            "type": "Type03"
-                        },
-                        {
-                            "visualization": "blocker",
-                            "start": "2019-09-04T17:00",
-                            "end": "2019-09-04T17:30",
-                            "title": "Private appointment",
-                            "icon": "sap-icon://desktop-mobile",
-                            "type": "Type07"
-                        },
-                        {
-                            "visualization": "appointment",
-                            "start": "2019-09-05T11:00",
-                            "end": "2019-09-05T12:00",
-                            "title": "Team meeting",
-                            "text": "online meeting",
-                            "icon": "sap-icon://sap-ui5",
-                            "type": "Type04"
-                        },
-                        {
-                            "visualization": "blocker",
-                            "start": "2019-09-06T09:00",
-                            "end": "2019-09-06T10:00",
-                            "title": "Payment reminder",
-                            "icon": "sap-icon://desktop-mobile",
-                            "type": "Type06"
-                        }
-                    ],
-                    "specialDate": [
-                        {
-                            "start": "2019-09-13",
-                            "end": "2019-09-14",
-                            "type": "Type08"
-                        },
-                        {
-                            "start": "2019-09-24",
-                            "end": "2019-09-24",
-                            "type": "Type13"
-                        }
-                    ],
-                    "legendItem": [
-                        {
-                            "category": "calendar",
-                            "text": "Team building",
-                            "type": "Type08"
-                        },
-                        {
-                            "category": "calendar",
-                            "text": "Public holliday",
-                            "type": "Type13"
-                        },
-                        {
-                            "category": "appointment",
-                            "text": "Reminder",
-                            "type": "Type06"
-                        },
-                        {
-                            "category": "appointment",
-                            "text": "Private appointment",
-                            "type": "Type07"
-                        },
-                        {
-                            "category": "appointment",
-                            "text": "Out of office",
-                            "type": "Type03"
-                        },
-                        {
-                            "category": "appointment",
-                            "text": "Collaboration with other team members",
-                            "type": "Type07"
+                            "title": "{/columns/2/title}",
+                            "value": "{quantity}",
+                            "hAlign": "Center",
+                            "visible": "{/columns/2/visibleFlag}"
                         }
                     ]
-                }
-            },
-            "header": {
-                "title": "My calendar",
-                "subTitle": "Team Balkan",
-                "status": {
-                    "text": {
-                        "format": {
-                            "translationKey": "i18n>CARD.COUNT_X_OF_Y",
-                            "parts": [
-                                "parameters>/visibleItems",
-                                "parameters>/allItems"
-                            ]
-                        }
+                },
+                "group": {
+                    "title": "{= ${quantity} > 0 ? 'Nearly Out' : 'Out of Stock'}",
+                    "order": {
+                        "path": "statusState",
+                        "dir": "ASC"
                     }
                 }
             },
-            "content": {
-                "date": "2019-09-02",
-                "maxItems": 5,
-                "maxLegendItems": 3,
-                "noItemsText": "You have nothing planned for that day",
-                "item": {
-                    "template": {
-                        "visualization": "{visualization}",
-                        "startDate": "{start}",
-                        "endDate": "{end}",
-                        "title": "{title}",
-                        "text": "{text}",
-                        "icon": "{icon}",
-                        "type": "{type}"
-                    },
-                    "path": "/item"
-                },
-                "specialDate": {
-                    "template": {
-                        "startDate": "{start}",
-                        "endDate": "{end}",
-                        "type": "{type}"
-                    },
-                    "path": "/specialDate"
-                },
-                "legendItem": {
-                    "template": {
-                        "category": "{category}",
-                        "text": "{text}",
-                        "type": "{type}"
-                    },
-                    "path": "/legendItem"
-                },
-                "moreItems": {
-                    "actions": [
+            "data": {
+                "json": {
+                    "results": [
                         {
-                            "type": "Navigation",
-                            "enabled": true,
-                            "url": "http://sap.com"
+                            "productSKU": "5000010050",
+                            "productName": "Hawaiian Shirt",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010053",
+                            "productName": "Rubber Boots",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010054",
+                            "productName": "Overalls",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010051",
+                            "productName": "Winter Coat",
+                            "quantity": "4",
+                            "status": "Nearly Out",
+                            "statusState": "Warning"
+                        },
+                        {
+                            "productSKU": "5000010052",
+                            "productName": "Rain Coat",
+                            "quantity": "6",
+                            "status": "Nearly Out",
+                            "statusState": "Warning"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Product SKU",
+                            "visibleFlag": true,
+                            "identifier": true
+                        },
+                        {
+                            "title": "Product",
+                            "visibleFlag": true
+                        },
+                        {
+                            "title": "Quantity",
+                            "visibleFlag": true
+                        },
+                        {
+                            "title": "Status",
+                            "visibleFlag": true
                         }
                     ]
                 }
+            }
+        }
+    },
+    "productsOutOfStockOrNearlyOutOfStock": {
+        "sap.app": {
+            "id": "card.explorer.line.card",
+            "type": "card"
+        },
+        "sap.ui": {
+            "technology": "UI5",
+            "icons": {
+                "icon": "sap-icon://line-chart"
+            }
+        },
+        "sap.card": {
+            "type": "Analytical",
+            "header": {
+                "type": "Numeric",
+                "data": {
+                    "json": {
+                        "number": "29",
+                        "unit": "%",
+                        "trend": "Up",
+                        "state": "Error",
+                        "target": {
+                            "number": 14,
+                            "unit": "%"
+                        },
+                        "details": "December 2022 (Predicted)"
+                    }
+                },
+                "title": "Products Out of Stock, or Nearly Out of Stock",
+                "subTitle": "Percentage of All Stock",
+                "unitOfMeasurement": "%",
+                "mainIndicator": {
+                    "number": "{number}",
+                    "unit": "{unit}",
+                    "trend": "{trend}",
+                    "state": "{state}"
+                },
+                "details": "{details}",
+                "sideIndicators": [
+                    {
+                        "title": "Target",
+                        "number": "{target/number}",
+                        "unit": "{target/unit}"
+                    }
+                ]
+            },
+            "content": {
+                "chartType": "Line",
+                "chartProperties": {
+                    "title": {
+                        "text": "Historical Trend",
+                        "visible": true,
+                        "alignment": "left"
+                    },
+                    "legend": {
+                        "visible": "{legend/visible}"
+                    },
+                    "legendGroup": {
+                        "layout": {
+                            "position": "{legend/position}",
+                            "alignment": "{legend/alignment}"
+                        }
+                    },
+                    "plotArea": {
+                        "dataLabel": {
+                            "visible": true
+                        }
+                    },
+                    "categoryAxis": {
+                        "title": {
+                            "visible": false
+                        }
+                    },
+                    "valueAxis": {
+                        "title": {
+                            "visible": false
+                        }
+                    }
+                },
+                "data": {
+                    "json": {
+                        "dimensions": {
+                            "monthLabel": "Month"
+                        },
+                        "measures": {
+                            "stockLabel": "Stock"
+                        },
+                        "legend": {
+                            "visible": true,
+                            "position": "bottom",
+                            "alignment": "topLeft"
+                        },
+                        "list": [
+                            {
+                                "Month": "June",
+                                "Stock": 40
+                            },
+                            {
+                                "Month": "July",
+                                "Stock": 40
+                            },
+                            {
+                                "Month": "Aug",
+                                "Stock": 36.36363636
+                            },
+                            {
+                                "Month": "Sep",
+                                "Stock": 40.90909
+                            },
+                            {
+                                "Month": "Oct",
+                                "Stock": 30
+                            },
+                            {
+                                "Month": "Nov",
+                                "Stock": 25.80645
+                            }
+                        ]
+                    },
+                    "path": "/list"
+                },
+                "dimensions": [
+                    {
+                        "name": "{dimensions/monthLabel}",
+                        "value": "{Month}"
+                    }
+                ],
+                "measures": [
+                    {
+                        "name": "{measures/stockLabel}",
+                        "value": "{Stock}"
+                    }
+                ],
+                "feeds": [
+                    {
+                        "uid": "valueAxis",
+                        "type": "Measure",
+                        "values": [
+                            "{measures/stockLabel}"
+                        ]
+                    },
+                    {
+                        "uid": "categoryAxis",
+                        "type": "Dimension",
+                        "values": [
+                            "{dimensions/monthLabel}"
+                        ]
+                    }
+                ]
             }
         }
     }
