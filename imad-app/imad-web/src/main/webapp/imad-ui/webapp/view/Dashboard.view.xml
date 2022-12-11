@@ -7,163 +7,55 @@
 	xmlns:core="sap.ui.core"
 	xmlns:t="sap.tnt"
     xmlns:mc="sap.suite.ui.microchart"
+	xmlns:w="sap.ui.integration.widgets"
     displayBlock="true">
-    <Panel width="100%" backgroundDesign="Transparent">
-		<headerToolbar>
-			<Toolbar height="3rem">
-				<Title text="{i18n>title}" />
-			</Toolbar>
-		</headerToolbar>
 
-		<f:GridList 
-            id="gridList2" >
-			<f:customLayout>
-				<grid:GridBoxLayout boxWidth="22.5rem" />
-			</f:customLayout>
+	<ScrollContainer
+		vertical="true"
+		class="sapUiResponsiveContentPadding">
 
-			<f:GridListItem>
-				<VBox height="100%" class="sapUiSmallMargin">
-					<layoutData>
-						<FlexItemData growFactor="1" shrinkFactor="0" /><!-- Don't shrink below minimum size. Fill space if available. -->
-					</layoutData>
+		<OverflowToolbar id="contentTb" class="titleToolbar" active="true" height="2.5rem">
+			<Title text="{i18n>title}" class="title" /> <Label class="subTitle" text="Powered by CP630"/>
+		</OverflowToolbar>
 
-					<core:Icon
-						src="sap-icon://activities"
-						size="2.625rem"
-						color="Default"
-						class="sapUiTinyMarginBottom" />
-					<Title text="Title" wrapping="true" />
-					<Text text="A great description with useful information about this project. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy." wrapping="true" />
-				</VBox>
-			</f:GridListItem>
+		<Title
+			visible="true"
+			text="Corporate View"
+			titleStyle="H3"
+			class="sapUiSmallMarginBottom sapUiSmallMarginTop" />
+	
+		<f:GridContainer>
+			<f:layout>
+				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="1rem" />
+			</f:layout>
+			<f:layoutS>
+				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="0.5rem" />
+			</f:layoutS>
 
-			<f:GridListItem>
-				<VBox height="100%" class="sapUiSmallMargin">
-					<layoutData>
-						<FlexItemData growFactor="1" shrinkFactor="0" /><!-- Don't shrink below minimum size. Fill space if available. -->
-					</layoutData>
+			<w:Card manifest="{manifests>/totalStockValue}">
+				<w:layoutData>
+					<f:GridContainerItemLayoutData rows="5" columns="12" />
+				</w:layoutData>
+			</w:Card>
 
-					<core:Icon
-						src="sap-icon://badge"
-						size="2.625rem"
-						color="Default"
-						class="sapUiTinyMarginBottom" />
-					<Title text="Longer Title" wrapping="true" />
-					<Text text="A great description with useful information about this project." wrapping="true" />
-				</VBox>
-			</f:GridListItem>
-            <f:GridListItem>
-                <mc:RadialMicroChart size="Responsive" percentage="93" alignContent="Right" valueColor="Good"/>
-            </f:GridListItem>
-            <f:GridListItem>
-                <mc:AreaMicroChart size="Responsive"
-						minXValue="0" maxXValue="100" minYValue="0" maxYValue="100">
-						<mc:firstXLabel>
-							<mc:AreaMicroChartLabel label="June 1" color="Good" />
-						</mc:firstXLabel>
-						<mc:lastXLabel>
-							<mc:AreaMicroChartLabel label="June 30" color="Critical" />
-						</mc:lastXLabel>
-						<mc:firstYLabel>
-							<mc:AreaMicroChartLabel label="0M" color="Good" />
-						</mc:firstYLabel>
-						<mc:lastYLabel>
-							<mc:AreaMicroChartLabel label="80M" color="Critical" />
-						</mc:lastYLabel>
-						<mc:chart>
-							<mc:AreaMicroChartItem>
-								<mc:points>
-									<mc:AreaMicroChartPoint x="0" y="0" />
-									<mc:AreaMicroChartPoint x="30" y="20" />
-									<mc:AreaMicroChartPoint x="60" y="20" />
-									<mc:AreaMicroChartPoint x="100" y="80" />
-								</mc:points>
-							</mc:AreaMicroChartItem>
-						</mc:chart>
-						<mc:target>
-							<mc:AreaMicroChartItem>
-								<mc:points>
-									<mc:AreaMicroChartPoint x="0" y="0" />
-									<mc:AreaMicroChartPoint x="30" y="30" />
-									<mc:AreaMicroChartPoint x="60" y="40" />
-									<mc:AreaMicroChartPoint x="100" y="90" />
-								</mc:points>
-							</mc:AreaMicroChartItem>
-						</mc:target>
-						<mc:maxThreshold>
-							<mc:AreaMicroChartItem color="Good">
-								<mc:points>
-									<mc:AreaMicroChartPoint x="0" y="0" />
-									<mc:AreaMicroChartPoint x="30" y="40" />
-									<mc:AreaMicroChartPoint x="60" y="50" />
-									<mc:AreaMicroChartPoint x="100" y="100" />
-								</mc:points>
-							</mc:AreaMicroChartItem>
-						</mc:maxThreshold>
-						<mc:minThreshold>
-							<mc:AreaMicroChartItem color="Error">
-								<mc:points>
-									<mc:AreaMicroChartPoint x="0" y="0" />
-									<mc:AreaMicroChartPoint x="30" y="20" />
-									<mc:AreaMicroChartPoint x="60" y="30" />
-									<mc:AreaMicroChartPoint x="100" y="70" />
-								</mc:points>
-							</mc:AreaMicroChartItem>
-						</mc:minThreshold>
-					</mc:AreaMicroChart>
-            </f:GridListItem>
+			<w:Card manifest="{manifests>/donut}">
+				<w:layoutData>
+					<f:GridContainerItemLayoutData rows="5" columns="4" />
+				</w:layoutData>
+			</w:Card>
 
-            <f:GridListItem>
-                <mc:BulletMicroChart scale="M" targetValue="100"
-                    forecastValue="110" showValueMarker="true" size="Responsive">
-                    <mc:actual>
-                        <mc:BulletMicroChartData value="120" color="Good" />
-                    </mc:actual>
-                    <mc:thresholds>
-                        <mc:BulletMicroChartData value="0" color="Error" />
-                        <mc:BulletMicroChartData value="50" color="Critical" />
-                        <mc:BulletMicroChartData value="150" color="Critical" />
-                        <mc:BulletMicroChartData value="200" color="Error" />
-                    </mc:thresholds>
-                </mc:BulletMicroChart>
-            </f:GridListItem>
+			<w:Card manifest="{manifests>/list1}" baseUrl="./">
+				<w:layoutData>
+					<f:GridContainerItemLayoutData columns="4" />
+				</w:layoutData>
+			</w:Card>
 
-            <f:GridListItem>
-                <mc:ComparisonMicroChart scale="M" size="Responsive">
-                    <mc:data>
-                        <mc:ComparisonMicroChartData title="Americas"
-                            value="234" color="Good" />
-                        <mc:ComparisonMicroChartData title="EMEA"
-                            value="97" color="Error" />
-                        <mc:ComparisonMicroChartData title="APAC"
-                            value="197" color="Critical" />
-                    </mc:data>
-                </mc:ComparisonMicroChart>
-            </f:GridListItem>
+			<w:Card manifest="{manifests>/list2}"  baseUrl="./" action="onAction">
+				<w:layoutData>
+					<f:GridContainerItemLayoutData columns="4" />
+				</w:layoutData>
+			</w:Card>
 
-            <f:GridListItem>
-                <mc:HarveyBallMicroChart total="100" size="Responsive" alignContent="Right"
-                    totalScale="Mrd">
-                    <mc:items>
-                        <mc:HarveyBallMicroChartItem fraction="63.5"
-                            color="Good" fractionScale="Mrd" />
-                    </mc:items>
-                </mc:HarveyBallMicroChart>
-            </f:GridListItem>
-
-            <f:GridListItem>
-                <mc:RadialMicroChart size="Responsive" percentage="93" alignContent="Right" valueColor="Good"/>
-            </f:GridListItem>
-
-            <f:GridListItem>
-                <mc:RadialMicroChart size="Responsive" percentage="47" alignContent="Right" valueColor="Error"/>
-            </f:GridListItem>
-
-            <f:GridListItem>
-                <mc:RadialMicroChart size="Responsive" percentage="50" alignContent="Right" valueColor="None"/>
-            </f:GridListItem>
-
-
-		</f:GridList>
-    </Panel>
+		</f:GridContainer>
+	</ScrollContainer>
 </mvc:View>

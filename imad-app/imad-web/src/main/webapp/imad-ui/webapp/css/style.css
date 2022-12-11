@@ -1,1 +1,19 @@
-/* Enter your custom styles here */
+
+.customUiBody {
+    background-color: #dfdfdf;
+}
+
+.titleToolbar {
+    background-color: black;
+}
+
+.title {
+    color: white;
+    font-size: large;
+    font-weight: bold;
+}
+
+.subTitle {
+    color: white;
+    font-size: smaller;
+}
