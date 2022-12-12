@@ -30,37 +30,37 @@
 				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="0.5rem" />
 			</f:layoutS>
 
-			<w:Card manifest="{manifests>/totalStockValue}" baseUrl="./">
+			<w:Card manifest="{cardModel>/totalStockValue}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="8" />
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{manifests>/totalStockValueByCategory}" baseUrl="./">
+			<w:Card manifest="{cardModel>/totalStockValueByCategory}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{manifests>/top5ProductsSold}" baseUrl="./">
+			<w:Card manifest="{cardModel>/top5ProductsSold}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{manifests>/overviewStockingIssues}" baseUrl="./">
+			<w:Card manifest="{cardModel>/overviewStockingIssues}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{manifests>/currentStateOfStock}" baseUrl="./">
+			<w:Card manifest="{cardModel>/currentStateOfStock}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{manifests>/productsOutOfStockOrNearlyOutOfStock}" baseUrl="./">
+			<w:Card manifest="{cardModel>/productsOutOfStockOrNearlyOutOfStock}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="12" />
 				</w:layoutData>

@@ -44,6 +44,10 @@
         "settings": {
           "bundleName": "ec.laurier.imad.i18n.i18n"
         }
+      },
+      "cardModel": {
+          "type": "sap.ui.model.json.JSONModel",
+          "uri": "./model/mockdata/cardsdata.json"
       }
     },
     "resources": {

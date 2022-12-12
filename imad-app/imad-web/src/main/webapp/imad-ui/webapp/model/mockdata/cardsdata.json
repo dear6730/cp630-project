@@ -16,7 +16,7 @@
                         "valueColor": "Error"
                     }
                 },
-                "title": "Total Stock value",
+                "title": "[Mock] Total Stock value",
                 "details": "as of Dec 6, 2022",
                 "mainIndicator": {
                     "number": "{n}",
@@ -123,7 +123,7 @@
         "sap.card": {
             "type": "Analytical",
             "header": {
-                "title": "Total Stock by Category"
+                "title": "[Mock] Total Stock by Category"
             },
             "content": {
                 "chartType": "Donut",
