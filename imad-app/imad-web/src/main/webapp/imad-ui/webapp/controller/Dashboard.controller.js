@@ -10,7 +10,7 @@ sap.ui.define([
 
         return Controller.extend("ec.laurier.imad.controller.Dashboard", {
             onInit: function () {
-                this.populateTotalStockValue();
+                // this.populateTotalStockValue();
                 this.populateTotalStockValueByCategory();
             },
 
@@ -68,29 +68,31 @@ sap.ui.define([
             },
 
             populateTotalStockValueByCategory: function() {
+                var oCard = this.getView().byId("totalStockValueByCategory");
                 var oModel = this.getView().getModel("cardModel");
                 var oCardData = oModel.getProperty("/totalStockValueByCategory");
                 var oMeasures = [];
-
-                // call REST-API
-                // pending
-                oMeasures = [{
-                        measureName: "New Category 1XX",
-                        value: 800,
-                    },{
-                        measureName: "New Category 2XX",
-                        value: 150,
-                    },{
-                        measureName: "New Category 3XX",
-                        value: 50,
-                    }];
                 
-                if(oMeasures.length > 0) {
-                    // assign new value
-                    oCardData["sap.card"].header.title = "Total Stock by Category";
-                    oCardData["sap.card"].content.data.json.measures = oMeasures;
-                    oModel.setProperty("/totalStockValueByCategory",oCardData);
-                }
+                // call REST-API
+                $.ajax({
+                    type: "GET",
+                    url: "/imad-rs/rest/card2",
+                    dataType: "json",
+                    crossDomain: false,
+                    success: function(result) {
+                        oMeasures = result.card2;
+                        if(oMeasures.length > 0) {
+                            // assign new value
+                            oCardData["sap.card"].header.title = "Total Stock by Category";
+                            oCardData["sap.card"].content.data.json.measures = oMeasures;
+                            oModel.setProperty("/totalStockValueByCategory", oCardData);
+                            oCard.refresh();
+                        }
+                    },
+                    error: function(error) {
+                        console.log("error : " + JSON.stringify(error)); 
+                    }
+                });
             }
         });
     });

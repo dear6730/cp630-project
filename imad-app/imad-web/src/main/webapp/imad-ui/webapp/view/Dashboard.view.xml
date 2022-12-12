@@ -36,7 +36,7 @@
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{cardModel>/totalStockValueByCategory}" baseUrl="./">
+			<w:Card id="totalStockValueByCategory" manifest="{cardModel>/totalStockValueByCategory}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>

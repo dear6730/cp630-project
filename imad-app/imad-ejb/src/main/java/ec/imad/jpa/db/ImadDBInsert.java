@@ -38,6 +38,9 @@ public class ImadDBInsert {
 			insertOrder(TOTAL_RECORDS);
 			insertOrderItem(TOTAL_RECORDS);
 
+			// Mock data for A tables:
+			insertMockTotalStockCategory(TOTAL_RECORDS);
+
 			ps.close();
 			logger.info("Ending------------------------------------------------");
 		} catch (SQLException e) { // Handle errors for JDBC
@@ -134,5 +137,20 @@ public class ImadDBInsert {
 		}
 		iModelUpdated = ps.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_TORDER_ITEM");
+	}
+
+
+	private void insertMockTotalStockCategory(int totalRecords) throws SQLException {
+		String sql = "INSERT INTO IMAD_ATOTAL_STOCK_CATEGORY (NAME,VALUE) VALUES (?,?)";
+		ps = (PreparedStatement) connection.prepareStatement(sql);
+		Random randomGenerator = new Random();
+
+		for (int i = 1; i <= totalRecords; i++) {	
+			ps.setString(1, "Category " + i);
+			ps.setInt(2, randomGenerator.nextInt(1000) + 1);
+			ps.addBatch();
+		}
+		iModelUpdated = ps.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOTAL_STOCK_CATEGORY");
 	}
 }
