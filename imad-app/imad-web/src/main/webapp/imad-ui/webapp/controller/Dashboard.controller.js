@@ -10,8 +10,9 @@ sap.ui.define([
 
         return Controller.extend("ec.laurier.imad.controller.Dashboard", {
             onInit: function () {
-                // this.populateTotalStockValue();
+                //this.populateTotalStockValue();
                 this.populateTotalStockValueByCategory();
+                this.populateCurrentStateOfStock();
             },
 
             populateTotalStockValue: function() {
@@ -74,6 +75,7 @@ sap.ui.define([
                 var oMeasures = [];
                 
                 // call REST-API
+
                 $.ajax({
                     type: "GET",
                     url: "/imad-rs/rest/card2",
@@ -93,6 +95,76 @@ sap.ui.define([
                         console.log("error : " + JSON.stringify(error)); 
                     }
                 });
-            }
+
+            },
+
+            populateCurrentStateOfStock: function() {
+
+                var oModel = this.getView().getModel("cardModel");
+                var oCardData = oModel.getProperty("/currentStateOfStock");
+                
+                var oResults = [];
+                var oColumns = [];
+
+                // call REST-API
+                // pending
+
+                oResults = [
+                    {
+                        "productSKU": "5000010050",
+                        "productName": "Ultra Hawaiian Shirt",
+                        "quantity": "0",
+                        "status": "Out of Stock",
+                        "statusState": "Error"
+                    },
+                    {
+                        "productSKU": "5000010053",
+                        "productName": "Rubber Duckie Boots",
+                        "quantity": "0",
+                        "status": "Out of Stock",
+                        "statusState": "Error"
+                    }, 
+                    {
+                        "productSKU": "5000010052",
+                        "productName": "Rainy Day Coat",
+                        "quantity": "6",
+                        "status": "Nearly Out",
+                        "statusState": "Warning"
+                    }                 
+                ];
+                
+                oColumns = [
+                    {
+                        "title": "SKU",
+                        "visibleFlag": true,
+                        "identifier": true
+                    },
+                    {
+                        "title": "Product",
+                        "visibleFlag": true
+                    },
+                    {
+                        "title": "Quantity",
+                        "visibleFlag": true
+                    },
+                    {
+                        "title": "Status",
+                        "visibleFlag": true
+                    }
+                ];
+
+                if(oResults.length > 0 && oColumns.length > 0) {
+
+                    // assign new value
+                    oCardData["sap.card"].header.title = "Current State of Stock";
+                    oCardData["sap.card"].header.subTitle = "December 13, 2022";
+
+                    oCardData["sap.card"].data.json.results = oResults;
+                    oCardData["sap.card"].data.json.columns = oColumns;
+
+                    oModel.setProperty("/currentStateOfStock",oCardData);
+
+                }
+            }            
         });
     });
