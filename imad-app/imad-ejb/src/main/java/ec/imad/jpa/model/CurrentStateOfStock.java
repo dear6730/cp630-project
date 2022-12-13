@@ -75,11 +75,11 @@ public class CurrentStateOfStock implements Serializable {
     @Override
     public String toString() {
         return "{ \"productSKU\": \"" + getSku() 
-                    + "\",\"productName\":" + getName() 
-                    + "\",\"quantity\":" + getQuantity()
-                    + "\",\"status\":" + getStatus()
-                    + "\",\"statusState\":" + getStatusState()   
-                    + "}";
+                    + "\", \"productName\": \"" + getName() 
+                    + "\", \"quantity\": \""    + getQuantity()
+                    + "\", \"status\": \""      + getStatus()
+                    + "\", \"statusState\": \"" + getStatusState()   
+                    + "\"}";
     }
 
 }

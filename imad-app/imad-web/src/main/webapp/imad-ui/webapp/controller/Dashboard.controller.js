@@ -99,72 +99,36 @@ sap.ui.define([
             },
 
             populateCurrentStateOfStock: function() {
-
+                var oCard = this.getView().byId("currentStateOfStock");
                 var oModel = this.getView().getModel("cardModel");
                 var oCardData = oModel.getProperty("/currentStateOfStock");
                 
                 var oResults = [];
-                var oColumns = [];
 
                 // call REST-API
-                // pending
+                $.ajax({
+                    type: "GET",
+                    url: "/imad-rs/rest/card5",
+                    dataType: "json",
+                    crossDomain: false,
+                    success: function(result) {
+                        oResults = result.card5;
+                        if(oResults.length > 0) {
+                            // assign new value
+                            oCardData["sap.card"].header.title = "Current State of Stock";
+                            oCardData["sap.card"].header.subTitle = "December 13, 2022";
+                            oCardData["sap.card"].data.json.results = oResults;
 
-                oResults = [
-                    {
-                        "productSKU": "5000010050",
-                        "productName": "Ultra Hawaiian Shirt",
-                        "quantity": "0",
-                        "status": "Out of Stock",
-                        "statusState": "Error"
+                            oModel.setProperty("/currentStateOfStock", oCardData);
+                            oCard.refresh();
+
+                        }
                     },
-                    {
-                        "productSKU": "5000010053",
-                        "productName": "Rubber Duckie Boots",
-                        "quantity": "0",
-                        "status": "Out of Stock",
-                        "statusState": "Error"
-                    }, 
-                    {
-                        "productSKU": "5000010052",
-                        "productName": "Rainy Day Coat",
-                        "quantity": "6",
-                        "status": "Nearly Out",
-                        "statusState": "Warning"
-                    }                 
-                ];
-                
-                oColumns = [
-                    {
-                        "title": "SKU",
-                        "visibleFlag": true,
-                        "identifier": true
-                    },
-                    {
-                        "title": "Product",
-                        "visibleFlag": true
-                    },
-                    {
-                        "title": "Quantity",
-                        "visibleFlag": true
-                    },
-                    {
-                        "title": "Status",
-                        "visibleFlag": true
+                    error: function(error) {
+                        console.log("error : " + JSON.stringify(error)); 
                     }
-                ];
-
-                if(oResults.length > 0 && oColumns.length > 0) {
-
-                    // assign new value
-                    oCardData["sap.card"].header.title = "Current State of Stock";
-                    oCardData["sap.card"].header.subTitle = "December 13, 2022";
-
-                    oCardData["sap.card"].data.json.results = oResults;
-                    oCardData["sap.card"].data.json.columns = oColumns;
-
-                    oModel.setProperty("/currentStateOfStock",oCardData);
-
-                }
-            }            
+                });
+            }       
+                 
         });
     });

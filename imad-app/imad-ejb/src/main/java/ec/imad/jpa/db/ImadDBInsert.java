@@ -165,8 +165,11 @@ public class ImadDBInsert {
 		for (int i = 1; i <= totalRecords; i++) {	
 
 			int val = randomGenerator.nextInt(15);
+			if(val % 5 == 0) { // increase the chance of 0
+				val = 0;
+			}
 
-			if( val < 10) { // ignoring things with decent stock
+			if( val < 8) { // ignoring things with decent stock
 
 				ps.setInt(1, i+50050);
 				ps.setString(2, "Product " + i);
