@@ -30,7 +30,7 @@
 				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="0.5rem" />
 			</f:layoutS>
 
-			<w:Card manifest="{cardModel>/totalStockValue}" baseUrl="./">
+			<w:Card id="totalStockValue" manifest="{cardModel>/totalStockValue}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="8" />
 				</w:layoutData>
