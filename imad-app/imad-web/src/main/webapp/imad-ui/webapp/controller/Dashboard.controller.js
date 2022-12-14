@@ -12,6 +12,9 @@ sap.ui.define([
             onInit: function () {
                 //this.populateTotalStockValue();
                 this.populateTotalStockValueByCategory();
+
+                this.populateOverviewStockingIssues();
+
                 this.populateCurrentStateOfStock();
             },
 
@@ -95,6 +98,32 @@ sap.ui.define([
                         console.log("error : " + JSON.stringify(error)); 
                     }
                 });
+
+            },
+
+            populateOverviewStockingIssues: function() {
+
+                var oCard = this.getView().byId("overviewStockingIssues");
+                var oModel = this.getView().getModel("cardModel");
+                var oCardData = oModel.getProperty("/overviewStockingIssues");
+
+
+                // Mock
+
+                var oosPercent = "26";  // out of stock
+                var noosPercent = "11"; // nearly out of stock
+
+                // for (var key in oCardData["sap.card"].content.body[1]["inlines"][0]) {
+                //     console.log("Key: " + key);
+                //     console.log("Value: " + oCardData["sap.card"].content.body[1]["inlines"][0][key]);
+                // }
+
+                //console.log("Percentage?: " + oCardData["sap.card"].content.body[1]["inlines"][0]["text"]);
+
+                oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
+                oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
+                oModel.setProperty("/overviewStockingIssues",oCardData);
+
 
             },
 
