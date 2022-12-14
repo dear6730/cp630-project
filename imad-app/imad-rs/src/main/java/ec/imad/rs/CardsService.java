@@ -15,8 +15,9 @@ import org.json.JSONObject;
 
 import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
-
+import ec.imad.jpa.dao.OverviewStockingIssuesDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
+
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 
@@ -30,6 +31,8 @@ public class CardsService {
     @EJB
     private CurrentStateOfStockDao currentStateOfStockDao;
 
+    @EJB
+    private OverviewStockingIssuesDao overviewStockingIssuesDao;
 
     @EJB
     private TotalStockValueDao totalStockValueDao;
@@ -107,6 +110,14 @@ public class CardsService {
     @Produces(MediaType.APPLICATION_JSON)
     public String getTotalStockValueByCategory() {
         return "{\"results\":" + totalStockCategoryDao.getAll() + "}";
+    }
+
+
+    @GET
+    @Path("/card4")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getOverviewStockingIssues() {
+        return "{\"results\":" + overviewStockingIssuesDao.getAll() + "}";
     }
 
 
