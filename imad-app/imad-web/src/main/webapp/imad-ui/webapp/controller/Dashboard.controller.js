@@ -14,6 +14,7 @@ function (Controller, JSONModel) {
             this.populateTotalStockValueByCategory();
             this.populateOverviewStockingIssues();
             this.populateCurrentStateOfStock();
+            this.populateProductsOutOfStockOrNearlyOutOfStock();
         },
 
         populateTotalStockValue: function() {
@@ -149,7 +150,68 @@ function (Controller, JSONModel) {
                     }
                 }
             });
-        }       
+        },
+        
+        populateProductsOutOfStockOrNearlyOutOfStock: function() {
+            var oCard = this.getView().byId("productsOutOfStockOrNearlyOutOfStock");
+            var oModel = this.getView().getModel("cardModel");
+            var oCardData = oModel.getProperty("/productsOutOfStockOrNearlyOutOfStock");
+            
+            var oResults = [];
+
+
+            // Mock
+
+            // locating the data elements
+/*            
+            console.log("header percent number:" + oCardData["sap.card"].header.data.json.number);
+            console.log("header trend:" + oCardData["sap.card"].header.data.json.trend);
+            console.log("header state:" + oCardData["sap.card"].header.data.json.state);
+            console.log("header target number:" + oCardData["sap.card"].header.data.json.target.number);
+            console.log("header trend:" + oCardData["sap.card"].header.data.json.trend);
+            console.log("header details:" + oCardData["sap.card"].header.data.json.details);
+
+            console.log("data list...:" + oCardData["sap.card"].content.data.json.list);
+            console.log("data list length...:" + oCardData["sap.card"].content.data.json.list.length);
+
+            //var len = oCardData["sap.card"].content.data.json.list.length;
+
+            console.log("?? = " + oCardData["sap.card"].content.data.json.list[0]);
+
+            for (var key in oCardData["sap.card"].content.data.json.list) {
+                console.log("Key: " + key);
+                console.log("Value: " + oCardData["sap.card"].content.data.json.list[key]);
+
+                for(var key2 in oCardData["sap.card"].content.data.json.list[key]){
+                    console.log("Key2: " + key2);
+                    console.log("Value: " + oCardData["sap.card"].content.data.json.list[key][key2]);
+                }
+            }
+   */         
+
+            //console.log("Test 1: " + oCardData["sap.card"].content.data.json.list[0]["Month"]);
+            //console.log("Test 2: " + oCardData["sap.card"].content.data.json.list[0]["Stock"]);
+
+
+            oCardData["sap.card"].content.data.json.list[0]["Month"] = "May";
+            oCardData["sap.card"].content.data.json.list[0]["Stock"] = "11.26";
+
+ 
+
+            // console.log("Test 2: " + oCardData["sap.card"].content.data.json.list[0]["Month"]);
+            // console.log("Test 2: " + oCardData["sap.card"].content.data.json.list[0]["Stock"]);
+
+
+
+
+
+            oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock", oCardData);
+
+
+
+
+
+        }
                 
     });
 });
