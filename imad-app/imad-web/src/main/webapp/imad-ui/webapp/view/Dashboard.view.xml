@@ -48,13 +48,13 @@
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{cardModel>/overviewStockingIssues}" baseUrl="./">
+			<w:Card id="overviewStockingIssues" manifest="{cardModel>/overviewStockingIssues}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{cardModel>/currentStateOfStock}" baseUrl="./">
+			<w:Card id="currentStateOfStock" manifest="{cardModel>/currentStateOfStock}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>

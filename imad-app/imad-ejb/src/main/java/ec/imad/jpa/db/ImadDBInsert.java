@@ -175,4 +175,37 @@ public class ImadDBInsert {
 		iModelUpdated =  statement.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOTAL_STOCK_VALUE");
 	}
+
+
+	private void insertMockCurrentStateOfStock(int totalRecords) throws SQLException {
+		String sql = "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES (?,?,?,?,?)";
+		ps = (PreparedStatement) connection.prepareStatement(sql);
+		Random randomGenerator = new Random();
+
+		for (int i = 1; i <= totalRecords; i++) {	
+
+			int val = randomGenerator.nextInt(15);
+			if(val % 5 == 0) { // increase the chance of 0
+				val = 0;
+			}
+
+			if( val < 8) { // ignoring things with decent stock
+
+				ps.setInt(1, i+50050);
+				ps.setString(2, "Product " + i);
+				ps.setInt(3, val);
+				if(val == 0) {
+					ps.setString(4, "Out of Stock");
+					ps.setString(5, "Error");
+				} else {
+					ps.setString(4, "Nearly Out");
+					ps.setString(5, "Warning");
+				}
+
+				ps.addBatch();
+			}
+		}
+		iModelUpdated = ps.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
+	}
 }
