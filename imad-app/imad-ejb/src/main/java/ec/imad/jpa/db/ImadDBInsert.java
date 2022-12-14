@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Random;
 
 import javax.persistence.EntityManager;
@@ -32,14 +33,15 @@ public class ImadDBInsert {
 			final int TOTAL_RECORDS = 10;
 
 			insertLocation(TOTAL_RECORDS);
-			insertCategory(TOTAL_RECORDS);
+			insertCategory(3);
 			insertProduct(TOTAL_RECORDS);
 			insertStock(TOTAL_RECORDS);
 			insertOrder(TOTAL_RECORDS);
 			insertOrderItem(TOTAL_RECORDS);
 
 			// Mock data for A tables:
-			insertMockTotalStockCategory(TOTAL_RECORDS);
+			insertMockTotalStockValue();
+			insertMockTotalStockCategory(4);
 
 			ps.close();
 			logger.info("Ending------------------------------------------------");
@@ -84,7 +86,7 @@ public class ImadDBInsert {
 		for (int i = 1; i <= totalRecords; i++) {	
 			ps.setString(1, "Product " + i);
 			ps.setBigDecimal(2, new BigDecimal(i*3.14));
-			ps.setInt(3, randomGenerator.nextInt(10) + 1);
+			ps.setInt(3, randomGenerator.nextInt(3) + 1);
 			ps.addBatch();
 		}
 		iModelUpdated = ps.executeBatch();
@@ -152,5 +154,25 @@ public class ImadDBInsert {
 		}
 		iModelUpdated = ps.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOTAL_STOCK_CATEGORY");
+	}
+
+	private void insertMockTotalStockValue() throws SQLException {
+		String sql1= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 1','Category1',"+new BigDecimal(999)+")";
+		String sql2= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 1','Category2',"+new BigDecimal(550)+")";
+		String sql3= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 1','Category3',"+new BigDecimal(300)+")";
+
+		String sql4= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 2','Category1',"+new BigDecimal(1000)+")";
+		String sql5= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 2','Category2',"+new BigDecimal(550)+")";
+		String sql6= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 2','Category3',"+new BigDecimal(400)+")";
+		
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+		statement.addBatch(sql2);
+		statement.addBatch(sql3);
+		statement.addBatch(sql4);
+		statement.addBatch(sql5);
+		statement.addBatch(sql6);
+		iModelUpdated =  statement.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOTAL_STOCK_VALUE");
 	}
 }

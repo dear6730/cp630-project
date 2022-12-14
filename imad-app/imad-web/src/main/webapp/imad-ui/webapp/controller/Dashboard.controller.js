@@ -10,61 +10,53 @@ sap.ui.define([
 
         return Controller.extend("ec.laurier.imad.controller.Dashboard", {
             onInit: function () {
-                // this.populateTotalStockValue();
+                this.populateTotalStockValue();
                 this.populateTotalStockValueByCategory();
             },
 
             populateTotalStockValue: function() {
+                var oCard = this.getView().byId("totalStockValue");
                 var oModel = this.getView().getModel("cardModel");
                 var oCardData = oModel.getProperty("/totalStockValue");
-                var oHeaderData = null;
+                var oTitle;
                 var oList = [];
                 var oMeasures = [];
 
                 // call REST-API
-                // pending
-                oHeaderData = {
-                    "n": "$99,707",
-                    "u": "CAD",
-                    "trend": "Up",
-                    "valueColor": "Critical"
-                };
-                oList = [{
-                    "Category": "New Location 1",
-                    "Category1": 999,
-                    "Category2": 550,
-                    "Category3": 300
-                },{
-                    "Category": "New Location 2",
-                    "Category1": 1000,
-                    "Category2": 550,
-                    "Category3": 400
-                },{
-                    "Category": "New Location 3",
-                    "Category1": 700,
-                    "Category2": 156,
-                    "Category3": 300
-                }];
-                oMeasures = [{
-                        label: "New Category 1XX",
-                        value: "{Category1}"
-                    },{
-                        label: "New Category 2XX",
-                        value: "{Category2}"
-                    },{
-                        label: "New Category 3XX",
-                        value: "{Category3}"
-                    }];
-                
-                if(oHeaderData !== null && oList.length > 0 && oMeasures.length > 0) {
+                $.when(
+                    $.ajax({
+                        url: "/imad-rs/rest/card1Title",
+                        dataType: "json",
+                        success: function(result) {
+                            oTitle = result.results;
+                        }
+                    }),
+                    $.ajax({
+                        url: "/imad-rs/rest/card1List",
+                        dataType: "json",
+                        success: function(result) {
+                            oList = result.results;
+                        }
+                    }),
+                    $.ajax({
+                        url: "/imad-rs/rest/card1Measures",
+                        dataType: "json",
+                        success: function(result) {
+                            oMeasures = result.results;
+                        }
+                    })
+                ).then(function(){
                     // assign new value
-                    oCardData["sap.card"].header.title = "Total Stock value";
-                    oCardData["sap.card"].header.details = "as of Dec 6, 2022 [NEW]";
-                    oCardData["sap.card"].header.data.json = oHeaderData;
-                    oCardData["sap.card"].content.data.json.list = oList;
-                    oCardData["sap.card"].content.measures = oMeasures;
-                    oModel.setProperty("/totalStockValue",oCardData);
-                }
+                    if(oTitle !== null && oList.length > 0 && oMeasures.length > 0) {
+                        oCardData["sap.card"].header.title = "Total Stock value";
+                        oCardData["sap.card"].header.details = oTitle.details;
+                        oCardData["sap.card"].header.data.json = oTitle;
+                        oCardData["sap.card"].content.data.json.list = oList;
+                        oCardData["sap.card"].content.measures = oMeasures;
+                        oModel.setProperty("/totalStockValue",oCardData);
+                        oCard.refresh();
+                    }
+                });
             },
 
             populateTotalStockValueByCategory: function() {
@@ -75,22 +67,17 @@ sap.ui.define([
                 
                 // call REST-API
                 $.ajax({
-                    type: "GET",
                     url: "/imad-rs/rest/card2",
                     dataType: "json",
-                    crossDomain: false,
                     success: function(result) {
-                        oMeasures = result.card2;
+                        oMeasures = result.results;
+                        // assign new value
                         if(oMeasures.length > 0) {
-                            // assign new value
                             oCardData["sap.card"].header.title = "Total Stock by Category";
                             oCardData["sap.card"].content.data.json.measures = oMeasures;
                             oModel.setProperty("/totalStockValueByCategory", oCardData);
                             oCard.refresh();
                         }
-                    },
-                    error: function(error) {
-                        console.log("error : " + JSON.stringify(error)); 
                     }
                 });
             }
