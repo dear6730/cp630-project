@@ -87,28 +87,43 @@ function (Controller, JSONModel) {
         },
 
         populateOverviewStockingIssues: function() {
-
             var oCard = this.getView().byId("overviewStockingIssues");
             var oModel = this.getView().getModel("cardModel");
             var oCardData = oModel.getProperty("/overviewStockingIssues");
 
+            var oResults = [];
 
             // Mock
 
-            var oosPercent = "26";  // out of stock
-            var noosPercent = "11"; // nearly out of stock
+            // var oosPercent = "26";  // out of stock
+            // var noosPercent = "11"; // nearly out of stock
 
-            // for (var key in oCardData["sap.card"].content.body[1]["inlines"][0]) {
-            //     console.log("Key: " + key);
-            //     console.log("Value: " + oCardData["sap.card"].content.body[1]["inlines"][0][key]);
-            // }
+            // oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
+            // oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
+            // oModel.setProperty("/overviewStockingIssues",oCardData);
 
-            //console.log("Percentage?: " + oCardData["sap.card"].content.body[1]["inlines"][0]["text"]);
+            // call REST API
+            $.ajax({
+                url: "/imad-rs/rest/card4",
+                dataType: "json",
+                success: function(result) {
+                    oResults = result.results;
 
-                oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
-                oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
-                oModel.setProperty("/overviewStockingIssues",oCardData);
-            },
+                    // assign new value
+                    if(oResults.length > 0) {
+
+                        var oosPercent = oResults[0]["percentageOutOfStock"];
+                        var noosPercent = oResults[0]["percentageNearlyOutOfStock"];
+
+                        oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
+                        oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
+
+                        oModel.setProperty("/overviewStockingIssues", oCardData);
+                        oCard.refresh();
+                    }
+                }
+            });
+        },
 
         populateCurrentStateOfStock: function() {
             var oCard = this.getView().byId("currentStateOfStock");
@@ -119,10 +134,8 @@ function (Controller, JSONModel) {
 
             // call REST-API
             $.ajax({
-                type: "GET",
                 url: "/imad-rs/rest/card5",
                 dataType: "json",
-                crossDomain: false,
                 success: function(result) {
                     oResults = result.results;
                     if(oResults.length > 0) {
@@ -133,7 +146,6 @@ function (Controller, JSONModel) {
 
                         oModel.setProperty("/currentStateOfStock", oCardData);
                         oCard.refresh();
-
                     }
                 }
             });
