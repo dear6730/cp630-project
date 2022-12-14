@@ -114,6 +114,6 @@ public class CardsService {
     @Path("/card5")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCurrentStateOfStock() {
-        return "{\"card5\":" + currentStateOfStockDao.getAll() + "}";
+        return "{\"results\":" + currentStateOfStockDao.getAll() + "}";
     }
 }

@@ -12,9 +12,7 @@ function (Controller, JSONModel) {
         onInit: function () {
             this.populateTotalStockValue();
             this.populateTotalStockValueByCategory();
-
             this.populateOverviewStockingIssues();
-
             this.populateCurrentStateOfStock();
         },
 
@@ -107,12 +105,10 @@ function (Controller, JSONModel) {
 
             //console.log("Percentage?: " + oCardData["sap.card"].content.body[1]["inlines"][0]["text"]);
 
-            oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
-            oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
-            oModel.setProperty("/overviewStockingIssues",oCardData);
-
-
-        },
+                oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
+                oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
+                oModel.setProperty("/overviewStockingIssues",oCardData);
+            },
 
         populateCurrentStateOfStock: function() {
             var oCard = this.getView().byId("currentStateOfStock");
@@ -128,11 +124,11 @@ function (Controller, JSONModel) {
                 dataType: "json",
                 crossDomain: false,
                 success: function(result) {
-                    oResults = result.card5;
+                    oResults = result.results;
                     if(oResults.length > 0) {
                         // assign new value
                         oCardData["sap.card"].header.title = "Current State of Stock";
-                        oCardData["sap.card"].header.subTitle = "December 13, 2022";
+                        oCardData["sap.card"].header.subTitle = "December 14, 2022";
                         oCardData["sap.card"].data.json.results = oResults;
 
                         oModel.setProperty("/currentStateOfStock", oCardData);

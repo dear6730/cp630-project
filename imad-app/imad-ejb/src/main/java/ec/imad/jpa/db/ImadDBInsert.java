@@ -43,6 +43,10 @@ public class ImadDBInsert {
 			insertMockTotalStockValue();
 			insertMockTotalStockCategory(4);
 
+			insertMockOverviewStockingIssues();
+			insertMockCurrentStateOfStock(TOTAL_RECORDS);
+
+
 			ps.close();
 			logger.info("Ending------------------------------------------------");
 		} catch (SQLException e) { // Handle errors for JDBC
@@ -177,7 +181,27 @@ public class ImadDBInsert {
 	}
 
 
+	private void insertMockOverviewStockingIssues() throws SQLException {
+		String sql = "INSERT INTO IMAD_ASTOCK_ISSUES (percentage_out_of_stock, percentage_nearly_out_of_stock) VALUES (?,?)";
+		ps = (PreparedStatement) connection.prepareStatement(sql);
+		Random randomGenerator = new Random();
+
+		Integer num = 100;
+		Integer oos = randomGenerator.nextInt(num);
+		num -= oos;
+		Integer noos = randomGenerator.nextInt(num);
+
+		ps.setBigDecimal(1, new BigDecimal(oos));
+		ps.setBigDecimal(2, new BigDecimal(noos));
+		ps.addBatch();
+
+		iModelUpdated = ps.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ASTOCK_ISSUES");
+	}
+
+
 	private void insertMockCurrentStateOfStock(int totalRecords) throws SQLException {
+
 		String sql = "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES (?,?,?,?,?)";
 		ps = (PreparedStatement) connection.prepareStatement(sql);
 		Random randomGenerator = new Random();
@@ -207,5 +231,18 @@ public class ImadDBInsert {
 		}
 		iModelUpdated = ps.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
+
+/*
+		String sql1= "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES ('500010', 'Product 7', '0','Out of Stock', 'Error')";
+		String sql2= "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES ('500015', 'Product 27', '4','Nearly Out', 'Warning')";
+		String sql3= "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES ('500062', 'Product 35', '0','Out of Stock', 'Error')";
+
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+		statement.addBatch(sql2);
+		statement.addBatch(sql3);
+		iModelUpdated =  statement.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
+		*/
 	}
 }
