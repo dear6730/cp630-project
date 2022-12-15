@@ -265,8 +265,7 @@
                 "title": "Overview of Stocking Issues",
                 "subTitle": "Percentage of Products Currently...",
                 "icon": {
-                    "src": "sap-icon://warning",
-                    "color": "orange"
+                    "src": "sap-icon://warning2"
                 }
             },
             "type": "AdaptiveCard",
@@ -291,7 +290,6 @@
                             {
                                 "type": "TextRun",
                                 "text": "12%",
-                                "color": "red",
                                 "size": "extraLarge",
                                 "weight": "bolder"
                             }
@@ -304,7 +302,7 @@
                             {
                                 "type": "TextRun",
                                 "text": "Nearly Out of Stock",
-                                "size": "orange"
+                                "size": "medium"
                             }
                         ]
                     },
@@ -320,7 +318,6 @@
                             {
                                 "type": "TextRun",
                                 "text": "18%",
-                                "color": "error",
                                 "size": "extraLarge",
                                 "weight": "bolder"
                             }
