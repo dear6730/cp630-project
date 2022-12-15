@@ -47,8 +47,9 @@ public class ImadDBInsert {
 			insertMockOverviewStockingIssues();
 			insertMockCurrentStateOfStock(TOTAL_RECORDS);
 
+			//for: productsOutOfStockOrNearlyOutOfStock
 			insertMockCombinedOutOfStockPercentage();
-			///productsOutOfStockOrNearlyOutOfStock
+			insertMockCombinedOutOfStockHeader();
 
 
 			ps.close();
@@ -255,8 +256,8 @@ public class ImadDBInsert {
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
 	}
 
+	//productsOutOfStockOrNearlyOutOfStock
 	public void insertMockCombinedOutOfStockPercentage() throws SQLException {
-			///productsOutOfStockOrNearlyOutOfStock
 
 		String sql1= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Jan', '26.11')";
 		String sql2= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Feb', '23.23')";
@@ -264,8 +265,6 @@ public class ImadDBInsert {
 		String sql4= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Apr', '15.5')";
 		String sql5= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('May', '11.26')";
 		String sql6= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Jun', '15.9')";
-
-
 
 		Statement statement = connection.createStatement();
 		statement.addBatch(sql1);
@@ -275,10 +274,18 @@ public class ImadDBInsert {
 		statement.addBatch(sql5);
 		statement.addBatch(sql6);
 
-
 		iModelUpdated =  statement.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE");
-
-
 	}
+
+	public void insertMockCombinedOutOfStockHeader() throws SQLException {
+
+		String sql1= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_HEADER (NUMBER,TREND,STATE,DETAILS,TARGET) VALUES ('26','Up','Error','Nov 2022','11')";
+
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+
+		iModelUpdated = statement.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACOMBINED_OUT_OF_STOCK_HEADER");
+	}	
 }

@@ -89,7 +89,6 @@ function (Controller, JSONModel) {
         },
 
         populateTop5ProductsSold: function() {
-
             var oCard = this.getView().byId("top5ProductsSold");
             var oModel = this.getView().getModel("cardModel");
             var oCardData = oModel.getProperty("/top5ProductsSold");
@@ -97,13 +96,12 @@ function (Controller, JSONModel) {
             var oResults = [];
 
             // call REST-API
-
             $.ajax({
                 url: "/imad-rs/rest/card3",
                 dataType: "json",
                 success: function(result) {
                     oResults = result.results;
-                    // assign new value
+                    // assign new values
                     if(oResults.length > 0) {
                         oCardData["sap.card"].content.data.json.list = oResults;
                         oModel.setProperty("/top5ProductsSold", oCardData);
@@ -111,10 +109,6 @@ function (Controller, JSONModel) {
                     }
                 }
             });
-
-            // oCardData["sap.card"].content.data.json.list = newList;
-            // oModel.setProperty("/top5ProductsSold", oCardData);
-
         },
 
         populateOverviewStockingIssues: function() {
@@ -124,15 +118,6 @@ function (Controller, JSONModel) {
 
             var oResults = [];
 
-            // Mock
-
-            // var oosPercent = "26";  // out of stock
-            // var noosPercent = "11"; // nearly out of stock
-
-            // oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
-            // oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
-            // oModel.setProperty("/overviewStockingIssues",oCardData);
-
             // call REST API
             $.ajax({
                 url: "/imad-rs/rest/card4",
@@ -140,7 +125,7 @@ function (Controller, JSONModel) {
                 success: function(result) {
                     oResults = result.results;
 
-                    // assign new value
+                    // assign new values
                     if(oResults.length > 0) {
 
                         var oosPercent = oResults[0]["percentageOutOfStock"];
@@ -163,6 +148,10 @@ function (Controller, JSONModel) {
             
             var oResults = [];
 
+            const timeElapsed = Date.now();
+            const today = new Date(timeElapsed);
+            var TODAY = today.toDateString();
+
             // call REST-API
             $.ajax({
                 url: "/imad-rs/rest/card5",
@@ -171,8 +160,7 @@ function (Controller, JSONModel) {
                     oResults = result.results;
                     if(oResults.length > 0) {
                         // assign new value
-                        oCardData["sap.card"].header.title = "Current State of Stock";
-                        oCardData["sap.card"].header.subTitle = "December 14, 2022";
+                        oCardData["sap.card"].header.subTitle = TODAY; // "December 14, 2022";  //TODO: What to do with date?
                         oCardData["sap.card"].data.json.results = oResults;
 
                         oModel.setProperty("/currentStateOfStock", oCardData);
@@ -186,91 +174,19 @@ function (Controller, JSONModel) {
             var oCard = this.getView().byId("productsOutOfStockOrNearlyOutOfStock");
             var oModel = this.getView().getModel("cardModel");
             var oCardData = oModel.getProperty("/productsOutOfStockOrNearlyOutOfStock");
-            
-            var oResults = [];
-
-
-            // Mock
-
-            // locating the data elements
-/*            
-            console.log("header percent number:" + oCardData["sap.card"].header.data.json.number);
-            console.log("header trend:" + oCardData["sap.card"].header.data.json.trend);
-            console.log("header state:" + oCardData["sap.card"].header.data.json.state);
-            console.log("header target number:" + oCardData["sap.card"].header.data.json.target.number);
-            console.log("header details:" + oCardData["sap.card"].header.data.json.details);
-
-            console.log("data list...:" + oCardData["sap.card"].content.data.json.list);
-            console.log("data list length...:" + oCardData["sap.card"].content.data.json.list.length);
-
-            //var len = oCardData["sap.card"].content.data.json.list.length;
-
-            console.log("?? = " + oCardData["sap.card"].content.data.json.list[0]);
-
-            for (var key in oCardData["sap.card"].content.data.json.list) {
-                console.log("Key: " + key);
-                console.log("Value: " + oCardData["sap.card"].content.data.json.list[key]);
-
-                for(var key2 in oCardData["sap.card"].content.data.json.list[key]){
-                    console.log("Key2: " + key2);
-                    console.log("Value: " + oCardData["sap.card"].content.data.json.list[key][key2]);
-                }
-            }
-   */         
-
-            //console.log("Test 1: " + oCardData["sap.card"].content.data.json.list[0]["Month"]);
-            //console.log("Test 2: " + oCardData["sap.card"].content.data.json.list[0]["Stock"]);
-
-/*
-            oCardData["sap.card"].content.data.json.list[0]["Month"] = "Q3 2021";
-            oCardData["sap.card"].content.data.json.list[0]["Stock"] = "11.26";
-
-            oCardData["sap.card"].content.data.json.list[1]["Month"] = "Q4 2021";
-            oCardData["sap.card"].content.data.json.list[1]["Stock"] = "26.11";
-
-            oCardData["sap.card"].content.data.json.list[2]["Month"] = "Q1 2022";
-            oCardData["sap.card"].content.data.json.list[2]["Stock"] = "24.1";
-
-            oCardData["sap.card"].content.data.json.list[3]["Month"] = "Q2 2022";
-            oCardData["sap.card"].content.data.json.list[3]["Stock"] = "12.21";
-
-            oCardData["sap.card"].content.data.json.list[4]["Month"] = "Q3 2022";
-            oCardData["sap.card"].content.data.json.list[4]["Stock"] = "21.26";
-
-            oCardData["sap.card"].content.data.json.list[5]["Month"] = undefined;
-            oCardData["sap.card"].content.data.json.list[5]["Stock"] = undefined;
-*/
-
-            // CombinedOutOfStockPercentageHeader model
-            oCardData["sap.card"].header.data.json.number = "9.9";
-            oCardData["sap.card"].header.data.json.trend = "Down";
-            oCardData["sap.card"].header.data.json.state = "Good";
-            oCardData["sap.card"].header.data.json.details = "Q4 2022 (predicted)";
-
-            oCardData["sap.card"].header.data.json.target.number = "10.0";
-
-            
-            // CombinedOutOfStockPercentage model
-            oCardData["sap.card"].content.data.json.list = [
-                { "Month": "Q3 2021", "Stock": "11.26" },
-                { "Month": "Q4 2021", "Stock": "26.11" },
-                { "Month": "Q1 2022", "Stock": "24.1" },
-                { "Month": "Q2 2022", "Stock": "12.21" },
-                { "Month": "Q3 2022", "Stock": "21.26" }
-            ];
 
             var oHeader = [];
             var oResults = [];
 
             // call REST-API
             $.when(
-                // $.ajax({
-                //     url: "/imad-rs/rest/card6Header",
-                //     dataType: "json",
-                //     success: function(result) {
-                //         oHeader = result.results;
-                //     }
-                // }),
+                $.ajax({
+                    url: "/imad-rs/rest/card6Header",
+                    dataType: "json",
+                    success: function(result) {
+                        oHeader = result.results;
+                    }
+                }),
                 $.ajax({
                     url: "/imad-rs/rest/card6",
                     dataType: "json",
@@ -279,18 +195,15 @@ function (Controller, JSONModel) {
                     }
                 })
             ).then(function(){
-                // assign new value
-                // if(oTitle !== null && oList.length > 0 && oMeasures.length > 0) {
+                // assign new values
+                if(oHeader.length > 0 && oResults.length > 0) {
 
+                    oCardData["sap.card"].header.data.json = oHeader[0];
                     oCardData["sap.card"].content.data.json.list = oResults;
                     oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock",oCardData);
                     oCard.refresh();
-                // }
+                }
             });
-            
-
-            //oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock", oCardData);
-        }
-                
+        }            
     });
 });

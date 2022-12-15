@@ -454,7 +454,8 @@
             "header": {
                 "type": "Numeric",
                 "data": {
-                    "json": {
+                    "json":
+                    {
                         "number": "29",
                         "unit": "%",
                         "trend": "Up",

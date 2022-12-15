@@ -86,11 +86,18 @@ public class CombinedOutOfStockHeader implements Serializable {
 
     @Override
     public String toString() {
+        // return "{\"number\": \"" + getNumber()
+        //     + "\",\"trend\":" + getTrend() 
+        //     + "\",\"state\":" + getState() 
+        //     + "\",\"details\":" + getDetails() 
+        //     + "\",\"target\":" + getTarget() 
+        //     + "}";
+
         return "{\"number\": \"" + getNumber()
-            + "\",\"trend\":" + getTrend() 
-            + "\",\"state\":" + getState() 
-            + "\",\"details\":" + getDetails() 
-            + "\",\"target\":" + getTarget() 
-            + "}";
+            + "\",\"unit\": \"%\",\"trend\": \"" + getTrend()
+            + "\",\"state\": \"" + getState()
+            + "\",\"target\": {\"number\": " + getTarget()
+            + ",\"unit\": \"%\"},\"details\": \"" + getDetails()
+            + "\"}";
     }
 }
