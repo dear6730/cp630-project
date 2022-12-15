@@ -42,7 +42,7 @@ public class ImadDBInsert {
 			// Mock data for A tables:
 			insertMockTotalStockValue();
 			insertMockTotalStockCategory(4);
-
+			insertMockTop5Products();
 			insertMockOverviewStockingIssues();
 			insertMockCurrentStateOfStock(TOTAL_RECORDS);
 
@@ -180,6 +180,21 @@ public class ImadDBInsert {
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOTAL_STOCK_VALUE");
 	}
 
+	private void insertMockTop5Products() throws SQLException {
+		int numberOfProducts = 5;
+
+		String sql = "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES (?,?)";
+		ps = (PreparedStatement) connection.prepareStatement(sql);
+		Random randomGenerator = new Random();
+
+		for (int i = 1; i <= numberOfProducts; i++) {	
+			ps.setString(1, "Product " + i);
+			ps.setInt(2, randomGenerator.nextInt(1000) + 1);
+			ps.addBatch();
+		}
+		iModelUpdated = ps.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOP_5_PRODUCTS");
+	}
 
 	private void insertMockOverviewStockingIssues() throws SQLException {
 		String sql = "INSERT INTO IMAD_ASTOCK_ISSUES (percentage_out_of_stock, percentage_nearly_out_of_stock) VALUES (?,?)";
