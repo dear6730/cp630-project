@@ -59,7 +59,7 @@ public class OverviewStockingIssues implements Serializable {
     
     @Override
     public String toString() {
-        return "{ \"percentageOutOfStock\": \"" + getPercentageOutOfStock() 
+        return "{\"percentageOutOfStock\": \"" + getPercentageOutOfStock() 
                     + "\", \"percentageNearlyOutOfStock\": \"" + getPercentageNearlyOutOfStock()   
                     + "\"}";
     }

@@ -47,6 +47,9 @@ public class ImadDBInsert {
 			insertMockOverviewStockingIssues();
 			insertMockCurrentStateOfStock(TOTAL_RECORDS);
 
+			insertMockCombinedOutOfStockPercentage();
+			///productsOutOfStockOrNearlyOutOfStock
+
 
 			ps.close();
 			logger.info("Ending------------------------------------------------");
@@ -250,5 +253,32 @@ public class ImadDBInsert {
 		}
 		iModelUpdated = ps.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
+	}
+
+	public void insertMockCombinedOutOfStockPercentage() throws SQLException {
+			///productsOutOfStockOrNearlyOutOfStock
+
+		String sql1= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Jan', '26.11')";
+		String sql2= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Feb', '23.23')";
+		String sql3= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Mar', '11.11')";
+		String sql4= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Apr', '15.5')";
+		String sql5= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('May', '11.26')";
+		String sql6= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Jun', '15.9')";
+
+
+
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+		statement.addBatch(sql2);
+		statement.addBatch(sql3);
+		statement.addBatch(sql4);
+		statement.addBatch(sql5);
+		statement.addBatch(sql6);
+
+
+		iModelUpdated =  statement.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE");
+
+
 	}
 }

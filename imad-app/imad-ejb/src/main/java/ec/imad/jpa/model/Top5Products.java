@@ -54,6 +54,6 @@ public class Top5Products implements Serializable {
 
     @Override
     public String toString() {
-        return "{ \"Product\": \"" + getName() + "\",\"Stock Value\":" + getValue() + "}";
+        return "{\"Product\": \"" + getName() + "\",\"Stock Value\":" + getValue() + "}";
     }
 }

@@ -17,6 +17,8 @@ import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.Top5ProductsDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
+import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
+
 import ec.imad.jpa.dao.TotalStockValueDao;
 
 import ec.imad.jpa.model.TotalStockCategory;
@@ -37,6 +39,9 @@ public class CardsService {
 
     @EJB
     private OverviewStockingIssuesDao overviewStockingIssuesDao;
+
+    @EJB
+    private CombinedOutOfStockPercentageDao combinedOutOfStockPercentageDao;
 
     @EJB
     private TotalStockValueDao totalStockValueDao;
@@ -137,5 +142,13 @@ public class CardsService {
     @Produces(MediaType.APPLICATION_JSON)
     public String getCurrentStateOfStock() {
         return "{\"results\":" + currentStateOfStockDao.getAll() + "}";
+    }
+
+
+    @GET
+    @Path("/card6")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCombinedOutOfStockPercentage() {
+        return "{\"results\":" + combinedOutOfStockPercentageDao.getAll() + "}";
     }
 }

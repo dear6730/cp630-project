@@ -96,32 +96,6 @@ function (Controller, JSONModel) {
             
             var oResults = [];
 
-            // MOCK
-            /*
-            var newList = [
-                {
-                    "Product": "Product 5 - Blue",
-                    "Stock Value": "9000"
-                },
-                {
-                    "Product": "Product 17",
-                    "Stock Value": "4050"
-                },
-                {
-                    "Product": "Product 12",
-                    "Stock Value": '800'
-                },
-                {
-                    "Product": "Product 5 - Yellow",
-                    "Stock Value": 750
-                },
-                {
-                    "Product": "Product 3",
-                    "Stock Value": 560
-                }
-            ];
-            */
-
             // call REST-API
 
             $.ajax({
@@ -137,8 +111,6 @@ function (Controller, JSONModel) {
                     }
                 }
             });
-
-
 
             // oCardData["sap.card"].content.data.json.list = newList;
             // oModel.setProperty("/top5ProductsSold", oCardData);
@@ -269,6 +241,7 @@ function (Controller, JSONModel) {
             oCardData["sap.card"].content.data.json.list[5]["Stock"] = undefined;
 */
 
+            // CombinedOutOfStockPercentageHeader model
             oCardData["sap.card"].header.data.json.number = "9.9";
             oCardData["sap.card"].header.data.json.trend = "Down";
             oCardData["sap.card"].header.data.json.state = "Good";
@@ -276,6 +249,8 @@ function (Controller, JSONModel) {
 
             oCardData["sap.card"].header.data.json.target.number = "10.0";
 
+            
+            // CombinedOutOfStockPercentage model
             oCardData["sap.card"].content.data.json.list = [
                 { "Month": "Q3 2021", "Stock": "11.26" },
                 { "Month": "Q4 2021", "Stock": "26.11" },
@@ -284,7 +259,37 @@ function (Controller, JSONModel) {
                 { "Month": "Q3 2022", "Stock": "21.26" }
             ];
 
-            oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock", oCardData);
+            var oHeader = [];
+            var oResults = [];
+
+            // call REST-API
+            $.when(
+                // $.ajax({
+                //     url: "/imad-rs/rest/card6Header",
+                //     dataType: "json",
+                //     success: function(result) {
+                //         oHeader = result.results;
+                //     }
+                // }),
+                $.ajax({
+                    url: "/imad-rs/rest/card6",
+                    dataType: "json",
+                    success: function(result) {
+                        oResults = result.results;
+                    }
+                })
+            ).then(function(){
+                // assign new value
+                // if(oTitle !== null && oList.length > 0 && oMeasures.length > 0) {
+
+                    oCardData["sap.card"].content.data.json.list = oResults;
+                    oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock",oCardData);
+                    oCard.refresh();
+                // }
+            });
+            
+
+            //oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock", oCardData);
         }
                 
     });
