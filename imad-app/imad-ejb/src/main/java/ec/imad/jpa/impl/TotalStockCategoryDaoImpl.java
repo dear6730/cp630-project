@@ -14,7 +14,6 @@ import ec.imad.jpa.model.TotalStockCategory;
 @Stateful
 public class TotalStockCategoryDaoImpl implements TotalStockCategoryDao {
     private static final Logger LOGGER = Logger.getLogger(TotalStockCategoryDaoImpl.class);
-
     
     @PersistenceContext(unitName="primary")
     private EntityManager entityManager;
@@ -27,6 +26,13 @@ public class TotalStockCategoryDaoImpl implements TotalStockCategoryDao {
 
     @Override
     public List<TotalStockCategory> getAll() {
-        return entityManager.createQuery("from TotalStockCategory").getResultList();
+        return entityManager.createQuery("from TotalStockCategory", TotalStockCategory.class).getResultList();
+    }
+
+    @Override
+    public void saveModel(List<TotalStockCategory> totalStockCategories) {
+        for (TotalStockCategory totalStockCategory : totalStockCategories) {
+            saveModel(totalStockCategory);
+        }
     }
 }
