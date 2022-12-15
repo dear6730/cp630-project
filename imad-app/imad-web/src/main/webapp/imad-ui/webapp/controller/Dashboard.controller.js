@@ -12,6 +12,7 @@ function (Controller, JSONModel) {
         onInit: function () {
             this.populateTotalStockValue();
             this.populateTotalStockValueByCategory();
+            this.populateTop5ProductsSold();
             this.populateOverviewStockingIssues();
             this.populateCurrentStateOfStock();
             this.populateProductsOutOfStockOrNearlyOutOfStock();
@@ -84,6 +85,43 @@ function (Controller, JSONModel) {
                     }
                 }
             });
+
+        },
+
+        populateTop5ProductsSold: function() {
+
+            var oCard = this.getView().byId("top5ProductsSold");
+            var oModel = this.getView().getModel("cardModel");
+            var oCardData = oModel.getProperty("/top5ProductsSold");
+            
+            var oResults = [];
+
+            // MOCK
+            var newList = [
+                {
+                    "Product": "Product 5 - Blue",
+                    "Stock Value": "9000"
+                },
+                {
+                    "Product": "Product 17",
+                    "Stock Value": "4050"
+                },
+                {
+                    "Product": "Product 12",
+                    "Stock Value": '800'
+                },
+                {
+                    "Product": "Product 5 - Yellow",
+                    "Stock Value": 750
+                },
+                {
+                    "Product": "Product 3",
+                    "Stock Value": 560
+                }
+            ];
+
+            oCardData["sap.card"].content.data.json.list = newList;
+            oModel.setProperty("/top5ProductsSold", oCardData);
 
         },
 
