@@ -97,6 +97,7 @@ function (Controller, JSONModel) {
             var oResults = [];
 
             // MOCK
+            /*
             var newList = [
                 {
                     "Product": "Product 5 - Blue",
@@ -119,9 +120,28 @@ function (Controller, JSONModel) {
                     "Stock Value": 560
                 }
             ];
+            */
 
-            oCardData["sap.card"].content.data.json.list = newList;
-            oModel.setProperty("/top5ProductsSold", oCardData);
+            // call REST-API
+
+            $.ajax({
+                url: "/imad-rs/rest/card3",
+                dataType: "json",
+                success: function(result) {
+                    oResults = result.results;
+                    // assign new value
+                    if(oResults.length > 0) {
+                        oCardData["sap.card"].content.data.json.list = oResults;
+                        oModel.setProperty("/top5ProductsSold", oCardData);
+                        oCard.refresh();
+                    }
+                }
+            });
+
+
+
+            // oCardData["sap.card"].content.data.json.list = newList;
+            // oModel.setProperty("/top5ProductsSold", oCardData);
 
         },
 

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
+import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -181,18 +182,22 @@ public class ImadDBInsert {
 	}
 
 	private void insertMockTop5Products() throws SQLException {
-		int numberOfProducts = 5;
 
-		String sql = "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES (?,?)";
-		ps = (PreparedStatement) connection.prepareStatement(sql);
-		Random randomGenerator = new Random();
+		// mock the SORTED results going into the A table
+		String sql1= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 7', '3234.56')";
+		String sql2= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 2', '2334.56')";
+		String sql3= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 1', '1234.56')";
+		String sql4= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 5', '934.56')";
+		String sql5= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 17', '834.56')";
 
-		for (int i = 1; i <= numberOfProducts; i++) {	
-			ps.setString(1, "Product " + i);
-			ps.setInt(2, randomGenerator.nextInt(1000) + 1);
-			ps.addBatch();
-		}
-		iModelUpdated = ps.executeBatch();
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+		statement.addBatch(sql2);
+		statement.addBatch(sql3);
+		statement.addBatch(sql4);
+		statement.addBatch(sql5);
+
+		iModelUpdated =  statement.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOP_5_PRODUCTS");
 	}
 
@@ -213,7 +218,6 @@ public class ImadDBInsert {
 		iModelUpdated = ps.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ASTOCK_ISSUES");
 	}
-
 
 	private void insertMockCurrentStateOfStock(int totalRecords) throws SQLException {
 
@@ -246,18 +250,5 @@ public class ImadDBInsert {
 		}
 		iModelUpdated = ps.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
-
-/*
-		String sql1= "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES ('500010', 'Product 7', '0','Out of Stock', 'Error')";
-		String sql2= "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES ('500015', 'Product 27', '4','Nearly Out', 'Warning')";
-		String sql3= "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES ('500062', 'Product 35', '0','Out of Stock', 'Error')";
-
-		Statement statement = connection.createStatement();
-		statement.addBatch(sql1);
-		statement.addBatch(sql2);
-		statement.addBatch(sql3);
-		iModelUpdated =  statement.executeBatch();
-		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
-		*/
 	}
 }
