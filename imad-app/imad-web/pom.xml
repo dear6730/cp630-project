@@ -57,17 +57,30 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
                 <configuration>
+                    <packagingExcludes>imad-ui/node_modules/**</packagingExcludes>
                     <archive>
                         <manifestEntries>
                             <Dependencies>com.weka</Dependencies>
                          </manifestEntries> 
                     </archive>
                 </configuration>
-            </plugin>
+            </plugin> -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/webapp/imad-ui/node_modules</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>            
         </plugins>
     </build>
 </project>
