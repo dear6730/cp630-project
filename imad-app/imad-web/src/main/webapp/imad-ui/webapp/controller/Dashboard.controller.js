@@ -12,10 +12,10 @@ function (Controller, JSONModel) {
         onInit: function () {
             this.populateTotalStockValue();
             this.populateTotalStockValueByCategory();
-
+            this.populateTop5ProductsSold();
             this.populateOverviewStockingIssues();
-
             this.populateCurrentStateOfStock();
+            this.populateProductsOutOfStockOrNearlyOutOfStock();
         },
 
         populateTotalStockValue: function() {
@@ -88,30 +88,57 @@ function (Controller, JSONModel) {
 
         },
 
-        populateOverviewStockingIssues: function() {
+        populateTop5ProductsSold: function() {
+            var oCard = this.getView().byId("top5ProductsSold");
+            var oModel = this.getView().getModel("cardModel");
+            var oCardData = oModel.getProperty("/top5ProductsSold");
+            
+            var oResults = [];
 
+            // call REST-API
+            $.ajax({
+                url: "/imad-rs/rest/card3",
+                dataType: "json",
+                success: function(result) {
+                    oResults = result.results;
+                    // assign new values
+                    if(oResults.length > 0) {
+                        oCardData["sap.card"].content.data.json.list = oResults;
+                        oModel.setProperty("/top5ProductsSold", oCardData);
+                        oCard.refresh();
+                    }
+                }
+            });
+        },
+
+        populateOverviewStockingIssues: function() {
             var oCard = this.getView().byId("overviewStockingIssues");
             var oModel = this.getView().getModel("cardModel");
             var oCardData = oModel.getProperty("/overviewStockingIssues");
 
+            var oResults = [];
 
-            // Mock
+            // call REST API
+            $.ajax({
+                url: "/imad-rs/rest/card4",
+                dataType: "json",
+                success: function(result) {
+                    oResults = result.results;
 
-            var oosPercent = "26";  // out of stock
-            var noosPercent = "11"; // nearly out of stock
+                    // assign new values
+                    if(oResults.length > 0) {
 
-            // for (var key in oCardData["sap.card"].content.body[1]["inlines"][0]) {
-            //     console.log("Key: " + key);
-            //     console.log("Value: " + oCardData["sap.card"].content.body[1]["inlines"][0][key]);
-            // }
+                        var oosPercent = oResults[0]["percentageOutOfStock"];
+                        var noosPercent = oResults[0]["percentageNearlyOutOfStock"];
 
-            //console.log("Percentage?: " + oCardData["sap.card"].content.body[1]["inlines"][0]["text"]);
+                        oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
+                        oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
 
-            oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
-            oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
-            oModel.setProperty("/overviewStockingIssues",oCardData);
-
-
+                        oModel.setProperty("/overviewStockingIssues", oCardData);
+                        oCard.refresh();
+                    }
+                }
+            });
         },
 
         populateCurrentStateOfStock: function() {
@@ -121,27 +148,62 @@ function (Controller, JSONModel) {
             
             var oResults = [];
 
+            const timeElapsed = Date.now();
+            const today = new Date(timeElapsed);
+            var TODAY = today.toDateString();
+
             // call REST-API
             $.ajax({
-                type: "GET",
                 url: "/imad-rs/rest/card5",
                 dataType: "json",
-                crossDomain: false,
                 success: function(result) {
-                    oResults = result.card5;
+                    oResults = result.results;
                     if(oResults.length > 0) {
                         // assign new value
-                        oCardData["sap.card"].header.title = "Current State of Stock";
-                        oCardData["sap.card"].header.subTitle = "December 13, 2022";
+                        oCardData["sap.card"].header.subTitle = TODAY; // "December 14, 2022";  //TODO: What to do with date?
                         oCardData["sap.card"].data.json.results = oResults;
 
                         oModel.setProperty("/currentStateOfStock", oCardData);
                         oCard.refresh();
-
                     }
                 }
             });
-        }       
-                
+        },
+        
+        populateProductsOutOfStockOrNearlyOutOfStock: function() {
+            var oCard = this.getView().byId("productsOutOfStockOrNearlyOutOfStock");
+            var oModel = this.getView().getModel("cardModel");
+            var oCardData = oModel.getProperty("/productsOutOfStockOrNearlyOutOfStock");
+
+            var oHeader = [];
+            var oResults = [];
+
+            // call REST-API
+            $.when(
+                $.ajax({
+                    url: "/imad-rs/rest/card6Header",
+                    dataType: "json",
+                    success: function(result) {
+                        oHeader = result.results;
+                    }
+                }),
+                $.ajax({
+                    url: "/imad-rs/rest/card6",
+                    dataType: "json",
+                    success: function(result) {
+                        oResults = result.results;
+                    }
+                })
+            ).then(function(){
+                // assign new values
+                if(oHeader.length > 0 && oResults.length > 0) {
+
+                    oCardData["sap.card"].header.data.json = oHeader[0];
+                    oCardData["sap.card"].content.data.json.list = oResults;
+                    oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock",oCardData);
+                    oCard.refresh();
+                }
+            });
+        }            
     });
 });

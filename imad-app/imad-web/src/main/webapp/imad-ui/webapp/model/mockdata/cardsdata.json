@@ -265,8 +265,7 @@
                 "title": "Overview of Stocking Issues",
                 "subTitle": "Percentage of Products Currently...",
                 "icon": {
-                    "src": "sap-icon://error",
-                    "color": "critical"
+                    "src": "sap-icon://warning2"
                 }
             },
             "type": "AdaptiveCard",
@@ -291,7 +290,6 @@
                             {
                                 "type": "TextRun",
                                 "text": "12%",
-                                "color": "error",
                                 "size": "extraLarge",
                                 "weight": "bolder"
                             }
@@ -320,7 +318,6 @@
                             {
                                 "type": "TextRun",
                                 "text": "18%",
-                                "color": "error",
                                 "size": "extraLarge",
                                 "weight": "bolder"
                             }
@@ -457,7 +454,8 @@
             "header": {
                 "type": "Numeric",
                 "data": {
-                    "json": {
+                    "json":
+                    {
                         "number": "29",
                         "unit": "%",
                         "trend": "Up",

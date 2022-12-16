@@ -2,6 +2,7 @@ package ec.imad.jpa.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,11 +16,13 @@ public class CurrentStateOfStock implements Serializable {
     private static final long serialVersionUID = 1L;
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private Integer sku;
     private String name;
     private Integer quantity;
     private String status;
-    private String status_state;
+    @Column(name="status_state")
+    private String statusState;
 
 
     public CurrentStateOfStock() {
@@ -28,6 +31,14 @@ public class CurrentStateOfStock implements Serializable {
     public CurrentStateOfStock(String name, Integer quantity) {
         this.name = name;
         this.quantity = quantity;
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getSku() {
@@ -63,18 +74,18 @@ public class CurrentStateOfStock implements Serializable {
     }
 
     public String getStatusState() {
-        return status_state;
+        return statusState;
     }
 
     public void setStatusState(String statusState) {
-        this.status_state = statusState;
+        this.statusState = statusState;
     }    
 
 
     
     @Override
     public String toString() {
-        return "{ \"productSKU\": \"" + getSku() 
+        return "{\"productSKU\": \"" + getSku() 
                     + "\", \"productName\": \"" + getName() 
                     + "\", \"quantity\": \""    + getQuantity()
                     + "\", \"status\": \""      + getStatus()

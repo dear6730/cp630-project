@@ -18,11 +18,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import ec.imad.business.ProcessingScenariosStatelessLocal;
+import ec.imad.jpa.dao.Top5ProductsDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
 import ec.imad.jpa.dao.StockDao;
 import ec.imad.jpa.dao.TotalStockCategoryDao;
+import ec.imad.jpa.dao.OverviewStockingIssuesDao;
+import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
+import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
+
 import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.model.Stock;
+
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 
@@ -34,7 +40,18 @@ public class CardsService {
     private TotalStockCategoryDao totalStockCategoryDao;
 
     @EJB
+    private Top5ProductsDao top5ProductsDao;
+
+    @EJB
     private CurrentStateOfStockDao currentStateOfStockDao;
+    @EJB
+    private OverviewStockingIssuesDao overviewStockingIssuesDao;
+
+    @EJB
+    private CombinedOutOfStockPercentageDao combinedOutOfStockPercentageDao;
+
+    @EJB
+    private CombinedOutOfStockHeaderDao combinedOutOfStockHeaderDao;
 
     @EJB
     private TotalStockValueDao totalStockValueDao;
@@ -172,11 +189,41 @@ public class CardsService {
         return "{\"results\":" + totalStockCategoryDao.getAll() + "}";
     }
 
+    @GET
+    @Path("/card3")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getTop5Products() {
+        return "{\"results\":" + top5ProductsDao.getAll() + "}";
+    }
+
+
+    @GET
+    @Path("/card4")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getOverviewStockingIssues() {
+        return "{\"results\":" + overviewStockingIssuesDao.getAll() + "}";
+    }
+
 
     @GET
     @Path("/card5")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCurrentStateOfStock() {
-        return "{\"card5\":" + currentStateOfStockDao.getAll() + "}";
+        return "{\"results\":" + currentStateOfStockDao.getAll() + "}";
+    }
+
+
+    @GET
+    @Path("/card6")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCombinedOutOfStockPercentage() {
+        return "{\"results\":" + combinedOutOfStockPercentageDao.getAll() + "}";
+    }
+
+    @GET
+    @Path("/card6Header")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCombinedOutOfStockHeader() {
+        return "{\"results\":" + combinedOutOfStockHeaderDao.getAll() + "}";
     }
 }

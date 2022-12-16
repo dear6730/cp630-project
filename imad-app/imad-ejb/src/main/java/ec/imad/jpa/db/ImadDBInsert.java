@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
+import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,6 +43,14 @@ public class ImadDBInsert {
 			// Mock data for A tables:
 			insertMockTotalStockValue();
 			// insertMockTotalStockCategory(4);
+			insertMockTop5Products();
+			insertMockOverviewStockingIssues();
+			insertMockCurrentStateOfStock(TOTAL_RECORDS);
+
+			//for: productsOutOfStockOrNearlyOutOfStock
+			insertMockCombinedOutOfStockPercentage();
+			insertMockCombinedOutOfStockHeader();
+
 
 			ps.close();
 			logger.info("Ending------------------------------------------------");
@@ -176,8 +185,46 @@ public class ImadDBInsert {
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOTAL_STOCK_VALUE");
 	}
 
+	private void insertMockTop5Products() throws SQLException {
+
+		// mock the SORTED results going into the A table
+		String sql1= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 7', '3234.56')";
+		String sql2= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 2', '2334.56')";
+		String sql3= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 1', '1234.56')";
+		String sql4= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 5', '934.56')";
+		String sql5= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 17', '834.56')";
+
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+		statement.addBatch(sql2);
+		statement.addBatch(sql3);
+		statement.addBatch(sql4);
+		statement.addBatch(sql5);
+
+		iModelUpdated =  statement.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOP_5_PRODUCTS");
+	}
+
+	private void insertMockOverviewStockingIssues() throws SQLException {
+		String sql = "INSERT INTO IMAD_ASTOCK_ISSUES (percentage_out_of_stock, percentage_nearly_out_of_stock) VALUES (?,?)";
+		ps = (PreparedStatement) connection.prepareStatement(sql);
+		Random randomGenerator = new Random();
+
+		Integer num = 100;
+		Integer oos = randomGenerator.nextInt(num);
+		num -= oos;
+		Integer noos = randomGenerator.nextInt(num);
+
+		ps.setBigDecimal(1, new BigDecimal(oos));
+		ps.setBigDecimal(2, new BigDecimal(noos));
+		ps.addBatch();
+
+		iModelUpdated = ps.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ASTOCK_ISSUES");
+	}
 
 	private void insertMockCurrentStateOfStock(int totalRecords) throws SQLException {
+
 		String sql = "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES (?,?,?,?,?)";
 		ps = (PreparedStatement) connection.prepareStatement(sql);
 		Random randomGenerator = new Random();
@@ -208,4 +255,37 @@ public class ImadDBInsert {
 		iModelUpdated = ps.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
 	}
+
+	//productsOutOfStockOrNearlyOutOfStock
+	public void insertMockCombinedOutOfStockPercentage() throws SQLException {
+
+		String sql1= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Jan', '26.11')";
+		String sql2= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Feb', '23.23')";
+		String sql3= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Mar', '11.11')";
+		String sql4= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Apr', '15.5')";
+		String sql5= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('May', '11.26')";
+		String sql6= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE (MONTH,STOCK) VALUES ('Jun', '15.9')";
+
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+		statement.addBatch(sql2);
+		statement.addBatch(sql3);
+		statement.addBatch(sql4);
+		statement.addBatch(sql5);
+		statement.addBatch(sql6);
+
+		iModelUpdated =  statement.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACOMBINED_OUT_OF_STOCK_PERCENTAGE");
+	}
+
+	public void insertMockCombinedOutOfStockHeader() throws SQLException {
+
+		String sql1= "INSERT INTO IMAD_ACOMBINED_OUT_OF_STOCK_HEADER (NUMBER,TREND,STATE,DETAILS,TARGET) VALUES ('26','Up','Error','Nov 2022','11')";
+
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+
+		iModelUpdated = statement.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACOMBINED_OUT_OF_STOCK_HEADER");
+	}	
 }

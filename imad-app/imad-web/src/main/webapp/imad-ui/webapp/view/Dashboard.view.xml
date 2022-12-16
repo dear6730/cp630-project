@@ -42,7 +42,7 @@
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{cardModel>/top5ProductsSold}" baseUrl="./">
+			<w:Card id="top5ProductsSold" manifest="{cardModel>/top5ProductsSold}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="4" />
 				</w:layoutData>
@@ -60,7 +60,7 @@
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card manifest="{cardModel>/productsOutOfStockOrNearlyOutOfStock}" baseUrl="./">
+			<w:Card id="productsOutOfStockOrNearlyOutOfStock" manifest="{cardModel>/productsOutOfStockOrNearlyOutOfStock}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="12" />
 				</w:layoutData>
