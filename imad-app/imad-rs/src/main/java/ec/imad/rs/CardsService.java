@@ -1,7 +1,11 @@
 package ec.imad.rs;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -13,10 +17,12 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import ec.imad.jpa.dao.TotalStockCategoryDao;
+import ec.imad.business.ProcessingScenariosStatelessLocal;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
-
+import ec.imad.jpa.dao.StockDao;
+import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
+import ec.imad.jpa.model.Stock;
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 
@@ -30,9 +36,66 @@ public class CardsService {
     @EJB
     private CurrentStateOfStockDao currentStateOfStockDao;
 
-
     @EJB
     private TotalStockValueDao totalStockValueDao;
+
+    @EJB
+    private StockDao stockDao;
+
+    @EJB
+    private ProcessingScenariosStatelessLocal processingScenariosStatelessLocal;
+
+    @GET
+    @Path("/cardProcessing")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String processingScenarios() {
+        processingScenariosStatelessLocal.calculateTotalStockValueByCategory();
+        return "{\"results\": \"process started\"}";
+    }
+
+    /*
+     * Donna this method below is for testing before create the EJB Stateless.
+     * I left here and you can use for your development.
+     * We should delete later. 
+     * 
+     */
+    @GET
+    @Path("/cardX")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String testingJPA() {
+        Map<String, BigDecimal> hm = new HashMap<String, BigDecimal>();
+        List<Stock> allStock = stockDao.getAll();
+
+        //get all categories
+        for (Stock stock : allStock) {
+            String catName = stock.getProduct().getCategory().getName();
+            hm.put(catName, new BigDecimal(0));
+        }
+
+        // process stock value per category
+        for (Stock stock : allStock) {
+            String catName = stock.getProduct().getCategory().getName();
+            if(hm.containsKey(catName)){
+                BigDecimal totalStockValue = 
+                    stock.getProduct().getPrice()
+                        .multiply(BigDecimal.valueOf(stock.getQuantity()));
+                BigDecimal currentValue = hm.get(catName);
+                totalStockValue = totalStockValue.add(currentValue);
+                hm.put(catName, totalStockValue);
+            }
+        }
+
+        // assign to object to save at A table.
+        List<TotalStockCategory> totalStockCategories = new ArrayList<TotalStockCategory>();
+        hm.entrySet().forEach(entry -> {
+            TotalStockCategory tsc = new TotalStockCategory(entry.getKey(), entry.getValue());
+            totalStockCategories.add(tsc);
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        });
+        totalStockCategoryDao.saveModel(totalStockCategories);
+
+        return "{\"results\":" + totalStockCategories + "}";
+    }
 
     @GET
     @Path("/card1Title")
