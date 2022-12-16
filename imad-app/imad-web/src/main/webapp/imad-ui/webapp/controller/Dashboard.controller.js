@@ -29,24 +29,12 @@ function (Controller, JSONModel) {
             // call REST-API
             $.when(
                 $.ajax({
-                    url: "/imad-rs/rest/card1Title",
+                    url: "/imad-rs/rest/card1",
                     dataType: "json",
                     success: function(result) {
-                        oTitle = result.results;
-                    }
-                }),
-                $.ajax({
-                    url: "/imad-rs/rest/card1List",
-                    dataType: "json",
-                    success: function(result) {
-                        oList = result.results;
-                    }
-                }),
-                $.ajax({
-                    url: "/imad-rs/rest/card1Measures",
-                    dataType: "json",
-                    success: function(result) {
-                        oMeasures = result.results;
+                        oTitle = result.results.header;
+                        oList = result.results.list;
+                        oMeasures =  result.results.measures;
                     }
                 })
             ).then(function(){
