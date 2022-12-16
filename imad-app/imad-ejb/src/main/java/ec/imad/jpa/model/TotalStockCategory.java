@@ -1,6 +1,7 @@
 package ec.imad.jpa.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,13 +18,19 @@ public class TotalStockCategory implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Integer value;
+    private BigDecimal value;
 
 
     public TotalStockCategory() {
     }
 
-    public TotalStockCategory(String name, Integer value) {
+    public TotalStockCategory(String name, BigDecimal value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public TotalStockCategory(Integer id, String name, BigDecimal value) {
+        this.id = id;
         this.name = name;
         this.value = value;
     }
@@ -44,11 +51,11 @@ public class TotalStockCategory implements Serializable {
         this.name = name;
     }
 
-    public Integer getValue() {
+    public BigDecimal getValue() {
         return this.value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
