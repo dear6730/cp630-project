@@ -1,6 +1,7 @@
 package ec.imad.rs;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ import ec.imad.business.ProcessingScenariosStatelessLocal;
 import ec.imad.jpa.dao.Top5ProductsDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
 import ec.imad.jpa.dao.StockDao;
+import ec.imad.jpa.dao.ProductDao;
 import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
 import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
@@ -28,9 +30,12 @@ import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
 
 import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.model.Stock;
+import ec.imad.jpa.model.Product;
 
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
+
+import ec.imad.jpa.model.OverviewStockingIssues;
 
 @Path("/")
 @RequestScoped
@@ -60,6 +65,9 @@ public class CardsService {
     private StockDao stockDao;
 
     @EJB
+    private ProductDao productDao;
+
+    @EJB
     private ProcessingScenariosStatelessLocal processingScenariosStatelessLocal;
 
     @GET
@@ -80,6 +88,74 @@ public class CardsService {
     @Path("/cardX")
     @Produces(MediaType.APPLICATION_JSON)
     public String testingJPA() {
+
+        // CORPORATE (GLOBAL) OoS/NOoS percentages
+
+        Map<Integer, Integer> stockMap = new HashMap<Integer, Integer>();
+        List<Product> allProduct = productDao.getAll();
+        List<Stock> allStock = stockDao.getAll();
+
+        Map<Integer, Integer> productMap = new HashMap<Integer, Integer>();
+        List<Integer> globalProductIds = new ArrayList<Integer>();
+        List<Integer> productIds = new ArrayList<Integer>();
+
+
+        int countOfAllProductsCarriedGlobally = 0;
+        int countOfAllProductsOutOfStock = 0;
+        int countOfAllProductsNearlyOutOfStock = 0;
+
+
+        //get all products (globally)
+        countOfAllProductsCarriedGlobally = allProduct.size();
+
+        for(Product product : allProduct) {
+            Integer productId = product.getId();
+            globalProductIds.add(productId);
+            productMap.put(productId, product.getGlobalReorderPoint());
+        }
+
+        //get all stock
+        for (Stock stock : allStock) {
+            Integer productId = stock.getProduct().getId();
+            productIds.add(productId);
+            Integer quantity = stockMap.containsKey(productId) ? stockMap.get(productId) : 0;
+            quantity += stock.getQuantity();
+            stockMap.put(productId, quantity);
+        }
+
+        //count all products that are not in stock table
+        globalProductIds.removeAll(productIds);
+        countOfAllProductsOutOfStock += globalProductIds.size();
+
+        //count all products with global stock count of zero (in stock table)
+        countOfAllProductsOutOfStock += stockMap.values().stream().filter(v -> v == 0).count();
+
+        // READY TO WRITE countOfAllProductsOutOfStock to A table
+        BigDecimal percentageOutOfStock = new BigDecimal(countOfAllProductsOutOfStock/(double)countOfAllProductsCarriedGlobally*100.0);
+        percentageOutOfStock = percentageOutOfStock.setScale(2, RoundingMode.HALF_EVEN);
+
+
+        return "OoS % = " + percentageOutOfStock;
+        // return stockMap.toString() + " ...>>> " + countOfAllProductsCarriedGlobally + " .. " + countOfAllProductsOutOfStock;
+
+
+
+
+
+
+        // assign to object to save at A table.
+        // List<OverviewStockingIssues> overviewStockingIssues = new ArrayList<OverviewStockingIssues>();
+        // hm.entrySet().forEach(entry -> {
+            // OverviewStockingIssues osi = new OverviewStockingIssues(entry.getPercentageOutOfStock(), entry.getPercentageNearlyOutOfStock());
+            // overviewStockingIssues.add(osi);
+            // System.out.println(entry.getPercentageOutOfStock() + " " + entry.getPercentageNearlyOutOfStock());
+        // });
+        //overviewStockingIssuesDao.saveModel(overviewStockingIssues);
+
+        // return "{\"results\":" + overviewStockingIssues + "}";
+
+
+        /*
         Map<String, BigDecimal> hm = new HashMap<String, BigDecimal>();
         List<Stock> allStock = stockDao.getAll();
 
@@ -112,6 +188,9 @@ public class CardsService {
         totalStockCategoryDao.saveModel(totalStockCategories);
 
         return "{\"results\":" + totalStockCategories + "}";
+
+        */
+
     }
 
     @GET

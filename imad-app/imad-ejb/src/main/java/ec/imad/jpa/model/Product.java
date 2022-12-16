@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -27,14 +28,18 @@ public class Product implements Serializable{
     @JoinColumn(name="category_id", nullable = false)
     private Category category;
 
+    @Column(name="global_reorder_point")
+    private Integer globalReorderPoint;
+
 
     public Product() {
     }
 
-    public Product(String name, BigDecimal price, Category category) {
+    public Product(String name, BigDecimal price, Category category, Integer globalReorderPoint) {
         this.name = name;
         this.price = price;
         this.category = category;
+        this.globalReorderPoint = globalReorderPoint;
     }
 
     public Integer getId() {
@@ -69,12 +74,21 @@ public class Product implements Serializable{
         this.category = category;
     }
 
+    public Integer getGlobalReorderPoint() {
+        return this.globalReorderPoint;
+    }
+
+    public void setGlobalReorderPoint(Integer globalReorderPoint) {
+        this.globalReorderPoint = globalReorderPoint;
+    }
+
     @Override
     public String toString() {
         return "Product {" +
             " id='" + getId() + "'" +
             ", name='" + getName() + "'" +
             ", price='" + getPrice() + "'" +
+            ", globalReorderPoint='" + getGlobalReorderPoint() + "'" +
             ", category='" + getCategory() + "'" +
             "}";
     }

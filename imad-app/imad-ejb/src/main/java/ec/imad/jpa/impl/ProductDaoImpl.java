@@ -1,5 +1,7 @@
 package ec.imad.jpa.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,5 +23,10 @@ public class ProductDaoImpl implements ProductDao {
     public void saveModel(Product product) {
         LOGGER.info("Add " + product.toString());
         entityManager.persist(product);
+    }
+
+    @Override
+    public List<Product> getAll() {
+        return (List<Product>) entityManager.createQuery("from Product", Product.class).getResultList();
     }
 }
