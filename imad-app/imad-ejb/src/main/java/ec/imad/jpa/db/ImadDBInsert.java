@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
-import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
