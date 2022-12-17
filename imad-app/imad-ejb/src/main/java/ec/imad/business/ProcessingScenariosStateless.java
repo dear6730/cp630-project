@@ -21,6 +21,7 @@ import ec.imad.jpa.dao.ProductDao;
 import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
+import ec.imad.jpa.dao.CurrentStateOfStockDao;
 
 import ec.imad.jpa.model.Stock;
 import ec.imad.jpa.model.Product;
@@ -28,6 +29,7 @@ import ec.imad.jpa.model.Product;
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 import ec.imad.jpa.model.OverviewStockingIssues;
+import ec.imad.jpa.model.CurrentStateOfStock;
 
 @Stateless
 @LocalBean
@@ -50,6 +52,9 @@ public class ProcessingScenariosStateless
 
     @EJB 
     private OverviewStockingIssuesDao overviewStockingIssuesDao;
+
+    @EJB
+    private CurrentStateOfStockDao currentStateOfStockDao;
 
     @EJB
     private TotalStockValueDao totalStockValueDao;
@@ -223,5 +228,63 @@ public class ProcessingScenariosStateless
         overviewStockingIssuesDao.saveModel(overviewStockingIssues);
 
         LOGGER.info("Finish process calculateOverviewStockingIssues. Data saved at OverviewStockingIssues.");
+    }
+
+    /**
+     * This method should generate a GLOBAL list of products out of stock and nearly out of stock,
+     * showing a naive overview of the stocking issues within the ENTIRE system. 
+     * 
+     * The operational information from transactional database should 
+     * be extracted, transformed and load into the analytical database.
+     */
+    @Override
+    public void generateCurrentStateOfStockList() {
+        LOGGER.info("Start process generateCurrentStateOfStockList");
+
+        // CORPORATE (GLOBAL) OoS/NOoS product list
+
+        Map<Integer, Integer> stockMap = new HashMap<Integer, Integer>();
+        List<Stock> allStock = stockDao.getAll();
+        List<Integer> productIds = new ArrayList<Integer>();
+        List<Product> allProduct = productDao.getAll();
+
+        //get all stock
+        for (Stock stock : allStock) {
+            Integer productId = stock.getProduct().getId();
+            productIds.add(productId);
+            Integer quantity = stockMap.containsKey(productId) ? stockMap.get(productId) : 0;
+            quantity += stock.getQuantity();
+            stockMap.put(productId, quantity);
+        }
+
+        //look at all products
+        List<CurrentStateOfStock> stateOfStock = new ArrayList<CurrentStateOfStock>();
+        Integer globalQuantity = 0;
+
+        for (Product product : allProduct) {
+            globalQuantity = stockMap.get(product.getId());
+
+            if(globalQuantity == null || globalQuantity == 0) {
+                stateOfStock.add( new CurrentStateOfStock(
+                    product.getSku(),
+                    product.getName(),
+                    0,
+                    "Out of Stock",
+                    "Error"
+                ));   
+            } else if(globalQuantity <= product.getGlobalReorderPoint()) {
+                stateOfStock.add( new CurrentStateOfStock(
+                    product.getSku(),
+                    product.getName(),
+                    globalQuantity,
+                    "Nearly Out",
+                    "Warning"
+                ));
+            }
+        }
+
+        currentStateOfStockDao.saveModel(stateOfStock);
+
+        LOGGER.info("Finish process generateCurrentStateOfStockList. Data saved at CurrentStateOfStock.");
     }
 }

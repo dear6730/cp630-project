@@ -76,6 +76,7 @@ public class CardsService {
         processingScenariosStatelessLocal.calculateTotalStockValue();
         processingScenariosStatelessLocal.calculateTotalStockValueByCategory();
         processingScenariosStatelessLocal.calculateOverviewStockingIssues();
+        processingScenariosStatelessLocal.generateCurrentStateOfStockList();
 
         return "{\"results\": \"process started\"}";
     }
@@ -88,48 +89,7 @@ public class CardsService {
     @Produces(MediaType.APPLICATION_JSON)
     public String testingJPA() {
 
-        Map<Integer, Integer> stockMap = new HashMap<Integer, Integer>();
-        List<Stock> allStock = stockDao.getAll();
-        List<Integer> productIds = new ArrayList<Integer>();
-        List<Product> allProduct = productDao.getAll();
-
-        //get all stock
-        for (Stock stock : allStock) {
-            Integer productId = stock.getProduct().getId();
-            productIds.add(productId);
-            Integer quantity = stockMap.containsKey(productId) ? stockMap.get(productId) : 0;
-            quantity += stock.getQuantity();
-            stockMap.put(productId, quantity);
-        }
-
-        //look at all products
-        List<CurrentStateOfStock> stateOfStock = new ArrayList<CurrentStateOfStock>();
-        Integer globalQuantity = 0;
-
-        for (Product product : allProduct) {
-            globalQuantity = stockMap.get(product.getId());
-
-            if(globalQuantity == null || globalQuantity == 0) {
-                stateOfStock.add( new CurrentStateOfStock(
-                    product.getSku(),
-                    product.getName(),
-                    0,
-                    "Out of Stock",
-                    "Error"
-                ));   
-            } else if(globalQuantity <= product.getGlobalReorderPoint()) {
-                stateOfStock.add( new CurrentStateOfStock(
-                    product.getSku(),
-                    product.getName(),
-                    globalQuantity,
-                    "Nearly Out",
-                    "Warning"
-                ));
-            }
-        }
-
-        currentStateOfStockDao.saveModel(stateOfStock);
-        return "{\"results\":" + stateOfStock.toString() + "}";
+        return "{nothing to see here}";
     }
 
     @GET

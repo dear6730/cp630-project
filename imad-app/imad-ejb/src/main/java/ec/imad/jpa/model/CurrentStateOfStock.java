@@ -23,15 +23,10 @@ public class CurrentStateOfStock implements Serializable {
     private String status;
     @Column(name="status_state")
     private String statusState;
-
+    
 
     public CurrentStateOfStock() {
     }
-
-    // public CurrentStateOfStock(String name, Integer quantity) {
-    //     this.name = name;
-    //     this.quantity = quantity;
-    // }
 
     public CurrentStateOfStock(String sku, String name, Integer quantity, String status, String statusState) {
         this.sku = sku;
@@ -88,8 +83,6 @@ public class CurrentStateOfStock implements Serializable {
     public void setStatusState(String statusState) {
         this.statusState = statusState;
     }    
-
-
     
     @Override
     public String toString() {
@@ -100,5 +93,4 @@ public class CurrentStateOfStock implements Serializable {
                     + "\", \"statusState\": \"" + getStatusState()   
                     + "\"}";
     }
-
 }
