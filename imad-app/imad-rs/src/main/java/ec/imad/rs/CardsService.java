@@ -91,16 +91,7 @@ public class CardsService {
         Map<Integer, Integer> stockMap = new HashMap<Integer, Integer>();
         List<Stock> allStock = stockDao.getAll();
         List<Integer> productIds = new ArrayList<Integer>();
-
-        // Map<Integer, Integer> productMap = new HashMap<Integer, Integer>();
         List<Product> allProduct = productDao.getAll();
-        // List<Integer> globalProductIds = new ArrayList<Integer>();
-
-        // for(Product product : allProduct) {
-        //     Integer productId = product.getId();
-        //     globalProductIds.add(productId);
-        //     productMap.put(productId, product.getGlobalReorderPoint());
-        // }
 
         //get all stock
         for (Stock stock : allStock) {
