@@ -3,7 +3,6 @@ package ec.imad.rs;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,17 +17,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import ec.imad.business.ProcessingScenariosStatelessLocal;
-import ec.imad.jpa.dao.Top5ProductsDao;
-import ec.imad.jpa.dao.CurrentStateOfStockDao;
-import ec.imad.jpa.dao.StockDao;
-import ec.imad.jpa.dao.TotalStockCategoryDao;
-import ec.imad.jpa.dao.OverviewStockingIssuesDao;
-import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
 import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
-
+import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
+import ec.imad.jpa.dao.CurrentStateOfStockDao;
+import ec.imad.jpa.dao.OverviewStockingIssuesDao;
+import ec.imad.jpa.dao.StockDao;
+import ec.imad.jpa.dao.Top5ProductsDao;
+import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.model.Stock;
-
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 
@@ -115,71 +112,71 @@ public class CardsService {
     }
 
     @GET
-    @Path("/card1Title")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getTotalStockValueTitle() {
-        JSONObject item = new JSONObject();
-        item.put("n", "$77,979");
-        item.put("u", "CAD");
-        item.put("trend", "Up");
-        item.put("valueColor", "Good");
-        item.put("details", "as of Dec 12, 2022");
-        return "{\"results\":" + item.toString()+ "}";
-    }
-
-    /*
-     * **********************************************************
-     *  PENDING IT IS NOT WORKING.
-     */
-    @GET
-    @Path("/card1List")
+    @Path("/card1")
     @Produces(MediaType.APPLICATION_JSON)
     public String getTotalStockValueList() {
+        
         List<TotalStockValue> totalStockValues = totalStockValueDao.getAll();
-        Iterator<TotalStockValue> iterator = totalStockValues.iterator();
-        JSONArray array = new JSONArray();
-        JSONObject item = null;
+        Map<String, Map<String, BigDecimal>> locationMap = new HashMap<String, Map<String, BigDecimal>>();
 
-        String currentLocation = null;
+        // 1- set list ******************
+        //get all locations
+        for (TotalStockValue totalStockValue : totalStockValues) {
+            String location = totalStockValue.getCity();
+            locationMap.put(location, new HashMap<String, BigDecimal>());
+        }
 
-        while(iterator.hasNext()){
-            item = new JSONObject();
-            TotalStockValue obj = iterator.next();
-            currentLocation = obj.getCity();
-            item.put("Category", currentLocation);
-            item.put(obj.getCategoryName(), obj.getTotalCategory()); 
-
-            // array.put(item);
-            while(iterator.hasNext()){
-                obj = iterator.next();
-                
-                if(!currentLocation.equals(obj.getCity())) {  
-                    array.put(item);
-                    // item = new JSONObject();
-                    item.put("Category", obj.getCity());
-                    currentLocation = obj.getCity();
-                } else {
-                    // item = new JSONObject();
-                    item.put(obj.getCategoryName(), obj.getTotalCategory()); 
-                }
+        // process and set categories per location
+        BigDecimal totalValue = new BigDecimal(0);
+        for (TotalStockValue totalStockValue : totalStockValues) {
+            String location = totalStockValue.getCity();
+            if(locationMap.containsKey(location)){
+                Map<String, BigDecimal> locationCategories = locationMap.get(location);
+                locationCategories.put(totalStockValue.getCategoryName(),  totalStockValue.getTotalCategory());
+                locationMap.put(location, locationCategories);
+                totalValue = totalValue.add(totalStockValue.getTotalCategory());
             }
         }
-        return "{\"results\":" + array.toString() + "}";
-    }
 
-    @GET
-    @Path("/card1Measures")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getTotalStockValueMeasures() {
+        // transform from Java to JSON
+        JSONArray list = new JSONArray();
+        locationMap.entrySet().forEach(location -> {
+            JSONObject item = new JSONObject();
+            Map<String, BigDecimal> categories = location.getValue();
+            categories.entrySet().forEach(category -> {
+                item.put(category.getKey(), category.getValue());
+            });
+            item.put("Category", location.getKey());
+            list.put(item);
+        });
+
+        // 2- set header ******************
+        JSONObject header = new JSONObject();
+        header.put("n", "$" + totalValue);
+        header.put("u", "CAD");
+        header.put("trend", "Up");
+        header.put("valueColor", "Good");
+        header.put("details", "as of Dec 16, 2022");
+
+        // 3- set measures ******************
         List<TotalStockCategory> categories = totalStockCategoryDao.getAll();
-        JSONArray array = new JSONArray();
+        JSONArray measures = new JSONArray();
         for (TotalStockCategory category : categories) {
             JSONObject item = new JSONObject();
             item.put("label", category.getName());
             item.put("value", "{"+category.getName().replaceAll("\\s+","")+"}");
-            array.put(item);
+            measures.put(item);
         }
-        return "{\"results\":" + array.toString()+ "}";
+
+        // sety body: 2, 1, 3
+        JSONObject body = new JSONObject();
+        body.put("header", header);
+        body.put("list", list);
+        body.put("measures", measures);
+
+        JSONObject results = new JSONObject();
+        results.put("results", body);
+        return results.toString();
     }
 
     @GET
