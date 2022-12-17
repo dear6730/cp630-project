@@ -1,5 +1,6 @@
 package ec.imad.rs;
 
+import java.lang.NullPointerException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,9 @@ import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
+
+import ec.imad.jpa.model.OverviewStockingIssues;
+import ec.imad.jpa.model.CurrentStateOfStock;
 
 @Path("/")
 @RequestScoped
@@ -81,7 +85,58 @@ public class CardsService {
     @Produces(MediaType.APPLICATION_JSON)
     public String testingJPA() {
 
-        return "{nothing to see here}";
+        Map<Integer, Integer> stockMap = new HashMap<Integer, Integer>();
+        List<Stock> allStock = stockDao.getAll();
+        List<Integer> productIds = new ArrayList<Integer>();
+
+        // Map<Integer, Integer> productMap = new HashMap<Integer, Integer>();
+        List<Product> allProduct = productDao.getAll();
+        // List<Integer> globalProductIds = new ArrayList<Integer>();
+
+        // for(Product product : allProduct) {
+        //     Integer productId = product.getId();
+        //     globalProductIds.add(productId);
+        //     productMap.put(productId, product.getGlobalReorderPoint());
+        // }
+
+        //get all stock
+        for (Stock stock : allStock) {
+            Integer productId = stock.getProduct().getId();
+            productIds.add(productId);
+            Integer quantity = stockMap.containsKey(productId) ? stockMap.get(productId) : 0;
+            quantity += stock.getQuantity();
+            stockMap.put(productId, quantity);
+        }
+
+        //look at all products
+        List<CurrentStateOfStock> stateOfStock = new ArrayList<CurrentStateOfStock>();
+        Integer globalQuantity = 0;
+
+        for (Product product : allProduct) {
+            globalQuantity = stockMap.get(product.getId());
+
+            if(globalQuantity == null || globalQuantity == 0) {
+                stateOfStock.add( new CurrentStateOfStock(
+                    product.getSku(),
+                    product.getName(),
+                    0,
+                    "Out of Stock",
+                    "Error"
+                ));   
+            } else if(globalQuantity <= product.getGlobalReorderPoint()) {
+                stateOfStock.add( new CurrentStateOfStock(
+                    product.getSku(),
+                    product.getName(),
+                    globalQuantity,
+                    "Nearly Out",
+                    "Warning"
+                ));
+            }
+        }
+
+
+        currentStateOfStockDao.saveModel(stateOfStock);
+        return "{\"results\":" + stateOfStock.toString() + "}";
 
     }
 

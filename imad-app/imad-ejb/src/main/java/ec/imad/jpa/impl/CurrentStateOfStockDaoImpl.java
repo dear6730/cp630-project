@@ -29,4 +29,11 @@ public class CurrentStateOfStockDaoImpl implements CurrentStateOfStockDao {
     public List<CurrentStateOfStock> getAll() {
         return entityManager.createQuery("from CurrentStateOfStock", CurrentStateOfStock.class).getResultList();
     }
+
+    @Override
+    public void saveModel(List<CurrentStateOfStock> currentStateOfStock) {
+        for (CurrentStateOfStock stockItem : currentStateOfStock) {
+            saveModel(stockItem);
+        }
+    }
 }

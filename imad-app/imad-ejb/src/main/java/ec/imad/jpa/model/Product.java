@@ -23,6 +23,7 @@ public class Product implements Serializable{
     private Integer id;
     private String name;
     private BigDecimal price;
+    private String sku;
 
     @ManyToOne
     @JoinColumn(name="category_id", nullable = false)
@@ -35,9 +36,10 @@ public class Product implements Serializable{
     public Product() {
     }
 
-    public Product(String name, BigDecimal price, Category category, Integer globalReorderPoint) {
+    public Product(String name, BigDecimal price, String sku, Category category, Integer globalReorderPoint) {
         this.name = name;
         this.price = price;
+        this.sku = sku;
         this.category = category;
         this.globalReorderPoint = globalReorderPoint;
     }
@@ -66,6 +68,14 @@ public class Product implements Serializable{
         this.price = price;
     }
 
+    public String getSku() {
+        return this.sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
     public Category getCategory() {
         return this.category;
     }
@@ -88,6 +98,7 @@ public class Product implements Serializable{
             " id='" + getId() + "'" +
             ", name='" + getName() + "'" +
             ", price='" + getPrice() + "'" +
+            ", sku='" + getSku() + "'" +
             ", globalReorderPoint='" + getGlobalReorderPoint() + "'" +
             ", category='" + getCategory() + "'" +
             "}";

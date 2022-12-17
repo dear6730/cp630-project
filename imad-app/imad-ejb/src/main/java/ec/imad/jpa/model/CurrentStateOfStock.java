@@ -17,7 +17,7 @@ public class CurrentStateOfStock implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer sku;
+    private String sku;
     private String name;
     private Integer quantity;
     private String status;
@@ -28,9 +28,17 @@ public class CurrentStateOfStock implements Serializable {
     public CurrentStateOfStock() {
     }
 
-    public CurrentStateOfStock(String name, Integer quantity) {
+    // public CurrentStateOfStock(String name, Integer quantity) {
+    //     this.name = name;
+    //     this.quantity = quantity;
+    // }
+
+    public CurrentStateOfStock(String sku, String name, Integer quantity, String status, String statusState) {
+        this.sku = sku;
         this.name = name;
         this.quantity = quantity;
+        this.status = status;
+        this.statusState = statusState;
     }
 
     public Integer getId() {
@@ -41,11 +49,11 @@ public class CurrentStateOfStock implements Serializable {
         this.id = id;
     }
 
-    public Integer getSku() {
+    public String getSku() {
         return sku;
     }
 
-    public void setSku(Integer sku) {
+    public void setSku(String sku) {
         this.sku = sku;
     }
 

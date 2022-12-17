@@ -166,12 +166,12 @@ public class ProcessingScenariosStateless
         // CORPORATE (GLOBAL) OoS/NOoS percentages
 
         Map<Integer, Integer> stockMap = new HashMap<Integer, Integer>();
-        List<Product> allProduct = productDao.getAll();
         List<Stock> allStock = stockDao.getAll();
+        List<Integer> productIds = new ArrayList<Integer>();
 
         Map<Integer, Integer> productMap = new HashMap<Integer, Integer>();
+        List<Product> allProduct = productDao.getAll();
         List<Integer> globalProductIds = new ArrayList<Integer>();
-        List<Integer> productIds = new ArrayList<Integer>();
 
         int countOfAllProductsCarriedGlobally = 0;
         int countOfAllProductsOutOfStock = 0;

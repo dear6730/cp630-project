@@ -45,7 +45,7 @@ public class ImadDBInsert {
 			// insertMockTotalStockCategory(4);
 			insertMockTop5Products();
 			//insertMockOverviewStockingIssues();
-			insertMockCurrentStateOfStock(TOTAL_RECORDS);
+			//insertMockCurrentStateOfStock(TOTAL_RECORDS);
 
 			//for: productsOutOfStockOrNearlyOutOfStock
 			insertMockCombinedOutOfStockPercentage();
@@ -96,6 +96,19 @@ public class ImadDBInsert {
 	}
 
 	private void insertProduct(int totalRecords) throws SQLException {
+		// String sql = "INSERT INTO IMAD_TPRODUCT (name, price, sku, global_reorder_point, category_id) VALUES (?, ?, ?, ?, ?)";
+		// ps = (PreparedStatement) connection.prepareStatement(sql);
+		// Random randomGenerator = new Random();
+		
+		// for (int i = 1; i <= totalRecords; i++) {	
+		// 	ps.setString(1, "Product " + i);
+		// 	ps.setBigDecimal(2, new BigDecimal(i*3.14));
+		// 	ps.setString(3, new String(Integer.toString(50050+i)));
+		// 	ps.setInt(4, randomGenerator.nextInt(12) + 1);
+		// 	ps.setInt(5, randomGenerator.nextInt(3) + 1);
+		// 	ps.addBatch();
+		// }
+		// iModelUpdated = ps.executeBatch();
 		String sql1="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point) VALUES ('Cannondale Topstone 4 Bicycle',1734.95,1,4)";
 		String sql2="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point) VALUES ('Polygon Xtrada 7 Bike',1449.95,1,7)";
 		String sql3="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point) VALUES ('Intense Sniper T Expert Bike',5899.95,1,10)";

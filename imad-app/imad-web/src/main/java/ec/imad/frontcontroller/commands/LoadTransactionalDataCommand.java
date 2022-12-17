@@ -51,6 +51,7 @@ public class LoadTransactionalDataCommand extends FrontCommand {
 		for (int i = 1; i <= productsRecords; i++) {
 			product = new Product("Product " + i, 
 						new BigDecimal(i*3.14),
+						new String(Integer.toString(50050+i)),
 						new Category(randomGenerator.nextInt(10) + 1),
 						new Integer(randomGenerator.nextInt(12) + 1) 
 					);
