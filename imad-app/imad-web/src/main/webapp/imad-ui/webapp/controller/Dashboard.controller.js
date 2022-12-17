@@ -91,6 +91,7 @@ function (Controller, JSONModel) {
                     oResults = result.results;
                     // assign new values
                     if(oResults.length > 0) {
+                        oCardData["sap.card"].header.title = "Stock Value of Top 5 Products";
                         oCardData["sap.card"].content.data.json.list = oResults;
                         oModel.setProperty("/top5ProductsSold", oCardData);
                         oCard.refresh();
@@ -118,7 +119,7 @@ function (Controller, JSONModel) {
 
                         var oosPercent = oResults[0]["percentageOutOfStock"];
                         var noosPercent = oResults[0]["percentageNearlyOutOfStock"];
-
+                        oCardData["sap.card"].header.title = "Overview of Stocking Issues";
                         oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
                         oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
 
@@ -148,6 +149,7 @@ function (Controller, JSONModel) {
                     oResults = result.results;
                     if(oResults.length > 0) {
                         // assign new value
+                        oCardData["sap.card"].header.title = "Current State of Stock";
                         oCardData["sap.card"].header.subTitle = TODAY; // "December 14, 2022";  //TODO: What to do with date?
                         oCardData["sap.card"].data.json.results = oResults;
 
@@ -185,7 +187,7 @@ function (Controller, JSONModel) {
             ).then(function(){
                 // assign new values
                 if(oHeader.length > 0 && oResults.length > 0) {
-
+                    oCardData["sap.card"].header.title = "Products Out of Stock, or Nearly Out of Stock";
                     oCardData["sap.card"].header.data.json = oHeader[0];
                     oCardData["sap.card"].content.data.json.list = oResults;
                     oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock",oCardData);

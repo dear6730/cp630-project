@@ -29,4 +29,11 @@ public class TotalStockValueDaoImpl implements TotalStockValueDao {
     public List<TotalStockValue> getAll() {
         return entityManager.createQuery("from TotalStockValue", TotalStockValue.class).getResultList();
     }
+
+    @Override
+    public void saveModel(List<TotalStockValue> totalStockValues) {
+        for (TotalStockValue totalStockValue : totalStockValues) {
+            saveModel(totalStockValue);
+        }
+    }
 }

@@ -185,7 +185,7 @@
         "sap.card": {
             "type": "Analytical",
             "header": {
-                "title": "Stock Value of Top 5 Products"
+                "title": "[Mock] Stock Value of Top 5 Products"
             },
             "content": {
                 "chartType": "bar",
@@ -262,7 +262,7 @@
         },
         "sap.card": {
             "header": {
-                "title": "Overview of Stocking Issues",
+                "title": "[Mock] Overview of Stocking Issues",
                 "subTitle": "Percentage of Products Currently...",
                 "icon": {
                     "src": "sap-icon://warning2"
@@ -341,7 +341,7 @@
         "sap.card": {
             "type": "Table",
             "header": {
-                "title": "Current State of Stock",
+                "title": "[Mock] Current State of Stock",
                 "subTitle": "Today"
             },
             "content": {
@@ -467,7 +467,7 @@
                         "details": "December 2022 (Predicted)"
                     }
                 },
-                "title": "Products Out of Stock, or Nearly Out of Stock",
+                "title": "[Mock] Products Out of Stock, or Nearly Out of Stock",
                 "subTitle": "Percentage of All Stock",
                 "unitOfMeasurement": "%",
                 "mainIndicator": {
