@@ -90,14 +90,14 @@ public class ProcessingScenariosStateless
         // assign to model 
         List<TotalStockValue> totalStockValues = new ArrayList<TotalStockValue>();
         locationMap.entrySet().forEach(location -> {
-            TotalStockValue totalStockValue = new TotalStockValue();
             Map<String, BigDecimal> categories = location.getValue();
             categories.entrySet().forEach(category -> {
+                TotalStockValue totalStockValue = new TotalStockValue();
                 totalStockValue.setCategoryName(category.getKey().replaceAll("\\s+",""));
                 totalStockValue.setTotalCategory(category.getValue());
+                totalStockValue.setCity(location.getKey());
+                totalStockValues.add(totalStockValue);
             });
-            totalStockValue.setCity(location.getKey());
-            totalStockValues.add(totalStockValue);
         });
 
         // save at A table
@@ -140,7 +140,6 @@ public class ProcessingScenariosStateless
         hm.entrySet().forEach(entry -> {
             TotalStockCategory tsc = new TotalStockCategory(entry.getKey(), entry.getValue());
             totalStockCategories.add(tsc);
-            System.out.println(entry.getKey() + " " + entry.getValue());
         });
 
         // save at A table
