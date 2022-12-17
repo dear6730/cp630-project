@@ -1,8 +1,6 @@
 package ec.imad.rs;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +20,13 @@ import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
 import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
-import ec.imad.jpa.dao.StockDao;
 import ec.imad.jpa.dao.ProductDao;
+import ec.imad.jpa.dao.StockDao;
 import ec.imad.jpa.dao.Top5ProductsDao;
 import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
-import ec.imad.jpa.model.Stock;
-import ec.imad.jpa.model.Product;
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
-
-import ec.imad.jpa.model.OverviewStockingIssues;
 
 @Path("/")
 @RequestScoped
@@ -72,6 +66,7 @@ public class CardsService {
     @Path("/cardProcessing")
     @Produces(MediaType.APPLICATION_JSON)
     public String processingScenarios() {
+        processingScenariosStatelessLocal.calculateTotalStockValue();
         processingScenariosStatelessLocal.calculateTotalStockValueByCategory();
         processingScenariosStatelessLocal.calculateOverviewStockingIssues();
 
@@ -79,10 +74,7 @@ public class CardsService {
     }
 
     /*
-     * Donna this method below is for testing before create the EJB Stateless.
-     * I left here and you can use for your development.
-     * We should delete later. 
-     * 
+     * We should delete later.  
      */
     @GET
     @Path("/cardX")

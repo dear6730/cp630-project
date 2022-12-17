@@ -41,7 +41,7 @@ public class ImadDBInsert {
 			insertOrderItem(TOTAL_RECORDS);
 
 			// Mock data for A tables:
-			insertMockTotalStockValue();
+			// insertMockTotalStockValue();
 			// insertMockTotalStockCategory(4);
 			insertMockTop5Products();
 			//insertMockOverviewStockingIssues();

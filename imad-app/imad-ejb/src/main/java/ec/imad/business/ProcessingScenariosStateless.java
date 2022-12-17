@@ -19,12 +19,14 @@ import ec.imad.jpa.dao.StockDao;
 import ec.imad.jpa.dao.ProductDao;
 
 import ec.imad.jpa.dao.TotalStockCategoryDao;
+import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
 
 import ec.imad.jpa.model.Stock;
 import ec.imad.jpa.model.Product;
 
 import ec.imad.jpa.model.TotalStockCategory;
+import ec.imad.jpa.model.TotalStockValue;
 import ec.imad.jpa.model.OverviewStockingIssues;
 
 @Stateless
@@ -46,7 +48,62 @@ public class ProcessingScenariosStateless
     @EJB
     private ProductDao productDao;
 
-    @EJB private OverviewStockingIssuesDao overviewStockingIssuesDao;
+    @EJB 
+    private OverviewStockingIssuesDao overviewStockingIssuesDao;
+
+    @EJB
+    private TotalStockValueDao totalStockValueDao;
+
+
+    /**
+     * This method should calculate the value in stock per location and per category.
+     * Also it should show the sum of total stock value.
+     * 
+     * The operational information from transactional database should 
+     * be extracted, transformed and load into the analytical database.
+     */
+    @Override
+    public void calculateTotalStockValue() {
+        LOGGER.info("Start process calculateTotalStockValueByLocation");
+        List<Stock> allStock = stockDao.getAll();
+        Map<String, Map<String, BigDecimal>> locationMap = 
+            new HashMap<String, Map<String, BigDecimal>>();
+
+        //get all locations
+        for (Stock stock : allStock) {
+            String location = stock.getLocation().getCity();
+            locationMap.put(location, new HashMap<String, BigDecimal>());
+        }
+
+        // process and set categories per location
+        for (Stock stock : allStock) {
+            String location = stock.getLocation().getCity();
+            if(locationMap.containsKey(location)){
+                Map<String, BigDecimal> locationCategories = locationMap.get(location);
+                BigDecimal totalCategory = stock.getProduct().getPrice().multiply(new BigDecimal(stock.getQuantity()));
+                locationCategories.put(stock.getProduct().getCategory().getName(),  
+                                       totalCategory);
+                locationMap.put(location, locationCategories);
+            }
+        }
+
+        // assign to model 
+        List<TotalStockValue> totalStockValues = new ArrayList<TotalStockValue>();
+        locationMap.entrySet().forEach(location -> {
+            TotalStockValue totalStockValue = new TotalStockValue();
+            Map<String, BigDecimal> categories = location.getValue();
+            categories.entrySet().forEach(category -> {
+                totalStockValue.setCategoryName(category.getKey().replaceAll("\\s+",""));
+                totalStockValue.setTotalCategory(category.getValue());
+            });
+            totalStockValue.setCity(location.getKey());
+            totalStockValues.add(totalStockValue);
+        });
+
+        // save at A table
+        totalStockValueDao.saveModel(totalStockValues);
+        LOGGER.info("Finish process calculateTotalStockValueByLocation. Data saved at TotalStockValue.");
+    }
 
     /**
      * This method should calculate the value in stock per category (price * quantity).
