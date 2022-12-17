@@ -1,9 +1,9 @@
 package ec.imad.rs;
 
-import java.lang.NullPointerException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -28,6 +28,9 @@ import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
+
+import ec.imad.jpa.model.Product;
+import ec.imad.jpa.model.Stock;
 
 import ec.imad.jpa.model.OverviewStockingIssues;
 import ec.imad.jpa.model.CurrentStateOfStock;
@@ -134,10 +137,8 @@ public class CardsService {
             }
         }
 
-
         currentStateOfStockDao.saveModel(stateOfStock);
         return "{\"results\":" + stateOfStock.toString() + "}";
-
     }
 
     @GET
