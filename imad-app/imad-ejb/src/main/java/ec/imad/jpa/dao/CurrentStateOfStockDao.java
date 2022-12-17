@@ -10,4 +10,5 @@ import ec.imad.jpa.model.CurrentStateOfStock;
 public interface CurrentStateOfStockDao {
     public void saveModel(CurrentStateOfStock currentStateOfStock);
     public List<CurrentStateOfStock> getAll();
+    public void saveModel(List<CurrentStateOfStock> currentStateOfStock);
 }
