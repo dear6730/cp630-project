@@ -1,6 +1,7 @@
 package ec.imad.rs;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,12 +23,16 @@ import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
 import ec.imad.jpa.dao.StockDao;
+import ec.imad.jpa.dao.ProductDao;
 import ec.imad.jpa.dao.Top5ProductsDao;
 import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.model.Stock;
+import ec.imad.jpa.model.Product;
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
+
+import ec.imad.jpa.model.OverviewStockingIssues;
 
 @Path("/")
 @RequestScoped
@@ -41,6 +46,7 @@ public class CardsService {
 
     @EJB
     private CurrentStateOfStockDao currentStateOfStockDao;
+
     @EJB
     private OverviewStockingIssuesDao overviewStockingIssuesDao;
 
@@ -57,6 +63,9 @@ public class CardsService {
     private StockDao stockDao;
 
     @EJB
+    private ProductDao productDao;
+
+    @EJB
     private ProcessingScenariosStatelessLocal processingScenariosStatelessLocal;
 
     @GET
@@ -64,6 +73,8 @@ public class CardsService {
     @Produces(MediaType.APPLICATION_JSON)
     public String processingScenarios() {
         processingScenariosStatelessLocal.calculateTotalStockValueByCategory();
+        processingScenariosStatelessLocal.calculateOverviewStockingIssues();
+
         return "{\"results\": \"process started\"}";
     }
 
@@ -77,38 +88,9 @@ public class CardsService {
     @Path("/cardX")
     @Produces(MediaType.APPLICATION_JSON)
     public String testingJPA() {
-        Map<String, BigDecimal> hm = new HashMap<String, BigDecimal>();
-        List<Stock> allStock = stockDao.getAll();
 
-        //get all categories
-        for (Stock stock : allStock) {
-            String catName = stock.getProduct().getCategory().getName();
-            hm.put(catName, new BigDecimal(0));
-        }
+        return "{nothing to see here}";
 
-        // process stock value per category
-        for (Stock stock : allStock) {
-            String catName = stock.getProduct().getCategory().getName();
-            if(hm.containsKey(catName)){
-                BigDecimal totalStockValue = 
-                    stock.getProduct().getPrice()
-                        .multiply(BigDecimal.valueOf(stock.getQuantity()));
-                BigDecimal currentValue = hm.get(catName);
-                totalStockValue = totalStockValue.add(currentValue);
-                hm.put(catName, totalStockValue);
-            }
-        }
-
-        // assign to object to save at A table.
-        List<TotalStockCategory> totalStockCategories = new ArrayList<TotalStockCategory>();
-        hm.entrySet().forEach(entry -> {
-            TotalStockCategory tsc = new TotalStockCategory(entry.getKey(), entry.getValue());
-            totalStockCategories.add(tsc);
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        });
-        totalStockCategoryDao.saveModel(totalStockCategories);
-
-        return "{\"results\":" + totalStockCategories + "}";
     }
 
     @GET
@@ -193,7 +175,6 @@ public class CardsService {
         return "{\"results\":" + top5ProductsDao.getAll() + "}";
     }
 
-
     @GET
     @Path("/card4")
     @Produces(MediaType.APPLICATION_JSON)
@@ -201,14 +182,12 @@ public class CardsService {
         return "{\"results\":" + overviewStockingIssuesDao.getAll() + "}";
     }
 
-
     @GET
     @Path("/card5")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCurrentStateOfStock() {
         return "{\"results\":" + currentStateOfStockDao.getAll() + "}";
     }
-
 
     @GET
     @Path("/card6")

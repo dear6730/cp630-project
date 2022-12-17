@@ -44,7 +44,7 @@ public class ImadDBInsert {
 			insertMockTotalStockValue();
 			// insertMockTotalStockCategory(4);
 			insertMockTop5Products();
-			insertMockOverviewStockingIssues();
+			//insertMockOverviewStockingIssues();
 			insertMockCurrentStateOfStock(TOTAL_RECORDS);
 
 			//for: productsOutOfStockOrNearlyOutOfStock
@@ -88,14 +88,15 @@ public class ImadDBInsert {
 	}
 
 	private void insertProduct(int totalRecords) throws SQLException {
-		String sql = "INSERT INTO IMAD_TPRODUCT (name, price, category_id) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO IMAD_TPRODUCT (name, price, global_reorder_point, category_id) VALUES (?, ?, ?, ?)";
 		ps = (PreparedStatement) connection.prepareStatement(sql);
 		Random randomGenerator = new Random();
 		
 		for (int i = 1; i <= totalRecords; i++) {	
 			ps.setString(1, "Product " + i);
 			ps.setBigDecimal(2, new BigDecimal(i*3.14));
-			ps.setInt(3, randomGenerator.nextInt(3) + 1);
+			ps.setInt(3, randomGenerator.nextInt(12) + 1);
+			ps.setInt(4, randomGenerator.nextInt(3) + 1);
 			ps.addBatch();
 		}
 		iModelUpdated = ps.executeBatch();
@@ -103,14 +104,18 @@ public class ImadDBInsert {
 	}
 
 	private void insertStock(int totalRecords) throws SQLException {
-		String sql = "INSERT INTO IMAD_TSTOCK (PRODUCT_ID, LOCATION_ID, QUANTITY) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO IMAD_TSTOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, REORDER_POINT) VALUES (?, ?, ?, ?)";
 		ps = (PreparedStatement) connection.prepareStatement(sql);
 		Random randomGenerator = new Random();
 		
 		for (int i = 1; i <= totalRecords; i++) {	
 			ps.setInt(1, randomGenerator.nextInt(10) + 1);
 			ps.setInt(2, randomGenerator.nextInt(10) + 1);
-			ps.setInt(3, randomGenerator.nextInt(100) + 1);
+			Integer q = randomGenerator.nextInt(100);
+			if(q%3 == 0)
+				q = 0;
+			ps.setInt(3, q);
+			ps.setInt(4, randomGenerator.nextInt(10) + 2);
 			ps.addBatch();
 		}
 		iModelUpdated = ps.executeBatch();

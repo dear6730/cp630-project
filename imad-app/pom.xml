@@ -81,18 +81,6 @@
     
     <build>
         <finalName>${project.artifactId}</finalName>
-
-        <!--
-        <resources>
-            <resource>
-                <directory>src/main/webapp/imad-ui</directory>
-                <excludes>
-                    <exclude>node_modules/**</exclude>
-                </excludes>
-            </resource>
-        </resources>
-    -->
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -109,30 +97,7 @@
                 <configuration>
                     <skip>true</skip>
                 </configuration>
-            </plugin>   
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/imad-web/src/main/webapp/imad-ui/node_modules/*</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        -->
-            <!-- <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <excludes>
-                    <exclude>**/imad-web/src/main/webapp/imad-ui/node_modules/**/*</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>  -->                
+            </plugin>                 
         </plugins>
     </build>
 </project>

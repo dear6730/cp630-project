@@ -27,6 +27,6 @@ public class CurrentStateOfStockDaoImpl implements CurrentStateOfStockDao {
 
     @Override
     public List<CurrentStateOfStock> getAll() {
-        return entityManager.createQuery("from CurrentStateOfStock").getResultList();
+        return entityManager.createQuery("from CurrentStateOfStock", CurrentStateOfStock.class).getResultList();
     }
 }

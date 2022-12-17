@@ -49,7 +49,11 @@ public class LoadTransactionalDataCommand extends FrontCommand {
 		Product product = null;
 		Random randomGenerator = new Random();
 		for (int i = 1; i <= productsRecords; i++) {
-			product = new Product("Product " + i, new BigDecimal(i*3.14),new Category(randomGenerator.nextInt(10) + 1));
+			product = new Product("Product " + i, 
+						new BigDecimal(i*3.14),
+						new Category(randomGenerator.nextInt(10) + 1),
+						new Integer(randomGenerator.nextInt(12) + 1) 
+					);
 			productDao.saveModel(product);	
 		}
 		return true;

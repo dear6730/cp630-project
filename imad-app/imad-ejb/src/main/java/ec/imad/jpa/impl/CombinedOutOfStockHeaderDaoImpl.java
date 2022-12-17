@@ -27,6 +27,6 @@ public class CombinedOutOfStockHeaderDaoImpl implements CombinedOutOfStockHeader
 
     @Override
     public List<CombinedOutOfStockHeader> getAll() {
-        return entityManager.createQuery("from CombinedOutOfStockHeader").getResultList();
+        return entityManager.createQuery("from CombinedOutOfStockHeader", CombinedOutOfStockHeader.class).getResultList();
     }
 }
