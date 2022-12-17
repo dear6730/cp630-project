@@ -130,16 +130,32 @@ public class CardsService {
         //count all products with global stock count of zero (in stock table)
         countOfAllProductsOutOfStock += stockMap.values().stream().filter(v -> v == 0).count();
 
-        // READY TO WRITE countOfAllProductsOutOfStock to A table
+        //count all products with global stock count <= global_reorder_point (in stock table)
+        
+        for (Integer productId : stockMap.keySet()) {
+            Integer quantity = stockMap.get(productId);
+            Integer globalReorderPoint = productMap.get(productId);
+            if(quantity > 0 && quantity <= globalReorderPoint) {
+                countOfAllProductsNearlyOutOfStock += 1;
+            }
+        }
+
+
+
+        // READY TO WRITE countOfAllProductsOutOfStock and countOfAllProductsNearlyOutOfStock to A table
         BigDecimal percentageOutOfStock = new BigDecimal(countOfAllProductsOutOfStock/(double)countOfAllProductsCarriedGlobally*100.0);
         percentageOutOfStock = percentageOutOfStock.setScale(2, RoundingMode.HALF_EVEN);
 
+        BigDecimal percentageNearlyOutOfStock = new BigDecimal(countOfAllProductsNearlyOutOfStock/(double)countOfAllProductsCarriedGlobally*100.0);
+        percentageNearlyOutOfStock = percentageNearlyOutOfStock.setScale(2, RoundingMode.HALF_EVEN);
 
-        return "OoS % = " + percentageOutOfStock;
+
+        //return "OoS % = " + percentageOutOfStock;
         // return stockMap.toString() + " ...>>> " + countOfAllProductsCarriedGlobally + " .. " + countOfAllProductsOutOfStock;
 
-
-
+        OverviewStockingIssues overviewStockingIssues = new OverviewStockingIssues(percentageOutOfStock, percentageNearlyOutOfStock);
+        overviewStockingIssuesDao.saveModel(overviewStockingIssues);
+        return "{\"results\":" + overviewStockingIssues + "}";
 
 
 

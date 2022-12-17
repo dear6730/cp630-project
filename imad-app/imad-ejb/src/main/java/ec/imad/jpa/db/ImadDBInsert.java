@@ -44,7 +44,7 @@ public class ImadDBInsert {
 			insertMockTotalStockValue();
 			// insertMockTotalStockCategory(4);
 			insertMockTop5Products();
-			insertMockOverviewStockingIssues();
+			//insertMockOverviewStockingIssues();
 			insertMockCurrentStateOfStock(TOTAL_RECORDS);
 
 			//for: productsOutOfStockOrNearlyOutOfStock
