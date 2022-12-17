@@ -29,6 +29,6 @@ public class OverviewStockingIssuesDaoImpl implements OverviewStockingIssuesDao 
 
     @Override
     public List<OverviewStockingIssues> getAll() {
-        return entityManager.createQuery("from OverviewStockingIssues").getResultList();
+        return entityManager.createQuery("from OverviewStockingIssues", OverviewStockingIssues.class).getResultList();
     }
 }

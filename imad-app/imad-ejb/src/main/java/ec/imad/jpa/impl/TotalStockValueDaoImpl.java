@@ -27,6 +27,6 @@ public class TotalStockValueDaoImpl implements TotalStockValueDao {
 
     @Override
     public List<TotalStockValue> getAll() {
-        return entityManager.createQuery("from TotalStockValue").getResultList();
+        return entityManager.createQuery("from TotalStockValue", TotalStockValue.class).getResultList();
     }
 }

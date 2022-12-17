@@ -27,6 +27,6 @@ public class Top5ProductsDaoImpl implements Top5ProductsDao {
 
     @Override
     public List<Top5Products> getAll() {
-        return entityManager.createQuery("from Top5Products").getResultList();
+        return entityManager.createQuery("from Top5Products", Top5Products.class).getResultList();
     }
 }
