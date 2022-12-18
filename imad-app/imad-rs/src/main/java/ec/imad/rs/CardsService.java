@@ -1,6 +1,7 @@
 package ec.imad.rs;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,11 +128,11 @@ public class CardsService {
 
         // 2- set header ******************
         JSONObject header = new JSONObject();
-        header.put("n", "$" + totalValue);
+        header.put("n", totalValue);
         header.put("u", "CAD");
-        header.put("trend", "Up");
-        header.put("valueColor", "Good");
-        header.put("details", "as of Dec 16, 2022");
+        header.put("trend", "None");
+        header.put("valueColor", "None");
+        header.put("details", new Date());
 
         // 3- set measures ******************
         List<TotalStockCategory> categories = totalStockCategoryDao.getAll();

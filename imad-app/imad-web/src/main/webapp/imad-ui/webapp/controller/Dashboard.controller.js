@@ -1,12 +1,21 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/core/format/NumberFormat",
+    "sap/ui/core/format/DateFormat"
 ],
 /**
  * @param {typeof sap.ui.core.mvc.Controller} Controller
  */
-function (Controller, JSONModel) {
+function (Controller, NumberFormat, DateFormat) {
     "use strict";
+
+    var oFormatOptions = {
+        style: "short",
+        decimals: 1,
+        shortDecimals: 2
+    };
+    var oFloatFormat = NumberFormat.getFloatInstance(oFormatOptions);
+    var oDateFormat = DateFormat.getDateInstance({pattern: "MMM d, y"});
 
     return Controller.extend("ec.laurier.imad.controller.Dashboard", {
         onInit: function () {
@@ -40,8 +49,11 @@ function (Controller, JSONModel) {
             ).then(function(){
                 // assign new value
                 if(oTitle !== null && oList.length > 0 && oMeasures.length > 0) {
+                    //format total
+                    oTitle.n = "$" + oFloatFormat.format(oTitle.n);
+                    
                     oCardData["sap.card"].header.title = "Total Stock value";
-                    oCardData["sap.card"].header.details = oTitle.details;
+                    oCardData["sap.card"].header.details = "as of " + oDateFormat.format(new Date(oTitle.details));
                     oCardData["sap.card"].header.data.json = oTitle;
                     oCardData["sap.card"].content.data.json.list = oList;
                     oCardData["sap.card"].content.measures = oMeasures;
@@ -137,10 +149,6 @@ function (Controller, JSONModel) {
             
             var oResults = [];
 
-            const timeElapsed = Date.now();
-            const today = new Date(timeElapsed);
-            var TODAY = today.toDateString();
-
             // call REST-API
             $.ajax({
                 url: "/imad-rs/rest/card5",
@@ -150,7 +158,7 @@ function (Controller, JSONModel) {
                     if(oResults.length > 0) {
                         // assign new value
                         oCardData["sap.card"].header.title = "Current State of Stock";
-                        oCardData["sap.card"].header.subTitle = TODAY; // "December 14, 2022";  //TODO: What to do with date?
+                        oCardData["sap.card"].header.subTitle = oDateFormat.format(new Date());
                         oCardData["sap.card"].data.json.results = oResults;
 
                         oModel.setProperty("/currentStateOfStock", oCardData);
