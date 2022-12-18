@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app> 
-  <servlet> 
-    <servlet-name>StatsSingletonServlet</servlet-name> 
-    <servlet-class>stats.StatsSingletonServlet</servlet-class>
-  </servlet>
-  <servlet> 
-    <servlet-name>StatsStatelessServlet</servlet-name> 
-    <servlet-class>stats.StatsStatelessServlet</servlet-class>
-  </servlet>
-  <servlet> 
-    <servlet-name>StatsStatefulServlet</servlet-name> 
-    <servlet-class>stats.StatsStatefulServlet</servlet-class>
-  </servlet>
-  <servlet-mapping> 
-    <servlet-name>StatsSingletonServlet</servlet-name> 
-    <url-pattern>/stats-web</url-pattern> 
-  </servlet-mapping>
-  <servlet-mapping> 
-    <servlet-name>StatsStatelessServlet</servlet-name> 
-    <url-pattern>/stats-web</url-pattern> 
-  </servlet-mapping>
-  <servlet-mapping> 
-    <servlet-name>StatsStatefulServlet</servlet-name> 
-    <url-pattern>/stats-web</url-pattern> 
-  </servlet-mapping>
+
 </web-app>
