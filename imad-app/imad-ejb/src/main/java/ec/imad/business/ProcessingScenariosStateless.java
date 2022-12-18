@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
 import org.jboss.logging.Logger;
 
 import ec.imad.jpa.dao.StockDao;
+import ec.imad.jpa.dao.Top5ProductsDao;
 import ec.imad.jpa.dao.ProductDao;
 
 import ec.imad.jpa.dao.TotalStockCategoryDao;
@@ -24,6 +25,7 @@ import ec.imad.jpa.dao.OverviewStockingIssuesDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
 
 import ec.imad.jpa.model.Stock;
+import ec.imad.jpa.model.Top5Products;
 import ec.imad.jpa.model.Product;
 
 import ec.imad.jpa.model.TotalStockCategory;
@@ -58,6 +60,9 @@ public class ProcessingScenariosStateless
 
     @EJB
     private TotalStockValueDao totalStockValueDao;
+
+    @EJB
+    private Top5ProductsDao top5ProductsDao;
 
 
     /**
@@ -150,6 +155,20 @@ public class ProcessingScenariosStateless
         // save at A table
         totalStockCategoryDao.saveModel(totalStockCategories);
         LOGGER.info("Finish process calculateTotalStockValueByCategory. Data saved at TotalStockCategory.");
+    }
+
+    /**
+     * This method should calculate the top 5 products value in stock.
+     * The operational information from transactional database should 
+     * be extracted, transformed and load into the analytical database.
+     */
+    @Override
+    public void calculateTop5StockValueProducts() {
+
+        LOGGER.info("Start process calculateTop5StockValueProducts");
+        List<Top5Products> top5StockValueProducts = productDao.getTop5StockValueProducts();
+        top5ProductsDao.saveModel(top5StockValueProducts);
+        LOGGER.info("Finish process calculateTop5StockValueProducts. Data saved at Top5Products.");
     }
 
     /**

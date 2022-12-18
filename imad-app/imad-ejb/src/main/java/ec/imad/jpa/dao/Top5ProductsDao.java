@@ -10,4 +10,5 @@ import ec.imad.jpa.model.Top5Products;
 public interface Top5ProductsDao {
     public void saveModel(Top5Products top5Products);
     public List<Top5Products> getAll();
+    public void saveModel(List<Top5Products> list);
 }

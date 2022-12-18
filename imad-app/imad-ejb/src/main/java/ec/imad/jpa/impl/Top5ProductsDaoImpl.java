@@ -29,4 +29,11 @@ public class Top5ProductsDaoImpl implements Top5ProductsDao {
     public List<Top5Products> getAll() {
         return entityManager.createQuery("from Top5Products", Top5Products.class).getResultList();
     }
+
+    @Override
+    public void saveModel(List<Top5Products> list) {
+        for (Top5Products top5Products : list) {
+            saveModel(top5Products);
+        }
+    }
 }

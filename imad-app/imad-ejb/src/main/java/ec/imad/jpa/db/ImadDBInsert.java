@@ -42,7 +42,7 @@ public class ImadDBInsert {
 			// Mock data for A tables:
 			// insertMockTotalStockValue();
 			// insertMockTotalStockCategory(4);
-			insertMockTop5Products();
+			// insertMockTop5Products();
 			//insertMockOverviewStockingIssues();
 			//insertMockCurrentStateOfStock(TOTAL_RECORDS);
 
@@ -113,7 +113,7 @@ public class ImadDBInsert {
 		String sql16="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Merrell Trail Running Shoes',74.93,3,7,'50016')";
 		String sql17="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Brooks Road Running Shoes',125.95,3,7,'50017')";
 		String sql18="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Salomon Gore-Tex Light Trail Shoes',199.95,3,7,'50018')";
-		String sql19="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Merrell Waterproof Light Trail Shoes ',189.95,3,7,'50019')";
+		String sql19="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Merrell Waterproof Light Trail Shoes',189.95,3,7,'50019')";
 		String sql20="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Fubuki Niseko 2.0 Winter Boots',159.95,3,7,'50020')";
 		String sql21="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Timberland Rugged Waterproof Boots',189.95,3,6,'50021')";
 
