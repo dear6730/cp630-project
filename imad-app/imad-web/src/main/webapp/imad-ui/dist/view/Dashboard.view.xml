@@ -23,11 +23,17 @@
 			class="sapUiSmallMarginBottom sapUiSmallMarginTop" />
 	
 		<f:GridContainer snapToRow="true">
-			<f:layout>
-				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="1rem" />
-			</f:layout>
+			<f:layoutXL>
+				<f:GridContainerSettings rowSize="6rem" columnSize="7.5rem" gap="1rem" />
+			</f:layoutXL>
+			<f:layoutL>
+				<f:GridContainerSettings rowSize="5rem" columnSize="5.3rem" gap="0.5rem" />
+			</f:layoutL>
+			<f:layoutM>
+				<f:GridContainerSettings rowSize="5rem" columnSize="3.6rem" gap="0.5rem" />
+			</f:layoutM>
 			<f:layoutS>
-				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="0.5rem" />
+				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="1rem" />
 			</f:layoutS>
 
 			<w:Card id="totalStockValue" manifest="{cardModel>/totalStockValue}" baseUrl="./">
