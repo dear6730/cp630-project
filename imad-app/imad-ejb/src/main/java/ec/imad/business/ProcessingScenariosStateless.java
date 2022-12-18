@@ -86,14 +86,28 @@ public class ProcessingScenariosStateless
         }
 
         // process and set categories per location
+        BigDecimal sumTotalCategory = new BigDecimal(0);
+        String lastCategoryName = null;
         for (Stock stock : allStock) {
             String location = stock.getLocation().getCity();
+
             if(locationMap.containsKey(location)){
-                Map<String, BigDecimal> locationCategories = locationMap.get(location);
-                BigDecimal totalCategory = stock.getProduct().getPrice().multiply(new BigDecimal(stock.getQuantity()));
-                locationCategories.put(stock.getProduct().getCategory().getName(),  
-                                       totalCategory);
-                locationMap.put(location, locationCategories);
+                Map<String, BigDecimal> currentCategories = locationMap.get(location);
+                String currentCategoryName = stock.getProduct().getCategory().getName();
+                BigDecimal sumTotalProduct = stock.getProduct().getPrice().multiply(new BigDecimal(stock.getQuantity()));
+
+                if(lastCategoryName == null) 
+                    lastCategoryName = currentCategoryName;
+                
+                if(!lastCategoryName.equals(currentCategoryName)){
+                    lastCategoryName = currentCategoryName;
+                    sumTotalCategory = sumTotalProduct;
+                } else {
+                    sumTotalCategory = sumTotalProduct.add(sumTotalCategory);
+                }
+
+                currentCategories.put(currentCategoryName, sumTotalCategory);
+                locationMap.put(location, currentCategories);
             }
         }
 
