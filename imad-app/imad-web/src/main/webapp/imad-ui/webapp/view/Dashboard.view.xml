@@ -22,7 +22,7 @@
 			titleStyle="H3"
 			class="sapUiSmallMarginBottom sapUiSmallMarginTop" />
 	
-		<f:GridContainer>
+		<f:GridContainer snapToRow="true">
 			<f:layout>
 				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="1rem" />
 			</f:layout>
@@ -44,7 +44,13 @@
 
 			<w:Card id="top5ProductsSold" manifest="{cardModel>/top5ProductsSold}" baseUrl="./">
 				<w:layoutData>
-					<f:GridContainerItemLayoutData rows="4" columns="4" />
+					<f:GridContainerItemLayoutData rows="4" columns="6" />
+				</w:layoutData>
+			</w:Card>
+
+			<w:Card id="currentStateOfStock" manifest="{cardModel>/currentStateOfStock}" baseUrl="./">
+				<w:layoutData>
+					<f:GridContainerItemLayoutData rows="4" columns="6" />
 				</w:layoutData>
 			</w:Card>
 
@@ -54,15 +60,9 @@
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card id="currentStateOfStock" manifest="{cardModel>/currentStateOfStock}" baseUrl="./">
-				<w:layoutData>
-					<f:GridContainerItemLayoutData rows="4" columns="4" />
-				</w:layoutData>
-			</w:Card>
-
 			<w:Card id="productsOutOfStockOrNearlyOutOfStock" manifest="{cardModel>/productsOutOfStockOrNearlyOutOfStock}" baseUrl="./">
 				<w:layoutData>
-					<f:GridContainerItemLayoutData rows="4" columns="12" />
+					<f:GridContainerItemLayoutData rows="4" columns="8" />
 				</w:layoutData>
 			</w:Card>
 

@@ -23,11 +23,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>imad-ws</artifactId>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>imad-rs</artifactId>
             <type>war</type>
         </dependency>

@@ -9,7 +9,6 @@
         <module>imad-ejb</module>
         <module>imad-web</module>
         <module>imad-ear</module>
-        <module>imad-ws</module>
         <module>imad-rs</module>
     </modules>
     <properties>
@@ -40,13 +39,6 @@
             <dependency>
                 <groupId>ec.project</groupId>
                 <artifactId>imad-web</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>imad-ws</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
                 <scope>compile</scope>

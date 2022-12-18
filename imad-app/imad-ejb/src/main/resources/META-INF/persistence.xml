@@ -9,9 +9,6 @@
         
         <persistence-unit name="primary">
         <jta-data-source>java:/MySqlDS</jta-data-source>
-        <class>ec.stats.jpa.model.User</class>
-        <class>ec.stats.jpa.model.Model</class>
-
         <class>ec.imad.jpa.model.Product</class>
         <properties>
             <!-- Properties for Hibernate, create, create-drop, update -->
