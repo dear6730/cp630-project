@@ -262,8 +262,8 @@
         },
         "sap.card": {
             "header": {
-                "title": "[Mock] Overview of Stocking Issues",
-                "subTitle": "Percentage of Products Currently...",
+                "title": "[Mock] Global Stocking Issues",
+                "subTitle": "",
                 "icon": {
                     "src": "sap-icon://warning2"
                 }
@@ -278,7 +278,7 @@
                         "inlines": [
                             {
                                 "type": "TextRun",
-                                "text": "Out of Stock",
+                                "text": "Percentage of Products Out of Stock",
                                 "size": "medium"
                             }
                         ]
@@ -294,22 +294,17 @@
                                 "weight": "bolder"
                             }
                         ]
-                    },
+                    },            
                     {
                         "type": "RichTextBlock",
                         "horizontalAlignment": "center",
                         "inlines": [
                             {
                                 "type": "TextRun",
-                                "text": "Nearly Out of Stock",
+                                "text": "Percentage of Products Nearly Out of Stock",
                                 "size": "medium"
                             }
                         ]
-                    },
-                    {
-                        "type": "RichTextBlock",
-                        "horizontalAlignment": "center",
-                        "inlines": []
                     },
                     {
                         "type": "RichTextBlock",
@@ -322,7 +317,41 @@
                                 "weight": "bolder"
                             }
                         ]
-                    }
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [                               
+                            {
+                                "type": "TextRun",
+                                "text": "---------",
+                                "size": "extraSmall"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "Combined Percentage",
+                                "size": "medium"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "30%",
+                                "size": "extraLarge",
+                                "weight": "bolder"
+                            }
+                        ]
+                    }                    
                 ]
             }
         }

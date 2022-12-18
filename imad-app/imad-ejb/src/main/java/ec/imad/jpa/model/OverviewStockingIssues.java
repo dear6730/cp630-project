@@ -19,18 +19,20 @@ public class OverviewStockingIssues implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name="percentage_out_of_stock")
-    private BigDecimal percentageOutOfStock;
-    @Column(name="percentage_nearly_out_of_stock")
-    private BigDecimal percentageNearlyOutOfStock;
-
+    @Column(name="out_of_stock_percentage")
+    private BigDecimal outOfStockPercentage;
+    @Column(name="nearly_out_of_stock_percentage")
+    private BigDecimal nearlyOutOfStockPercentage;
+    @Column(name="combined_percentage")
+    private BigDecimal combinedPercentage;
 
     public OverviewStockingIssues() {
     }
 
-    public OverviewStockingIssues(BigDecimal percentageOutOfStock, BigDecimal percentageNearlyOutOfStock) {
-        this.percentageOutOfStock = percentageOutOfStock;
-        this.percentageNearlyOutOfStock = percentageNearlyOutOfStock;
+    public OverviewStockingIssues(BigDecimal outOfStockPercentage, BigDecimal nearlyOutOfStockPercentage, BigDecimal combinedPercentage) {
+        this.outOfStockPercentage = outOfStockPercentage;
+        this.nearlyOutOfStockPercentage = nearlyOutOfStockPercentage;
+        this.combinedPercentage = combinedPercentage;
     }
 
     public Integer getId() {
@@ -41,26 +43,35 @@ public class OverviewStockingIssues implements Serializable {
         this.id = id;
     }
 
-    public BigDecimal getPercentageOutOfStock() {
-        return percentageOutOfStock;
+    public BigDecimal getOutOfStockPercentage() {
+        return outOfStockPercentage;
     }
 
-    public void setPercentageOutOfStock(BigDecimal percentageOutOfStock) {
-        this.percentageOutOfStock = percentageOutOfStock;
+    public void setOutOfStockPercentage(BigDecimal outOfStockPercentage) {
+        this.outOfStockPercentage = outOfStockPercentage;
     }
 
-    public BigDecimal getPercentageNearlyOutOfStock() {
-        return percentageNearlyOutOfStock;
+    public BigDecimal getNearlyOutOfStockPercentage() {
+        return nearlyOutOfStockPercentage;
     }
 
-    public void setPercentageNearlyOutOfStock(BigDecimal percentageNearlyOutOfStock) {
-        this.percentageNearlyOutOfStock = percentageNearlyOutOfStock;
+    public void setNearlyOutOfStockPercentage(BigDecimal nearlyOutOfStockPercentage) {
+        this.nearlyOutOfStockPercentage = nearlyOutOfStockPercentage;
+    }
+
+    public BigDecimal getCombinedPercentage() {
+        return combinedPercentage;
+    }
+
+    public void setCombinedPercentage(BigDecimal combinedPercentage) {
+        this.combinedPercentage = combinedPercentage;
     }
     
     @Override
     public String toString() {
-        return "{\"percentageOutOfStock\": \"" + getPercentageOutOfStock() 
-                    + "\", \"percentageNearlyOutOfStock\": \"" + getPercentageNearlyOutOfStock()   
+        return "{\"outOfStockPercentage\": \"" + getOutOfStockPercentage() 
+                    + "\", \"nearlyOutOfStockPercentage\": \"" + getNearlyOutOfStockPercentage()   
+                    + "\", \"combinedPercentage\": \"" + getCombinedPercentage()   
                     + "\"}";
     }
 }

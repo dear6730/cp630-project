@@ -29,6 +29,16 @@ import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 
+import ec.imad.jpa.model.Product;
+import ec.imad.jpa.model.Stock;
+
+import ec.imad.jpa.model.OverviewStockingIssues;
+import ec.imad.jpa.model.CurrentStateOfStock;
+
+
+import ec.imad.business.model.Quarter;
+
+
 @Path("/")
 @RequestScoped
 public class CardsService {
@@ -84,7 +94,12 @@ public class CardsService {
     @Produces(MediaType.APPLICATION_JSON)
     public String testingJPA() {
 
-        return "{nothing to see here}";
+        return new Quarter().toString();
+ 
+        //return Quarter.determineQuarter(5) + "";
+
+        //return "you can do it";
+
     }
 
     @GET

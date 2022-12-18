@@ -129,11 +129,14 @@ function (Controller, NumberFormat, DateFormat) {
                     // assign new values
                     if(oResults.length > 0) {
 
-                        var oosPercent = oResults[0]["percentageOutOfStock"];
-                        var noosPercent = oResults[0]["percentageNearlyOutOfStock"];
-                        oCardData["sap.card"].header.title = "Overview of Stocking Issues";
-                        oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
-                        oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
+                        var oosPercentage = oResults[0]["outOfStockPercentage"];
+                        var noosPercentage = oResults[0]["nearlyOutOfStockPercentage"];
+                        var combinedPercentage = oResults[0]["combinedPercentage"];
+
+                        oCardData["sap.card"].header.title = "Global Stocking Issues";
+                        oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercentage + "%";
+                        oCardData["sap.card"].content.body[3]["inlines"][0]["text"] = noosPercentage + "%";
+                        oCardData["sap.card"].content.body[6]["inlines"][0]["text"] = combinedPercentage + "%";
 
                         oModel.setProperty("/overviewStockingIssues", oCardData);
                         oCard.refresh();

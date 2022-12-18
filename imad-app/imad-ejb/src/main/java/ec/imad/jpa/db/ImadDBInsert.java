@@ -32,12 +32,14 @@ public class ImadDBInsert {
 			connection = ConnectionFactory.getInstance().getConnection();
 			final int TOTAL_RECORDS = 10;
 
-			insertLocation(TOTAL_RECORDS);
-			insertCategory(3);
-			insertProduct(TOTAL_RECORDS);
-			insertStock(TOTAL_RECORDS);
+			insertLocation();
+			insertCategory();
+			insertProduct();
+			insertStock();
 			insertOrder(TOTAL_RECORDS);
 			insertOrderItem(TOTAL_RECORDS);
+
+			insertHistoricalStock();
 
 			// Mock data for A tables:
 			// insertMockTotalStockValue();
@@ -62,7 +64,7 @@ public class ImadDBInsert {
 		}
 	}
 
-	private void insertLocation(int totalRecords) throws SQLException {
+	private void insertLocation() throws SQLException {
 		String sql1="INSERT INTO IMAD_TLOCATION (city) VALUES ('Barrie')";
 		String sql2="INSERT INTO IMAD_TLOCATION (city) VALUES ('Burlington')";
 		String sql3="INSERT INTO IMAD_TLOCATION (city) VALUES ('Toronto')";
@@ -81,7 +83,7 @@ public class ImadDBInsert {
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_TLOCATION");
 	}
 
-	private void insertCategory(int totalRecords) throws SQLException {
+	private void insertCategory() throws SQLException {
 		String sql1="INSERT INTO IMAD_TCATEGORY (name) VALUES ('Cycling')";
 		String sql2="INSERT INTO IMAD_TCATEGORY (name) VALUES ('Clothing')";
 		String sql3="INSERT INTO IMAD_TCATEGORY (name) VALUES ('Footwear')";
@@ -94,7 +96,7 @@ public class ImadDBInsert {
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_TCATEGORY");
 	}
 
-	private void insertProduct(int totalRecords) throws SQLException {
+	private void insertProduct() throws SQLException {
 		String sql1="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Cannondale Topstone 4 Bicycle',1734.95,1,2,'50001')";
 		String sql2="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Polygon Xtrada 7 Bike',1449.95,1,2,'50002')";
 		String sql3="INSERT INTO IMAD_TPRODUCT (name, price, category_id, global_reorder_point, sku) VALUES ('Intense Sniper T Expert Bike',5899.95,1,2,'50003')";
@@ -143,7 +145,7 @@ public class ImadDBInsert {
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_TPRODUCT");
 	}
 
-	private void insertStock(int totalRecords) throws SQLException {
+	private void insertStock() throws SQLException {
 
 		String sql1="INSERT INTO IMAD_TSTOCK (PRODUCT_ID, LOCATION_ID, QUANTITY) VALUES (1,1,3)";
 		String sql2="INSERT INTO IMAD_TSTOCK (PRODUCT_ID, LOCATION_ID, QUANTITY) VALUES (2,1,0)";
@@ -574,4 +576,36 @@ public class ImadDBInsert {
 		iModelUpdated = statement.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACOMBINED_OUT_OF_STOCK_HEADER");
 	}	
+
+
+	public void insertHistoricalStock() throws SQLException {
+
+		String sql1="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (1,1,3,2022,4)";
+		String sql2="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (2,1,0,2022,5)";
+		String sql3="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (3,1,2,2022,6)";
+		String sql4="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (4,1,1,2022,7)";
+		String sql5="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (5,1,2,2022,8)";
+		String sql6="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (6,1,3,2022,9)";
+		String sql7="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (7,1,1,2022,4)";
+		String sql8="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (8,1,16,2022,5)";
+		String sql9="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (9,1,18,2022,6)";
+		String sql10="INSERT INTO IMAD_THISTORICAL_STOCK (PRODUCT_ID, LOCATION_ID, QUANTITY, YEAR, MONTH) VALUES (10,1,20,2022,7)";
+
+		Statement statement = connection.createStatement();
+		statement.addBatch(sql1);
+		statement.addBatch(sql2);
+		statement.addBatch(sql3);
+		statement.addBatch(sql4);
+		statement.addBatch(sql5);
+		statement.addBatch(sql6);
+		statement.addBatch(sql7);
+		statement.addBatch(sql8);
+		statement.addBatch(sql9);
+		statement.addBatch(sql10);
+
+		iModelUpdated = statement.executeBatch();
+		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_THISTORICAL_STOCK");
+
+
+	}
 }
