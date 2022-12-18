@@ -60,7 +60,7 @@
 				</w:layoutData>
 			</w:Card>
 
-			<w:Card id="productsOutOfStockOrNearlyOutOfStock" manifest="{cardModel>/productsOutOfStockOrNearlyOutOfStock}" baseUrl="./">
+			<w:Card id="combinedPercentageHistory" manifest="{cardModel>/combinedPercentageHistory}" baseUrl="./">
 				<w:layoutData>
 					<f:GridContainerItemLayoutData rows="4" columns="8" />
 				</w:layoutData>

@@ -24,7 +24,7 @@ function (Controller, NumberFormat, DateFormat) {
             this.populateTop5ProductsSold();
             this.populateOverviewStockingIssues();
             this.populateCurrentStateOfStock();
-            this.populateProductsOutOfStockOrNearlyOutOfStock();
+            this.populateCombinedPercentageHistory();
         },
 
         populateTotalStockValue: function() {
@@ -160,7 +160,7 @@ function (Controller, NumberFormat, DateFormat) {
                     oResults = result.results;
                     if(oResults.length > 0) {
                         // assign new value
-                        oCardData["sap.card"].header.title = "Current State of Stock";
+                        oCardData["sap.card"].header.title = "Products Out of Stock, or Nearly Out of Stock";
                         oCardData["sap.card"].header.subTitle = oDateFormat.format(new Date());
                         oCardData["sap.card"].data.json.results = oResults;
 
@@ -171,10 +171,10 @@ function (Controller, NumberFormat, DateFormat) {
             });
         },
         
-        populateProductsOutOfStockOrNearlyOutOfStock: function() {
-            var oCard = this.getView().byId("productsOutOfStockOrNearlyOutOfStock");
+        populateCombinedPercentageHistory: function() {
+            var oCard = this.getView().byId("combinedPercentageHistory");
             var oModel = this.getView().getModel("cardModel");
-            var oCardData = oModel.getProperty("/productsOutOfStockOrNearlyOutOfStock");
+            var oCardData = oModel.getProperty("/combinedPercentageHistory");
 
             var oHeader = [];
             var oResults = [];
@@ -198,10 +198,10 @@ function (Controller, NumberFormat, DateFormat) {
             ).then(function(){
                 // assign new values
                 if(oHeader.length > 0 && oResults.length > 0) {
-                    oCardData["sap.card"].header.title = "Products Out of Stock, or Nearly Out of Stock";
+                    oCardData["sap.card"].header.title = "combinedPercentageHistory";
                     oCardData["sap.card"].header.data.json = oHeader[0];
                     oCardData["sap.card"].content.data.json.list = oResults;
-                    oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock",oCardData);
+                    oModel.setProperty("/combinedPercentageHistory",oCardData);
                     oCard.refresh();
                 }
             });
