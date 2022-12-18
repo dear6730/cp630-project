@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,8 +19,6 @@ public class Stock implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer quantity;
-    @Column(name="reorder_point")
-    private Integer reorderPoint;
 
     @ManyToOne
     @JoinColumn(name="PRODUCT_ID", nullable = false)
@@ -34,10 +31,9 @@ public class Stock implements Serializable{
     public Stock() {
     }
 
-    public Stock(Integer id, Integer quantity, Integer reorderPoint, Product product, Location location) {
+    public Stock(Integer id, Integer quantity, Product product, Location location) {
         this.id = id;
         this.quantity = quantity;
-        this.reorderPoint = reorderPoint;
         this.product = product;
         this.location = location;
     }
@@ -56,14 +52,6 @@ public class Stock implements Serializable{
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Integer getReorderPoint() {
-        return this.reorderPoint;
-    }
-
-    public void setReorderPoint(Integer reorderPoint) {
-        this.reorderPoint = reorderPoint;
     }
 
     public Product getProduct() {
@@ -87,7 +75,6 @@ public class Stock implements Serializable{
         return "Stock {" +
             " id='" + getId() + "'" +
             ", quantity='" + getQuantity() + "'" +
-            ", reorderPoint='" + getReorderPoint() + "'" +
             ", product='" + getProduct() + "'" +
             ", location='" + getLocation() + "'" +
             "}";
