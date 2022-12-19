@@ -276,4 +276,33 @@ public class ProcessingScenariosStateless
 
         LOGGER.info("Finish process generateCurrentStateOfStockList. Data saved at CurrentStateOfStock.");
     }
+
+
+    /**
+     * This method should calculate the HISTORICAL GLOBAL combined percentage
+     * (for products out of stock and nearly out of stock), showing a naive overview 
+     * of the stocking issues within the ENTIRE system. 
+     * 
+     * Combined percentage is calculated by:
+     *    Percentage of Out of Stock Products + Percentage of Nearly Out of Stock Products
+     *
+     * The operational information from transactional database should 
+     * be extracted, transformed and load into the analytical database.
+     */
+    @Override
+    public void calculateCombinedPercentageHistory() {
+        LOGGER.info("Start process calculateCombinedPercentageHistory");
+
+        // // CORPORATE (GLOBAL) OoS/NOoS percentages
+        // PercentageHelper helper = new PercentageHelper(productDao, stockDao);
+
+        // BigDecimal percentageOutOfStock = helper.calculatePercentageOutOfStock();
+        // BigDecimal percentageNearlyOutOfStock = helper.calculatePercentageNearlyOutOfStock();
+        // BigDecimal combinedPercentage = helper.calculateCombinedPercentage();
+
+        // OverviewStockingIssues overviewStockingIssues = new OverviewStockingIssues(percentageOutOfStock, percentageNearlyOutOfStock, combinedPercentage);
+        // overviewStockingIssuesDao.saveModel(overviewStockingIssues);
+
+        LOGGER.info("Finish process calculateCombinedPercentageHistory. Data saved at CombinedOutOfStockPercentage.");
+    }
 }

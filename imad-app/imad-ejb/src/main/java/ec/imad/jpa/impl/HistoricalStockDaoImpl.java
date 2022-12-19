@@ -1,6 +1,7 @@
 package ec.imad.jpa.impl;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
@@ -11,7 +12,8 @@ import org.jboss.logging.Logger;
 
 import ec.imad.jpa.dao.HistoricalStockDao;
 import ec.imad.jpa.model.HistoricalStock;
-// import ec.imad.jpa.model.TotalStockCategory;
+
+import ec.imad.business.model.Quarter;
 
 @Stateful
 public class HistoricalStockDaoImpl implements HistoricalStockDao {
@@ -20,29 +22,27 @@ public class HistoricalStockDaoImpl implements HistoricalStockDao {
     @PersistenceContext(unitName="primary")
     private EntityManager entityManager;
 
-    // @Override
-    // public List<TotalStockCategory> getTotalStockValuePerCategory() {
-    
-    //     try {
-    //         LOGGER.info("getTotalStockValuePerCategory ");
-	// 		// final String QUERY = "select u from Model u where u.name = :modelname";
-    //         final String QUERY2 = "SELECT c.name AS name, SUM(p.price) AS value "
-    //                             + "FROM "
-    //                             +   "Stock S, "
-    //                             +   "Product P, "
-    //                             +   "Category C "
-    //                             + "WHERE "
-    //                             +    "C.id = P.category AND P.id = S.product "
-    //                             +  "GROUP BY c.name";
-    //         List<TotalStockCategory> result = entityManager.createQuery(QUERY2, TotalStockCategory.class).getResultList();
-    //         return result;
-    //     } catch (NoResultException e) {
-    //         return null;
-    //     }
-    // }
-
     @Override
     public List<HistoricalStock> getAll() {
         return (List<HistoricalStock>) entityManager.createQuery("from HistoricalStock", HistoricalStock.class).getResultList();
     }
+
+    @Override
+    public List<HistoricalStock> getLastTwoQuarters(Quarter currentQuarter, Quarter oneQuarterAgo, Quarter twoQuartersAgo, List<Integer> sixMonthListValues) {
+
+        final String QUERY = "SELECT hs "
+                            + "FROM "
+                            +   "HistoricalStock hs "
+                            + "WHERE "
+                            +    "(month = " + sixMonthListValues.get(0) + " AND year = " + twoQuartersAgo.getYear() + ") "
+                            +    "OR (month = " + sixMonthListValues.get(1) + " AND year = " + twoQuartersAgo.getYear() + ") "
+                            +    "OR (month = " + sixMonthListValues.get(2) + " AND year = " + twoQuartersAgo.getYear() + ") "
+                            +    "OR (month = " + sixMonthListValues.get(3) + " AND year = " + oneQuarterAgo.getYear() + ") "
+                            +    "OR (month = " + sixMonthListValues.get(4) + " AND year = " + oneQuarterAgo.getYear() + ") "
+                            +    "OR (month = " + sixMonthListValues.get(5) + " AND year = " + oneQuarterAgo.getYear() + ") ";
+
+        return (List<HistoricalStock>) entityManager.createQuery("from HistoricalStock", HistoricalStock.class).getResultList();
+        
+    }
+
 }

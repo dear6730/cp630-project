@@ -29,4 +29,11 @@ public class CombinedOutOfStockPercentageDaoImpl implements CombinedOutOfStockPe
     public List<CombinedOutOfStockPercentage> getAll() {
         return entityManager.createQuery("from CombinedOutOfStockPercentage", CombinedOutOfStockPercentage.class).getResultList();
     }
+
+    @Override
+    public void saveModel(List<CombinedOutOfStockPercentage> combinedOutOfStockPercentageList) {
+        for (CombinedOutOfStockPercentage combinedOutOfStockPercentage : combinedOutOfStockPercentageList) {
+            saveModel(combinedOutOfStockPercentage);
+        }
+    }
 }

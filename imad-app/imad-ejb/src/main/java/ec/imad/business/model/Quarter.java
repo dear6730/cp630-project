@@ -10,6 +10,7 @@ public class Quarter {
     private Integer quarter;
     private Integer year;
     private List<String> monthList = new ArrayList<String>();
+    private List<Integer> monthListValues = new ArrayList<Integer>();
     private Quarter previousQuarter = null;
 
     // empty constructor gives current quarter
@@ -17,22 +18,14 @@ public class Quarter {
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
         quarter = determineQuarter(cal.get(Calendar.MONTH));
-        setMonthList(quarter);
+        setMonthLists(quarter);
         name = "Q" + quarter;
     }
 
-    // public Quarter( Integer quarter, Integer year ) {
-    //     this.quarter = quarter;
-    //     this.year = year;
-    //     setMonthList(quarter);
-    //     name = "Q" + quarter;
-    // }
-
-    public Quarter( Integer month, Integer year ) {
-        // this.quarter = quarter;
+    public Quarter( Integer quarter, Integer year ) {
+        this.quarter = quarter;
         this.year = year;
-        quarter = determineQuarter(month);
-        setMonthList(quarter);
+        setMonthLists(quarter);
         name = "Q" + quarter;
     }
 
@@ -52,30 +45,9 @@ public class Quarter {
         return monthList;
     }
 
-    // public Integer determineQuarter(Calendar cal) {
-    //     Integer month = cal.get(Calendar.MONTH);
-
-    //     switch(month) {
-    //         case Calendar.JANUARY:
-    //         case Calendar.FEBRUARY:
-    //         case Calendar.MARCH:
-    //             return 1;
-    //         case Calendar.APRIL:
-    //         case Calendar.MAY:
-    //         case Calendar.JUNE:
-    //             return 2;
-    //         case Calendar.JULY:
-    //         case Calendar.AUGUST:
-    //         case Calendar.SEPTEMBER:
-    //             return 3;
-    //         case Calendar.OCTOBER:
-    //         case Calendar.NOVEMBER:
-    //         case Calendar.DECEMBER:
-    //             return 4;
-    //     }
-
-    //     return -1;
-    // }
+    public List<Integer> getMonthListValues() {
+        return monthListValues;
+    }
 
     public Integer determineQuarter(Integer month) {
 
@@ -101,66 +73,57 @@ public class Quarter {
         return -1;
     }
 
-    // public static Integer determineQuarter(Integer month) {
-
-    //     switch(month) {
-    //         case Calendar.JANUARY:
-    //         case Calendar.FEBRUARY:
-    //         case Calendar.MARCH:
-    //             return 1;
-    //         case Calendar.APRIL:
-    //         case Calendar.MAY:
-    //         case Calendar.JUNE:
-    //             return 2;
-    //         case Calendar.JULY:
-    //         case Calendar.AUGUST:
-    //         case Calendar.SEPTEMBER:
-    //             return 3;
-    //         case Calendar.OCTOBER:
-    //         case Calendar.NOVEMBER:
-    //         case Calendar.DECEMBER:
-    //             return 4;
-    //     }
-
-    //     return -1;
-    // }
-
-    private void setMonthList(Integer quarter) {
+    private void setMonthLists(Integer quarter) {
         switch(quarter) {
             case 1:
                 monthList.add("Jan");
                 monthList.add("Feb");
                 monthList.add("Mar");
+                monthListValues.add(1);
+                monthListValues.add(2);
+                monthListValues.add(3);
                 break;
             case 2:
                 monthList.add("Apr");
                 monthList.add("May");
                 monthList.add("Jun");
+                monthListValues.add(4);
+                monthListValues.add(5);
+                monthListValues.add(6);                
                 break;
             case 3:
                 monthList.add("Jul");
                 monthList.add("Aug");
                 monthList.add("Sep");
+                monthListValues.add(7);
+                monthListValues.add(8);
+                monthListValues.add(9);
                 break;
             case 4:
                 monthList.add("Oct");
                 monthList.add("Nov");
                 monthList.add("Dec");
+                monthListValues.add(10);
+                monthListValues.add(11);
+                monthListValues.add(12);                
                 break;                
         }
     }
 
     public Quarter getPreviousQuarter() {
 
-        // previous quarter hasn't been set/used before
         if(previousQuarter == null) {
-            Integer prev_Q = quarter - 1;
-            Integer prev_Y = year;
-            if(prev_Q == 0) {
-                prev_Q = 4;
-                prev_Y = prev_Y - 1;
+            Integer prevQuarter = quarter - 1;
+            Integer prevQuarterYear = year;
+
+            if(prevQuarter == 0) {
+                prevQuarter = 4;
+                prevQuarterYear = prevQuarterYear - 1;
             }
-            previousQuarter = new Quarter(prev_Q, prev_Y);
+            previousQuarter = new Quarter(prevQuarter, prevQuarterYear);
+            
+        } else {
+            // skip
         }
 
         return previousQuarter;

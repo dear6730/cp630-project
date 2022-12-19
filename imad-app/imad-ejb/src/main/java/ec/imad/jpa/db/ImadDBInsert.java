@@ -41,18 +41,6 @@ public class ImadDBInsert {
 
 			insertHistoricalStock();
 
-			// Mock data for A tables:
-			// insertMockTotalStockValue();
-			// insertMockTotalStockCategory(4);
-			// insertMockTop5Products();
-			//insertMockOverviewStockingIssues();
-			//insertMockCurrentStateOfStock(TOTAL_RECORDS);
-
-			//for: productsOutOfStockOrNearlyOutOfStock
-			insertMockCombinedOutOfStockPercentage();
-			insertMockCombinedOutOfStockHeader();
-
-
 			ps.close();
 			logger.info("Ending------------------------------------------------");
 		} catch (SQLException e) { // Handle errors for JDBC

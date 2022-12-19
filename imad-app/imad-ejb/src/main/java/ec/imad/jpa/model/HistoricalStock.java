@@ -100,6 +100,8 @@ public class HistoricalStock implements Serializable{
         return "HistoricalStock {" +
             " id='" + getId() + "'" +
             ", quantity='" + getQuantity() + "'" +
+            ", month='" + getMonth() + "'" +
+            ", year='" + getYear() + "'" +
             ", product='" + getProduct() + "'" +
             ", location='" + getLocation() + "'" +
             "}";

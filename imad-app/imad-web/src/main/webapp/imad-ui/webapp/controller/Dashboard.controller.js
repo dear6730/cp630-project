@@ -198,8 +198,12 @@ function (Controller, NumberFormat, DateFormat) {
             ).then(function(){
                 // assign new values
                 if(oHeader.length > 0 && oResults.length > 0) {
-                    oCardData["sap.card"].header.title = "combinedPercentageHistory";
-                    oCardData["sap.card"].header.data.json = oHeader[0];
+
+                    oCardData["sap.card"].header.title = "Historical Analysis of Global Combined Percentage";
+                    oCardData["sap.card"].header.data.json["number"] = oHeader[0]["number"];
+                    oCardData["sap.card"].header.data.json["trend"] = oHeader[0]["trend"];
+                    oCardData["sap.card"].header.data.json["state"] = oHeader[0]["state"];
+
                     oCardData["sap.card"].content.data.json.list = oResults;
                     oModel.setProperty("/combinedPercentageHistory",oCardData);
                     oCard.refresh();
