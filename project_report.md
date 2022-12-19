@@ -148,7 +148,15 @@ If Yes, briefly describe:
 ### R9 Test your services, log your services, and document your term project.
 
  
-Complete? (Yes/No) 
+Complete? Yes
+
+![Unit tests using Postman](images/R9-1_unit_tests.png){width=90%} 
+
+![Unit tests using Postman in detail](images/R9-2_unit_tests_detail.png){width=90%} 
+
+![Example of method documentation](images/R9-3_method_documentation.png){width=90%} 
+
+![Development plan used by the team](images/R9-4_development_plan.png){width=90%} 
 
 If Yes, briefly describe: 
 
@@ -159,6 +167,23 @@ If Yes, briefly describe:
 
 ### R10 Demonstrate your term project in final project presentation, slides, short video.
 
+**DELETE LATER** Video script for Donna:
+1-shows the IMAD dashboard showing the A tables data (maybe browser should be at 90%)
+2-minimize the browser, it shows Github CP630 project home on right side. Shows the dev plan on the left side (or not...it is up to you. If you decide on it, shows git hub as full screen.)
+3-shows VS code, move over the modules: ejb, rs, web, etc. (Jboss is already up) Run mvn clean package wildfly:deploy. shows the MVN success log. shows the Jboss success deploy and the singleton running and loadind data.
+4-Shows this project report on browser and mover over on process cards link and the ui link.
+5-Shows the Dashboard in desktop mode, another browser in ipad mode.
+
+Summary:
+1-imad dashboard
+2-Github (and Dev Plan)
+3-VS Code (packaging and deploy)
+4-Dashboard in Desktop, Tablet and Phone. Landscape is already better than portrait for phones.
+
+Should we show the MySQL tables?****
+
+Please let me know any questions and we can discuss the details.
+Also, please add or remove anything you want to.
  
 Complete? (Yes/No) 
 
