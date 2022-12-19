@@ -34,7 +34,6 @@ import ec.imad.jpa.model.CurrentStateOfStock;
 
 import ec.imad.business.util.PercentageHelper;
 
-
 @Path("/")
 @RequestScoped
 public class CardsService {

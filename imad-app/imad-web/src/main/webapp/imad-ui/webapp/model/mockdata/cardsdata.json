@@ -34,7 +34,7 @@
                 },
                 "plotArea": {
                     "dataLabel": {
-                        "visible": false,
+                        "visible": true,
                         "showTotal": false
                     },
                     "categoryAxisText": {
@@ -408,7 +408,7 @@
                         {
                             "title": "{/columns/2/title}",
                             "value": "{quantity}",
-                            "hAlign": "Center",
+                            "hAlign": "Right",
                             "visible": "{/columns/2/visibleFlag}"
                         },
                         {

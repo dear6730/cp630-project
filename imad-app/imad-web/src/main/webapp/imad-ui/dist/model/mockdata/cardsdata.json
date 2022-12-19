@@ -34,7 +34,7 @@
                 },
                 "plotArea": {
                     "dataLabel": {
-                        "visible": false,
+                        "visible": true,
                         "showTotal": false
                     },
                     "categoryAxisText": {
@@ -195,7 +195,22 @@
                     },
                     "legend": {
                         "visible": false
-                    }
+                    },
+                    "plotArea": {
+                        "dataLabel": {
+                            "visible": true
+                        }
+                    },
+                    "categoryAxis": {
+                        "title": {
+                            "visible": false
+                        }
+                    },
+                    "valueAxis": {
+                        "title": {
+                            "visible": true
+                        }
+                    }                    
                 },
                 "dimensions": [
                     {
@@ -262,8 +277,8 @@
         },
         "sap.card": {
             "header": {
-                "title": "[Mock] Overview of Stocking Issues",
-                "subTitle": "Percentage of Products Currently...",
+                "title": "[Mock] Global Stocking Issues",
+                "subTitle": "",
                 "icon": {
                     "src": "sap-icon://warning2"
                 }
@@ -278,7 +293,7 @@
                         "inlines": [
                             {
                                 "type": "TextRun",
-                                "text": "Out of Stock",
+                                "text": "Percentage of Products Out of Stock",
                                 "size": "medium"
                             }
                         ]
@@ -294,22 +309,17 @@
                                 "weight": "bolder"
                             }
                         ]
-                    },
+                    },            
                     {
                         "type": "RichTextBlock",
                         "horizontalAlignment": "center",
                         "inlines": [
                             {
                                 "type": "TextRun",
-                                "text": "Nearly Out of Stock",
+                                "text": "Percentage of Products Nearly Out of Stock",
                                 "size": "medium"
                             }
                         ]
-                    },
-                    {
-                        "type": "RichTextBlock",
-                        "horizontalAlignment": "center",
-                        "inlines": []
                     },
                     {
                         "type": "RichTextBlock",
@@ -322,7 +332,41 @@
                                 "weight": "bolder"
                             }
                         ]
-                    }
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [                               
+                            {
+                                "type": "TextRun",
+                                "text": "---------",
+                                "size": "extraSmall"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "Combined Percentage",
+                                "size": "medium"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "30%",
+                                "size": "extraLarge",
+                                "weight": "bolder"
+                            }
+                        ]
+                    }                    
                 ]
             }
         }
@@ -341,7 +385,7 @@
         "sap.card": {
             "type": "Table",
             "header": {
-                "title": "[Mock] Current State of Stock",
+                "title": "[Mock] Products Out of Stock, or Nearly Out of Stock",
                 "subTitle": "Today"
             },
             "content": {
@@ -417,7 +461,7 @@
                     ],
                     "columns": [
                         {
-                            "title": "Product SKU",
+                            "title": "SKU",
                             "visibleFlag": true,
                             "identifier": true
                         },
@@ -438,7 +482,7 @@
             }
         }
     },
-    "productsOutOfStockOrNearlyOutOfStock": {
+    "combinedPercentageHistory": {
         "sap.app": {
             "id": "card.explorer.line.card",
             "type": "card"
@@ -456,40 +500,28 @@
                 "data": {
                     "json":
                     {
-                        "number": "29",
+                        "number": "30",
                         "unit": "%",
                         "trend": "Up",
                         "state": "Error",
-                        "target": {
-                            "number": 14,
-                            "unit": "%"
-                        },
-                        "details": "December 2022 (Predicted)"
+                        "details": "Current Combined Percentage"
                     }
                 },
-                "title": "[Mock] Products Out of Stock, or Nearly Out of Stock",
-                "subTitle": "Percentage of All Stock",
-                "unitOfMeasurement": "%",
+                "title": "[Mock] Historical Analysis of Global Combined Percentage",
+                "subTitle": "Examining the sum of Out of Stock + Nearly Out of Stock percentages",
                 "mainIndicator": {
                     "number": "{number}",
                     "unit": "{unit}",
                     "trend": "{trend}",
                     "state": "{state}"
                 },
-                "details": "{details}",
-                "sideIndicators": [
-                    {
-                        "title": "Target",
-                        "number": "{target/number}",
-                        "unit": "{target/unit}"
-                    }
-                ]
+                "details": "{details}"
             },
             "content": {
                 "chartType": "Line",
                 "chartProperties": {
                     "title": {
-                        "text": "Historical Trend",
+                        "text": "Historical Trend for Previous Two Quarters",
                         "visible": true,
                         "alignment": "left"
                     },
@@ -527,33 +559,33 @@
                             "stockLabel": "Stock"
                         },
                         "legend": {
-                            "visible": true,
+                            "visible": false,
                             "position": "bottom",
                             "alignment": "topLeft"
                         },
                         "list": [
                             {
-                                "Month": "June",
+                                "Month": "Jan",
                                 "Stock": 40
                             },
                             {
-                                "Month": "July",
+                                "Month": "Feb",
                                 "Stock": 40
                             },
                             {
-                                "Month": "Aug",
+                                "Month": "Mar",
                                 "Stock": 36.36363636
                             },
                             {
-                                "Month": "Sep",
+                                "Month": "Apr",
                                 "Stock": 40.90909
                             },
                             {
-                                "Month": "Oct",
+                                "Month": "May",
                                 "Stock": 30
                             },
                             {
-                                "Month": "Nov",
+                                "Month": "Jun",
                                 "Stock": 25.80645
                             }
                         ]

@@ -24,7 +24,7 @@ function (Controller, NumberFormat, DateFormat) {
             this.populateTop5ProductsSold();
             this.populateOverviewStockingIssues();
             this.populateCurrentStateOfStock();
-            this.populateProductsOutOfStockOrNearlyOutOfStock();
+            this.populateCombinedPercentageHistory();
         },
 
         populateTotalStockValue: function() {
@@ -129,11 +129,14 @@ function (Controller, NumberFormat, DateFormat) {
                     // assign new values
                     if(oResults.length > 0) {
 
-                        var oosPercent = oResults[0]["percentageOutOfStock"];
-                        var noosPercent = oResults[0]["percentageNearlyOutOfStock"];
-                        oCardData["sap.card"].header.title = "Overview of Stocking Issues";
-                        oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercent + "%";
-                        oCardData["sap.card"].content.body[4]["inlines"][0]["text"] = noosPercent + "%";
+                        var oosPercentage = oResults[0]["outOfStockPercentage"];
+                        var noosPercentage = oResults[0]["nearlyOutOfStockPercentage"];
+                        var combinedPercentage = oResults[0]["combinedPercentage"];
+
+                        oCardData["sap.card"].header.title = "Global Stocking Issues";
+                        oCardData["sap.card"].content.body[1]["inlines"][0]["text"] = oosPercentage + "%";
+                        oCardData["sap.card"].content.body[3]["inlines"][0]["text"] = noosPercentage + "%";
+                        oCardData["sap.card"].content.body[6]["inlines"][0]["text"] = combinedPercentage + "%";
 
                         oModel.setProperty("/overviewStockingIssues", oCardData);
                         oCard.refresh();
@@ -157,7 +160,7 @@ function (Controller, NumberFormat, DateFormat) {
                     oResults = result.results;
                     if(oResults.length > 0) {
                         // assign new value
-                        oCardData["sap.card"].header.title = "Current State of Stock";
+                        oCardData["sap.card"].header.title = "Products Out of Stock, or Nearly Out of Stock";
                         oCardData["sap.card"].header.subTitle = oDateFormat.format(new Date());
                         oCardData["sap.card"].data.json.results = oResults;
 
@@ -168,10 +171,10 @@ function (Controller, NumberFormat, DateFormat) {
             });
         },
         
-        populateProductsOutOfStockOrNearlyOutOfStock: function() {
-            var oCard = this.getView().byId("productsOutOfStockOrNearlyOutOfStock");
+        populateCombinedPercentageHistory: function() {
+            var oCard = this.getView().byId("combinedPercentageHistory");
             var oModel = this.getView().getModel("cardModel");
-            var oCardData = oModel.getProperty("/productsOutOfStockOrNearlyOutOfStock");
+            var oCardData = oModel.getProperty("/combinedPercentageHistory");
 
             var oHeader = [];
             var oResults = [];
@@ -195,10 +198,14 @@ function (Controller, NumberFormat, DateFormat) {
             ).then(function(){
                 // assign new values
                 if(oHeader.length > 0 && oResults.length > 0) {
-                    oCardData["sap.card"].header.title = "Products Out of Stock, or Nearly Out of Stock";
-                    oCardData["sap.card"].header.data.json = oHeader[0];
+
+                    oCardData["sap.card"].header.title = "Historical Analysis of Global Combined Percentage";
+                    oCardData["sap.card"].header.data.json["number"] = oHeader[0]["number"];
+                    oCardData["sap.card"].header.data.json["trend"] = oHeader[0]["trend"];
+                    oCardData["sap.card"].header.data.json["state"] = oHeader[0]["state"];
+
                     oCardData["sap.card"].content.data.json.list = oResults;
-                    oModel.setProperty("/productsOutOfStockOrNearlyOutOfStock",oCardData);
+                    oModel.setProperty("/combinedPercentageHistory",oCardData);
                     oCard.refresh();
                 }
             });

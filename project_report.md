@@ -115,7 +115,7 @@ Complete? Yes
 If Yes, briefly describe: 
 
 1. what you have done, 
-2. what are the new features. 
+2. what are the new features.  ...  https://www.baeldung.com/java-org-json
 3. Take some screen to demonstrate the features if applicable. 
 
 
@@ -141,7 +141,7 @@ Complete? Yes
 If Yes, briefly describe: 
 
 1. what you have done, 
-2. what are the new features. 
+2. what are the new features. ... https://sapui5.hana.ondemand.com/
 3. Take some screen to demonstrate the features if applicable. 
 
 
@@ -177,3 +177,5 @@ If Yes, briefly describe:
 1. CP630OC project
 2. https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/
 3. Assignment 3
+4. https://www.baeldung.com/java-org-json
+5. https://sapui5.hana.ondemand.com/

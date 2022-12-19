@@ -1,6 +1,5 @@
 package ec.imad.business.util;
 
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ import ec.imad.jpa.model.HistoricalStock;
 import ec.imad.jpa.model.CombinedOutOfStockPercentage;
 
 import ec.imad.business.util.PercentageHelper;
-
 import ec.imad.business.model.Quarter;
 
 public class PercentageHelper {
@@ -35,8 +33,6 @@ public class PercentageHelper {
     private List<HistoricalStock> allHistoricalStock;
     private Map<Integer, Integer> historicalStockMap;
     private Map<Integer, HashMap> monthlyMaps;
-    private Map<Integer, ArrayList> monthlyProductIds;
-
 
     private List<Integer> productIds;
     private Map<Integer, Integer> productMap;
@@ -54,7 +50,6 @@ public class PercentageHelper {
     public PercentageHelper(ProductDao productDao, StockDao stockDao) {
         stockMap = new HashMap<Integer, Integer>();
         productIds = new ArrayList<Integer>();
-
         productMap = new HashMap<Integer, Integer>();
         globalProductIds = new ArrayList<Integer>();
 
@@ -65,8 +60,6 @@ public class PercentageHelper {
     public PercentageHelper(Quarter quarter, ProductDao productDao, HistoricalStockDao historicalStockDao, Quarter oneQuarterAgo, Quarter twoQuartersAgo, List<Integer> sixMonthListValues) {
         historicalStockMap = new HashMap<Integer, Integer>();
         monthlyMaps = new HashMap<Integer, HashMap>();
-        monthlyProductIds = new HashMap<Integer, ArrayList>();
-
         productMap = new HashMap<Integer, Integer>();
         globalProductIds = new ArrayList<Integer>();
 
@@ -134,18 +127,16 @@ public class PercentageHelper {
         // prepare the maps of maps and lists
         for(Integer month : sixMonthListValues) {
             monthlyMaps.put(month, new HashMap<Integer, Integer>());
-            monthlyProductIds.put(month, new ArrayList<Integer>());
         }
 
         // populate the monthly stock maps
         for(HistoricalStock stock : allHistoricalStock) {
 
             Integer productId = stock.getProduct().getId();
-            monthlyProductIds.get(stock.getMonth()).add(productId);
-            Integer quantity = historicalStockMap.containsKey(productId) ? historicalStockMap.get(productId) : 0;
+            Map<Integer, Integer> thisMap = monthlyMaps.get(stock.getMonth());
+            Integer quantity = thisMap.containsKey(productId) ? thisMap.get(productId) : 0;
             quantity += stock.getQuantity();
-
-            monthlyMaps.get(stock.getMonth()).put(productId, quantity);
+            thisMap.put(productId, quantity);
         }
 
         // now ready for processing/calculating
@@ -157,14 +148,12 @@ public class PercentageHelper {
 
         for(Integer month : sixMonthListValues) {
 
+            // reset for the loop
+            countOfAllProductsOutOfStock = 0;
+            countOfAllProductsNearlyOutOfStock = 0;
+
             String monthLabel = translateMonth(month);
-
             Map<Integer, Integer> stockMap = monthlyMaps.get(month);
-            List<Integer> productIds = monthlyProductIds.get(month);
-
-            //count all products that are not in stock table
-            globalProductIds.removeAll(productIds);
-            countOfAllProductsOutOfStock += globalProductIds.size();
 
             //count all products with global stock count of zero (in stock table)
             countOfAllProductsOutOfStock += stockMap.values().stream().filter(v -> v == 0).count();
@@ -200,13 +189,8 @@ public class PercentageHelper {
     }
 
     public BigDecimal calculateCombinedPercentage() {
-
-        if(percentageOutOfStock == null)
-            calculatePercentageOutOfStock();
-
-        if(percentageNearlyOutOfStock == null)
-            calculatePercentageNearlyOutOfStock();
-
+        calculatePercentageOutOfStock();
+        calculatePercentageNearlyOutOfStock();
         return percentageOutOfStock.add(percentageNearlyOutOfStock);
     }
 
@@ -240,5 +224,4 @@ public class PercentageHelper {
 
         return "Undefined";
     }
-    
 }

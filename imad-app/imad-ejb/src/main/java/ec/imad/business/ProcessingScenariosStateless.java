@@ -39,10 +39,8 @@ import ec.imad.jpa.model.CurrentStateOfStock;
 import ec.imad.jpa.model.CombinedOutOfStockHeader;
 import ec.imad.jpa.model.CombinedOutOfStockPercentage;
 
-
 import ec.imad.business.util.PercentageHelper;
 import ec.imad.business.model.Quarter;
-
 
 @Stateless
 @LocalBean
@@ -83,8 +81,6 @@ public class ProcessingScenariosStateless
 
     @EJB
     private CombinedOutOfStockPercentageDao combinedOutOfStockPercentageDao;
-
-
 
 
     /**
@@ -327,15 +323,6 @@ public class ProcessingScenariosStateless
         }
         for(Integer month : oneQuarterAgo.getMonthListValues()) {
             sixMonthListValues.add(month);
-        }
-
-        // and for the labels in graph
-        List<String> sixMonthListLabels = new ArrayList<String>();
-        for(String monthLabel : twoQuartersAgo.getMonthList()) {
-            sixMonthListLabels.add(monthLabel);
-        } 
-        for(String monthLabel : oneQuarterAgo.getMonthList()) {
-            sixMonthListLabels.add(monthLabel);
         }
 
         // get only the requested months of data from the Dao
