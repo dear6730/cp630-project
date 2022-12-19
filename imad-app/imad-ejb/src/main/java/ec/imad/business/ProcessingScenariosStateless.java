@@ -24,6 +24,8 @@ import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
+import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
+import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
 
 import ec.imad.jpa.model.Stock;
 import ec.imad.jpa.model.Top5Products;
@@ -34,8 +36,12 @@ import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 import ec.imad.jpa.model.OverviewStockingIssues;
 import ec.imad.jpa.model.CurrentStateOfStock;
+import ec.imad.jpa.model.CombinedOutOfStockHeader;
+import ec.imad.jpa.model.CombinedOutOfStockPercentage;
+
 
 import ec.imad.business.util.PercentageHelper;
+import ec.imad.business.model.Quarter;
 
 
 @Stateless
@@ -50,6 +56,9 @@ public class ProcessingScenariosStateless
 
     @EJB
     private StockDao stockDao;
+
+    @EJB
+    private HistoricalStockDao historicalStockDao;
 
     @EJB
     private TotalStockCategoryDao totalStockCategoryDao;
@@ -68,6 +77,14 @@ public class ProcessingScenariosStateless
 
     @EJB
     private Top5ProductsDao top5ProductsDao;
+
+    @EJB
+    private CombinedOutOfStockHeaderDao combinedOutOfStockHeaderDao;
+
+    @EJB
+    private CombinedOutOfStockPercentageDao combinedOutOfStockPercentageDao;
+
+
 
 
     /**
@@ -293,15 +310,67 @@ public class ProcessingScenariosStateless
     public void calculateCombinedPercentageHistory() {
         LOGGER.info("Start process calculateCombinedPercentageHistory");
 
-        // // CORPORATE (GLOBAL) OoS/NOoS percentages
-        // PercentageHelper helper = new PercentageHelper(productDao, stockDao);
+        // 1: Current Percentage
+        PercentageHelper helper = new PercentageHelper(productDao, stockDao);
+        BigDecimal currentCombinedPercentage = helper.calculateCombinedPercentage();
 
-        // BigDecimal percentageOutOfStock = helper.calculatePercentageOutOfStock();
-        // BigDecimal percentageNearlyOutOfStock = helper.calculatePercentageNearlyOutOfStock();
-        // BigDecimal combinedPercentage = helper.calculateCombinedPercentage();
+        // 2: Get the Historical Data + percentages
+        Quarter currentQuarter = new Quarter();
 
-        // OverviewStockingIssues overviewStockingIssues = new OverviewStockingIssues(percentageOutOfStock, percentageNearlyOutOfStock, combinedPercentage);
-        // overviewStockingIssuesDao.saveModel(overviewStockingIssues);
+        Quarter oneQuarterAgo = currentQuarter.getPreviousQuarter();
+        Quarter twoQuartersAgo = oneQuarterAgo.getPreviousQuarter();
+
+        // get the month values for the DB
+        List<Integer> sixMonthListValues = new ArrayList<Integer>();
+        for(Integer month : twoQuartersAgo.getMonthListValues()) {
+            sixMonthListValues.add(month);
+        }
+        for(Integer month : oneQuarterAgo.getMonthListValues()) {
+            sixMonthListValues.add(month);
+        }
+
+        // and for the labels in graph
+        List<String> sixMonthListLabels = new ArrayList<String>();
+        for(String monthLabel : twoQuartersAgo.getMonthList()) {
+            sixMonthListLabels.add(monthLabel);
+        } 
+        for(String monthLabel : oneQuarterAgo.getMonthList()) {
+            sixMonthListLabels.add(monthLabel);
+        }
+
+        // get only the requested months of data from the Dao
+        PercentageHelper historicalHelper = new PercentageHelper(currentQuarter, productDao, historicalStockDao, oneQuarterAgo, twoQuartersAgo, sixMonthListValues);
+
+        // and calculate percentages
+        List<CombinedOutOfStockPercentage> combinedOutOfStockPercentages = historicalHelper.calculateAllHistoricalPercentages(sixMonthListValues);
+
+        // get the last value of the historical data, for trend
+        BigDecimal lastValue = combinedOutOfStockPercentages.get(combinedOutOfStockPercentages.size()-1).getStock();
+
+        // 4: set the Header
+        CombinedOutOfStockHeader combinedOutOfStockHeader = new CombinedOutOfStockHeader();
+        combinedOutOfStockHeader.setNumber(currentCombinedPercentage);
+
+        if( currentCombinedPercentage.compareTo(lastValue) == -1) {
+            // current is less than last (generally good)
+            combinedOutOfStockHeader.setTrend("Down");
+            combinedOutOfStockHeader.setState("Good");
+
+        } else if( currentCombinedPercentage.compareTo(lastValue) == 1) {
+            // current is greater than last (generally bad)
+            combinedOutOfStockHeader.setTrend("Up");
+            combinedOutOfStockHeader.setState("Error");
+        } else {
+            // current is equal to last (no change)
+            combinedOutOfStockHeader.setTrend("None");
+            combinedOutOfStockHeader.setState("None");
+        }
+
+        // 5: Save the populated Header
+        combinedOutOfStockHeaderDao.saveModel(combinedOutOfStockHeader);
+
+        // 6: Save the list of percentages
+        combinedOutOfStockPercentageDao.saveModel(combinedOutOfStockPercentages);
 
         LOGGER.info("Finish process calculateCombinedPercentageHistory. Data saved at CombinedOutOfStockPercentage.");
     }

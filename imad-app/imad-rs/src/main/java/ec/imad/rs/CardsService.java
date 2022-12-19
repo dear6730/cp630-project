@@ -22,31 +22,15 @@ import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
 import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
-import ec.imad.jpa.dao.ProductDao;
-import ec.imad.jpa.dao.StockDao;
-import ec.imad.jpa.dao.HistoricalStockDao;
 import ec.imad.jpa.dao.Top5ProductsDao;
 import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
-import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
-import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
-
 
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 
-import ec.imad.jpa.model.Product;
-import ec.imad.jpa.model.Stock;
-import ec.imad.jpa.model.HistoricalStock;
-
 import ec.imad.jpa.model.OverviewStockingIssues;
 import ec.imad.jpa.model.CurrentStateOfStock;
-import ec.imad.jpa.model.CombinedOutOfStockHeader;
-import ec.imad.jpa.model.CombinedOutOfStockPercentage;
-
-
-
-import ec.imad.business.model.Quarter;
 
 import ec.imad.business.util.PercentageHelper;
 
@@ -77,15 +61,6 @@ public class CardsService {
     private TotalStockValueDao totalStockValueDao;
 
     @EJB
-    private StockDao stockDao;
-
-    @EJB
-    private ProductDao productDao;
-
-    @EJB
-    private HistoricalStockDao historicalStockDao;
-
-    @EJB
     private ProcessingScenariosStatelessLocal processingScenariosStatelessLocal;
 
     @GET
@@ -97,105 +72,9 @@ public class CardsService {
         processingScenariosStatelessLocal.calculateTop5StockValueProducts();
         processingScenariosStatelessLocal.calculateOverviewStockingIssues();
         processingScenariosStatelessLocal.generateCurrentStateOfStockList();
-
-        // processingScenariosStatelessLocal.calculateCombinedPercentageHistory();
+        processingScenariosStatelessLocal.calculateCombinedPercentageHistory();
 
         return "{\"results\": \"process started\"}";
-    }
-
-    /*
-     * We should delete later.  
-     */
-    @GET
-    @Path("/cardX")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String testingJPA() {
-
-        // Card 6 work
-
-        // 1: Current Percentage
-        PercentageHelper helper = new PercentageHelper(productDao, stockDao);
-        BigDecimal currentCombinedPercentage = helper.calculateCombinedPercentage();
-
-        // 2: Get the Historical Data + percentages
-        Quarter currentQuarter = new Quarter();
-
-        Quarter oneQuarterAgo = currentQuarter.getPreviousQuarter();
-        Quarter twoQuartersAgo = oneQuarterAgo.getPreviousQuarter();
-
-        // get the month values for the DB
-        List<Integer> sixMonthListValues = new ArrayList<Integer>();
-        for(Integer month : twoQuartersAgo.getMonthListValues()) {
-            sixMonthListValues.add(month);
-        }
-        for(Integer month : oneQuarterAgo.getMonthListValues()) {
-            sixMonthListValues.add(month);
-        }
-
-        // and for the labels in graph
-        List<String> sixMonthListLabels = new ArrayList<String>();
-        for(String monthLabel : twoQuartersAgo.getMonthList()) {
-            sixMonthListLabels.add(monthLabel);
-        } 
-        for(String monthLabel : oneQuarterAgo.getMonthList()) {
-            sixMonthListLabels.add(monthLabel);
-        }
-
-
-        // get only the requested months of data from the Dao
-
-        // List<HistoricalStock> filteredHistoricalStock = historicalStockDao.(currentQuarter);
-        PercentageHelper historicalHelper = new PercentageHelper(currentQuarter, productDao, historicalStockDao, oneQuarterAgo, twoQuartersAgo, sixMonthListValues);
-
-
-        // and calculate percentages
-        List<CombinedOutOfStockPercentage> combinedOutOfStockPercentages = historicalHelper.calculateAllHistoricalPercentages(sixMonthListValues);
-
-
-        ///TODO: Step 3: NEED TO SET THIS FROM STEP 2
-        BigDecimal lastValue = new BigDecimal(10.5); // TEST VALUE FOR NOW
-
-
-        // 4: set the Header
-        CombinedOutOfStockHeader combinedOutOfStockHeader = new CombinedOutOfStockHeader();
-        combinedOutOfStockHeader.setNumber(currentCombinedPercentage);
-
-        // use last percentage and compare...
-
-        if( currentCombinedPercentage.compareTo(lastValue) == -1) {
-            // current is less than last (generally good)
-            combinedOutOfStockHeader.setTrend("Down");
-            combinedOutOfStockHeader.setState("Good");
-
-        } else if( currentCombinedPercentage.compareTo(lastValue) == 1) {
-            // current is greater than last (generally bad)
-            combinedOutOfStockHeader.setTrend("Up");
-            combinedOutOfStockHeader.setState("Error");
-        } else {
-            // current is equal to last (no change)
-            combinedOutOfStockHeader.setTrend("None");
-            combinedOutOfStockHeader.setState("None");
-        }
-
-        // 5: Save the populated Header + the historical data
-        combinedOutOfStockHeaderDao.saveModel(combinedOutOfStockHeader);
-
-        // NEED TO LOOP TO GET ALL SIX OF THEM
-        // combinedOutOfStockPercentageDao.saveModel(combinedOutOfStockPercentages);
-
-        combinedOutOfStockPercentageDao.saveModel(combinedOutOfStockPercentages);
-
-
-        return combinedOutOfStockPercentages.toString();
-
-        //return "sixMonthListValues: " + sixMonthListValues + "   \nsixMonthListLabels: " + sixMonthListLabels;
-        // return "current and previous? " + currentQuarter + " \n\n\n " + currentQuarter.getPreviousQuarter();
-
-
-        // return "{\"results\":" + combinedOutOfStockHeaderDao.getAll() + "}";
-
-        //return "you can do it";
-
     }
 
     @GET
@@ -298,7 +177,6 @@ public class CardsService {
     @Path("/card6")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCombinedOutOfStockPercentage() {
-
         return "{\"results\":" + combinedOutOfStockPercentageDao.getAll() + "}";
     }
 
@@ -306,7 +184,6 @@ public class CardsService {
     @Path("/card6Header")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCombinedOutOfStockHeader() {
-        
         return "{\"results\":" + combinedOutOfStockHeaderDao.getAll() + "}";
     }
 }
