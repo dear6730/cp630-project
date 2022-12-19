@@ -2,134 +2,196 @@
 <p>Author: Donna J. Harris (994042890) &amp; Valter J. De Araujo Junior (195826730)</p>
 <p>Date: Dec 20, 2022</p>
 <p>Check <a href="readme.txt" class="uri">readme.txt</a> for course work statement and self-evaluation.</p>
+<h2 id="project-overview-and-instructions-read-this-section-first">Project Overview and Instructions (READ THIS SECTION FIRST)</h2>
+<h3 id="introduction">Introduction</h3>
+<p>The standard project report begins in the major section below, “R1 Requirements (project)”.</p>
+<p>In this section, we describe how to run and view different aspects of the project.</p>
+<h3 id="project-preparation-deployment-and-execution-instructions">Project Preparation, Deployment, and Execution Instructions</h3>
+<h4 id="pre-conditions">Pre-conditions:</h4>
+<ul class="incremental">
+<li>Apache is running.</li>
+<li>MySQL is running, with the same user and ‘test’ database as course assignments.</li>
+<li>JBoss is installed.</li>
+</ul>
+<h4 id="start-jboss-web-application-server">Start JBoss web application server</h4>
+<p>From <code>C:\enterprise\workspace\project</code> run:</p>
+<p><code>standalone.bat -c standalone-full.xml</code></p>
+<h4 id="package-the-imad-web-application-for-use-by-jee-environment">Package the IMAD web application for use by JEE environment</h4>
+<p>From <code>C:\enterprise\workspace\project</code> run:</p>
+<p><code>mvn clean package</code></p>
+<h4 id="deploy-the-web-application">Deploy the Web Application</h4>
+<p>To deploy the IMAD web application to JBoss, from <code>C:\enterprise\workspace\project</code> run:</p>
+<p><code>mvn wildfly:deploy</code></p>
+<h4 id="view-base-ui-with-mock-data">View Base UI (with Mock Data)</h4>
+<p>To view the UI in its default state with <strong><em>mock</em></strong> data (present to confirm the UI is functional), go to:</p>
+<p><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" class="uri">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></p>
+<p><strong>Note:</strong> In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.</p>
+<figure>
+<img src="images/R0-1_mock_data_execution.png" alt="IMAD UI with Mock data loaded (before analytical data generated)" style="width:70.0%" /><figcaption>IMAD UI with Mock data loaded (before analytical data generated)</figcaption>
+</figure>
+<h4 id="generate-analytical-data">Generate Analytical Data</h4>
+<p>To generate the analytical data and populate the analytical tables go to:</p>
+<p><a href="http://localhost:8080/imad-rs/rest/cardProcessing" class="uri">http://localhost:8080/imad-rs/rest/cardProcessing</a></p>
+<p>This RESTful call returns a simple confirmation message data generation process has begun. The response looks like: <code>{&quot;results&quot;: &quot;process started&quot;}</code></p>
+<p>The result of running this command is generating all of the analytical data and populating the</p>
+<p><strong>NOTE:</strong> Only run this data loading command <strong><em>once</em></strong> in order to see the intended demonstration.</p>
+<h4 id="view-the-analytical-data-in-dashboard-ui">View the Analytical Data in Dashboard UI</h4>
+<p>To view the UI with the analytical data populated, refresh the UI index page, or go to:</p>
+<p><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" class="uri">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></p>
+<figure>
+<img src="images/R0-2_processed_data_execution.png" alt="IMAD UI with Real data loaded (after analytical data generated)" style="width:70.0%" /><figcaption>IMAD UI with Real data loaded (after analytical data generated)</figcaption>
+</figure>
+<h4 id="call-individual-rest-service-calls-test-page">Call Individual REST Service Calls (Test Page)</h4>
+<p>To view and call the direct service calls used by the various cards on the dashboard, go to:</p>
+<p><a href="http://localhost:8080/imad-rs/" class="uri">http://localhost:8080/imad-rs/</a></p>
+<p>Clicking on each button will open a new browser window and show the JSON response to the RESTful web service call. Note, these are the calls made and the data consumed directly by the IMAD dashboard UI. The results seen in these calls are the results presented on the dashboard.</p>
 <h2 id="r1-requirements-project">R1 Requirements (project)</h2>
 <h3 id="r1-write-a-project-proposal-2-3-pages.">R1 Write a project proposal (2-3 pages).</h3>
 <p>Complete? Yes</p>
-<ol class="incremental" type="1">
-<li><p>what you have done, The proposed Inventory Management Analytics Dashboard (IMAD) application presents a high-level, no-input view of inventory for the desired scope, store, region, or entire organization. IMAD presents details that will detect trends, issues, and opportunities.</p></li>
-<li><p>what are the new features. It handles transactional and analytical data and the dashboard uses modern UI which will consumes data using REST.</p></li>
-<li><p>Take some screen to demonstrate the features if applicable.</p></li>
-</ol>
+<h4 id="r1-overview">R1 Overview</h4>
+<p>In November, we proposed an Inventory Management Analytics Dashboard (IMAD) application which presents a high-level, no-input view of inventory.</p>
+<p>IMAD presents details that will detect trends, issues, and opportunities with respect to product stock levels. The application transforms raw transactional data into analytical information and presents its analysis in a modern user interface. The IMAD dashboard consumes the analytical data using RESTful web services.</p>
 <h3 id="r2-design-data-format-collect-data-create-dataset-for-the-application.">R2 Design data format, collect data, create dataset for the application.</h3>
 <p>Complete? Yes</p>
 <figure>
-<img src="images/R2-1_model_objects.png" alt="Model: EJB and JPA objects" style="width:90.0%" /><figcaption>Model: EJB and JPA objects</figcaption>
+<img src="images/R2-1_model_objects.png" alt="Model: EJB and JPA objects in project tree" style="width:90.0%" /><figcaption>Model: EJB and JPA objects in project tree</figcaption>
 </figure>
 <figure>
-<img src="images/R2-2_T_and_A_tables.png" alt="Model: Transactional and Analytical tables" style="width:70.0%" /><figcaption>Model: Transactional and Analytical tables</figcaption>
+<img src="images/R2-2_T_and_A_tables.png" alt="Model: Transactional and Analytical database tables" style="width:40.0%" /><figcaption>Model: Transactional and Analytical database tables</figcaption>
 </figure>
 <figure>
-<img src="images/R2-3_Load_At_Startup_T_Tables.png" alt="Model: Load initial data at Transactional tables at starting up" style="width:90.0%" /><figcaption>Model: Load initial data at Transactional tables at starting up</figcaption>
+<img src="images/R2-3_Load_At_Startup_T_Tables.png" alt="Model: Load initial data to the Transactional tables on startup" style="width:90.0%" /><figcaption>Model: Load initial data to the Transactional tables on startup</figcaption>
 </figure>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<h4 id="r2-overview">R2 Overview</h4>
+<p>IMAD is a data-centric application. The approach to use transactional and analytical data simulates systems with multiple databases. This application makes a logical separation between these kinds of data by using two different types of tables.</p>
+<p>Transactional data tables (also known as “T tables”, with the prefix <code>IMAD_T</code>) contain the raw data that would be generated in the day-to-day operations of an organization. This version of the application focuses on products, stocking levels (both current and historical), product categories, and stock locations.</p>
+<p>Analytical data tables (also known as “A tables”, with the prefix <code>IMAD_A</code>) start off empty when the application is deployed. These tables are the end result of the ETL process, providing the data directly consumed by the dashboard.</p>
+<p>In the current version, a card processing RESTful call generates all of the Analytical data based on the Transactional data. Note that in a future version, these tables would be updated regularly to reflect changes in the Transactional data.</p>
+<p>Both kinds of tables are modeled by entity beans.</p>
+<p>We used the <code>@Startup</code> annotation in the singleton bean which loads the initial Transactional data.</p>
+<p>The product, category, and location data was extracted from the MEC.ca website. Data around stock levels and reorder points were manually generated for demonstration purposes.</p>
+<p>We used a shared spreadsheet to manage and generate intentional Transactional data, which is loaded from <code>ImadDBInsert.java</code> in the <code>db</code> package. This information helped to test and inform the correctness of the analysis.</p>
 <h3 id="r3-develop-and-implement-data-application-algorithms-for-the-proposed-application-problem.">R3 Develop and implement data application algorithms for the proposed application problem.</h3>
 <p>Complete? Yes</p>
 <figure>
 <img src="images/R3-1_EJB_data_application_algorithms.png" alt="Model: EJB contains the business logic to transform transactional to analytical data" style="width:90.0%" /><figcaption>Model: EJB contains the business logic to transform transactional to analytical data</figcaption>
 </figure>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<h4 id="r3-overview">R3 Overview</h4>
+<p>The <code>business</code> layer uses a stateless session bean containing all of the business logic for generating the Analytical data from the Transactional data. (This is triggered by the CardProcessing RESTful service call.)</p>
+<p>This layer is the heart of the dashboard. Without it, analysis could not be presented to the user for their consideration. These algorithms handle the Extract and Transform aspects of the ETL process, acquiring and manipulating the Transactional data into something meaningful.</p>
+<p>Each card on the UI has a method for generating analytical data, found in <code>ProcessingScenariosStatelessLocal.java</code>.</p>
+<h4 id="calculatetotalstockvalue">calculateTotalStockValue</h4>
+<p>Shows the total value of all stock currently in the organization. Also presents a breakdown of the stock value currently at each location, and further broken down by category.</p>
+<h4 id="calculatetotalstockvaluebycategory">calculateTotalStockValueByCategory</h4>
+<p>Shows the organizational view of what percentage of stock belongs to what product category.</p>
+<h4 id="calculatetop5stockvalueproducts">calculateTop5StockValueProducts</h4>
+<p>Shows the five products with the highest stock value currently in the organization.</p>
+<h4 id="generatecurrentstateofstocklist">generateCurrentStateOfStockList</h4>
+<p>Shows a list of products that are completely out of stock, or are below the reorder point for that product (Nearly Out), across the entire organization.</p>
+<h4 id="calculateoverviewstockingissues">calculateOverviewStockingIssues</h4>
+<p>Shows a global percentage of products that are out of stock, or below their reorder point. The combined percentage is the sum of the two percentages and can be used here to indicate an overall state of understocking in the organization.</p>
+<p>(Note: these percentages are a naive metric used for the purposes of this project.)</p>
+<h4 id="calculatecombinedpercentagehistory">calculateCombinedPercentageHistory</h4>
+<p>Shows a historical trend of the combined percentage (described above) across the previous two quarters. It also shows the current combined percentage (note: it will present the same value as in the stocking issues card) and the trend compared to the last month in the previous quarter. If the current percentage is larger, it warns of a potential problem of increasing stocking issues. If it is lower, it depicts an improving situation.</p>
+<p>(Note: these percentages are a naive metric used for the purposes of this project.)</p>
 <h3 id="r4-do-data-computing-to-generate-models-representing-models-in-portable-format-and-stored-in-file-or-database.-more-credit-is-given-if-distributed-approach-is-used-data-mining-of-big-dataset.">R4 Do data computing to generate models, representing models in portable format and stored in file or database. More credit is given if distributed approach is used data mining of big dataset.</h3>
 <p>Complete? Yes</p>
 <figure>
-<img src="images/R4-1_representing_models_portable_format_from_T_to_A_table.png" alt="Model: representing models in portable format" style="width:90.0%" /><figcaption>Model: representing models in portable format</figcaption>
+<img src="images/R4-1_representing_models_portable_format_from_T_to_A_table.png" alt="Model: Representing models in portable format" style="width:90.0%" /><figcaption>Model: Representing models in portable format</figcaption>
 </figure>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<h4 id="r4-overview">R4 Overview</h4>
+<p>The algorithms described in the <strong>R3 Overview</strong> perform the transformation of Transactional data and store the results to Analytical data tables that are ready to be consumed. The EJB code of the business layer takes on the burden of the data processing here.</p>
+<p>As seen in the figure above, and mentioned previously in R2, the Analytical tables are the end result of the ETL processing. The data in the table on the right (an Analytical table) is user-friendly compared to the Transactional data. The transformed data is ready to consume by other code, such as a web service.</p>
+<p>The advantage of this approach is the cost reduction of having to constantly make complex calls or load large amounts of data. Instead, the user can see the analytical snapshot from the moment in time and benefit from the analysis without unnecessary delays or demands on the system. This would be particularly important with big data.</p>
 <h3 id="r5-create-deployable-service-components-using-application-models-using-java-based-enterprise-computing-technologies-to-create-client-program-to-do-remote-call-of-the-data-mining-services.">R5 Create deployable service components using application models using Java based enterprise computing technologies, to create client program to do remote call of the data mining services.</h3>
 <p>Complete? Yes</p>
 <figure>
 <img src="images/R5-1_All_software_layers.png" alt="JEE: All software layers" style="width:90.0%" /><figcaption>JEE: All software layers</figcaption>
 </figure>
 <figure>
-<img src="images/R5-2_create_deployable_service_components.png" alt="JEE: Maven to package all deployable artifacts" style="width:90.0%" /><figcaption>JEE: Maven to package all deployable artifacts</figcaption>
+<img src="images/R5-2_create_deployable_service_components.png" alt="JEE: Maven to package all deployable artifacts" style="width:70.0%" /><figcaption>JEE: Maven to package all deployable artifacts</figcaption>
 </figure>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<h4 id="r5-overview">R5 Overview</h4>
+<p>The IMAD application is well-layered, following the separation of concerns design pattern. The persistence layer (<code>imad-ejb</code>, <code>jpa</code>), business logic (<code>imad-ejb</code>, <code>business</code>), web services (<code>imad-rs</code>), and web interface (<code>imad-web</code>) are all packageable as <code>imad-app</code> wrapper.</p>
+<p>We used maven to manage the build process and to make it easy to deploy the package to any J2EE application, not just this project.</p>
+<p>The UI is also prepared for a production-ready environment (see <strong>R8 Overview</strong>) using <code>npm</code>.</p>
 <h3 id="r6-deploy-service-components-onto-enterprise-application-servers.">R6 Deploy service components onto enterprise application servers.</h3>
 <p>Complete? Yes</p>
 <figure>
-<img src="images/R6-1_deploy_service_components_at_jboss_wildfly.png" alt="Maven: Package and deploy log" style="width:90.0%" /><figcaption>Maven: Package and deploy log</figcaption>
+<img src="images/R6-1_deploy_service_components_at_jboss_wildfly.png" alt="Maven: Package and deploy log" style="width:70.0%" /><figcaption>Maven: Package and deploy log</figcaption>
 </figure>
 <figure>
 <img src="images/R6-2_deployed_imad-ear_at_jboss_wildfly.png" alt="JBoss Wildfly: Deploy log" style="width:90.0%" /><figcaption>JBoss Wildfly: Deploy log</figcaption>
 </figure>
 <figure>
-<img src="images/R6-3_wildfly_console.png" alt="JBoss Wildfly: Console" style="width:90.0%" /><figcaption>JBoss Wildfly: Console</figcaption>
+<img src="images/R6-3_wildfly_console.png" alt="JBoss Wildfly: Console" style="width:60.0%" /><figcaption>JBoss Wildfly: Console</figcaption>
 </figure>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<h4 id="r6-overview">R6 Overview</h4>
+<p>Using the <code>mvn wildfly:deploy</code> command, the application is successfully deployed to the JBoss web server (locally hosted). The log and console views show the <code>.ear</code> package deployed.</p>
 <h3 id="r7-create-web-services-soap-restful-to-use-the-data-service-components.">R7 Create web services (SOAP, RESTful) to use the data service components.</h3>
 <p>Complete? Yes</p>
 <figure>
 <img src="images/R7-1_create_RESTful_web_services.png" alt="RESTful: Service Implementation and testing" style="width:90.0%" /><figcaption>RESTful: Service Implementation and testing</figcaption>
 </figure>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<h4 id="r7-overview">R7 Overview</h4>
+<p>The conscious decision was made to use RESTful web services to support the dashboard interface. This was a result of using the chosen user interface library, SAPUI5. (See <strong>R8 Overview</strong>.) SAPUI5 is designed to be used with RESTful web services and supports those best.</p>
+<p>The RESTful calls used by the UI can be called directly from a services test page: <a href="http://localhost:8080/imad-rs/" class="uri">http://localhost:8080/imad-rs/</a>. All of the web services return a JSON response. The most complex cards leverage a JSON library, <code>JSON-Java</code> (<code>org.json</code>). (See: <a href="https://www.baeldung.com/java-org-json" class="uri">https://www.baeldung.com/java-org-json</a>.) The <code>JSONObject</code> provides a more friendly way to work with JSON data in Java over directly building and manipulating <code>String</code> data.</p>
+<p>The calls are made from the <code>webapp</code> JavaScript dashboard and the response is consumed and presented in the UI.</p>
 <h3 id="r8-create-web-user-interfacemobile-applications-to-use-the-applicationweb-services.">R8 Create web user interface/mobile applications to use the application/web services.</h3>
 <p>Complete? Yes</p>
 <figure>
-<img src="images/R8-1_Build_UI5_App.png" alt="SAPUI5: Using npm to build the UI app" style="width:90.0%" /><figcaption>SAPUI5: Using npm to build the UI app</figcaption>
+<img src="images/R8-1_Build_UI5_App.png" alt="SAPUI5: Using npm to build the UI app" style="width:70.0%" /><figcaption>SAPUI5: Using npm to build the UI app</figcaption>
 </figure>
 <figure>
 <img src="images/R8-2_xl_desktop_web_ui.png" alt="IMAD Dashboard rendering in an extra large desktop monitor" style="width:90.0%" /><figcaption>IMAD Dashboard rendering in an extra large desktop monitor</figcaption>
 </figure>
 <figure>
-<img src="images/R8-3_l_desktop_web_ui.png" alt="IMAD Dashboard rendering in a large desktop monitor" style="width:90.0%" /><figcaption>IMAD Dashboard rendering in a large desktop monitor</figcaption>
+<img src="images/R8-3_l_desktop_web_ui.png" alt="IMAD Dashboard rendering in a large desktop monitor" style="width:80.0%" /><figcaption>IMAD Dashboard rendering in a large desktop monitor</figcaption>
 </figure>
 <figure>
-<img src="images/R8-4_ipad_web_ui.png" alt="IMAD Dashboard rendering in an iPad portrait" style="width:90.0%" /><figcaption>IMAD Dashboard rendering in an iPad portrait</figcaption>
+<img src="images/R8-4_ipad_web_ui.png" alt="IMAD Dashboard rendering in an iPad portrait" style="width:40.0%" /><figcaption>IMAD Dashboard rendering in an iPad portrait</figcaption>
 </figure>
 <figure>
-<img src="images/R8-5_ipad_web_ui.png" alt="IMAD Dashboard rendering in an iPad landscape" style="width:90.0%" /><figcaption>IMAD Dashboard rendering in an iPad landscape</figcaption>
+<img src="images/R8-5_ipad_web_ui.png" alt="IMAD Dashboard rendering in an iPad landscape" style="width:60.0%" /><figcaption>IMAD Dashboard rendering in an iPad landscape</figcaption>
 </figure>
 <figure>
-<img src="images/R8-6_iphone_web_ui.png" alt="IMAD Dashboard rendering in an iPhone portrait" style="width:90.0%" /><figcaption>IMAD Dashboard rendering in an iPhone portrait</figcaption>
+<img src="images/R8-6_iphone_web_ui.png" alt="IMAD Dashboard rendering in an iPhone portrait" style="width:30.0%" /><figcaption>IMAD Dashboard rendering in an iPhone portrait</figcaption>
 </figure>
 <figure>
-<img src="images/R8-7_iphone_web_ui.png" alt="IMAD Dashboard rendering in an iPhone landscape" style="width:90.0%" /><figcaption>IMAD Dashboard rendering in an iPhone landscape</figcaption>
+<img src="images/R8-7_iphone_web_ui.png" alt="IMAD Dashboard rendering in an iPhone landscape" style="width:50.0%" /><figcaption>IMAD Dashboard rendering in an iPhone landscape</figcaption>
 </figure>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<h4 id="r8-overview">R8 Overview</h4>
+<p>The IMAD user interface is built using the professional framework SAPUI5. (Reference: <a href="https://sapui5.hana.ondemand.com/" class="uri">https://sapui5.hana.ondemand.com/</a> Leveraging this powerful UI library allowed us to build cards that were meaningful and attractive with a minimum of development work. The cards in the framework themselves are JSON-based. As a result, this informed much of the data modeling and web services work for the Analytical data.</p>
+<p>From the user’s perspective, this is the end point of the ETL process, where the prepared analytical data is loaded into a visual UI.</p>
+<p>The SAPUI5 library was built on responsive design principles, allowing the IMAD web application to be easily viewed using any viewport size or orientation, including desktop, tablet, and mobile phone.</p>
+<p>From a development perspective, the UI follows MVC principles, with a controller for the dashboard which is driven by the model data and is presented (again on the dashboard) in the various card views.</p>
+<p>The website itself is built to be production-ready, using <code>npm</code> and its build process, which minifies the code for the most efficient loading. The default view of the project website uses this minified code.</p>
 <h3 id="r9-test-your-services-log-your-services-and-document-your-term-project.">R9 Test your services, log your services, and document your term project.</h3>
-<p>Complete? (Yes/No)</p>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<p>Complete? Yes</p>
+<figure>
+<img src="images/R9-1_unit_tests.png" alt="Unit tests using Postman" style="width:90.0%" /><figcaption>Unit tests using Postman</figcaption>
+</figure>
+<figure>
+<img src="images/R9-2_unit_tests_detail.png" alt="Unit tests using Postman in detail" style="width:90.0%" /><figcaption>Unit tests using Postman in detail</figcaption>
+</figure>
+<figure>
+<img src="images/R9-3_method_documentation.png" alt="Example of method documentation" style="width:90.0%" /><figcaption>Example of method documentation</figcaption>
+</figure>
+<figure>
+<img src="images/R9-4_development_plan.png" alt="Development plan used by the team" style="width:90.0%" /><figcaption>Development plan used by the team</figcaption>
+</figure>
+<h4 id="r9-overview">R9 Overview</h4>
+<p>Our services were manually tested using our generated data (as discussed at the end of <strong>R2 Overview</strong>) to determine the expected results of the analysis. In this way, we were able to confirm that each business requirement was tested for all cards.</p>
+<p>The imad-rs test page includes direct links to all service calls needed for the application to load the Analytical data.</p>
+<p>Additionally, the services were verified using automated Postman tests. These are located in the project folder <code>C:\enterprise\workspace\project\tests</code>, and can be imported into Postman to run.</p>
+<p>All called services are logged by the JBoss logger and important methods and key steps are documented throughout the project code.</p>
 <h3 id="r10-demonstrate-your-term-project-in-final-project-presentation-slides-short-video.">R10 Demonstrate your term project in final project presentation, slides, short video.</h3>
+<p><strong>DELETE LATER</strong> Video script for Donna: 1-shows the IMAD dashboard showing the A tables data (maybe browser should be at 90%) 2-minimize the browser, it shows Github CP630 project home on right side. Shows the dev plan on the left side (or not…it is up to you. If you decide on it, shows git hub as full screen.) 3-shows VS code, move over the modules: ejb, rs, web, etc. (Jboss is already up) Run mvn clean package wildfly:deploy. shows the MVN success log. shows the Jboss success deploy and the singleton running and loadind data. 4-Shows this project report on browser and mover over on process cards link and the ui link. 5-Shows the Dashboard in desktop mode, another browser in ipad mode.</p>
+<p>Summary: 1-imad dashboard 2-Github (and Dev Plan) 3-VS Code (packaging and deploy) 4-Dashboard in Desktop, Tablet and Phone. Landscape is already better than portrait for phones.</p>
+<p>Should we show the MySQL tables?****</p>
+<p>Please let me know any questions and we can discuss the details. Also, please add or remove anything you want to.</p>
 <p>Complete? (Yes/No)</p>
+<h4 id="r10-overview">R10 Overview</h4>
 <p>If Yes, briefly describe:</p>
 <ol class="incremental" type="1">
 <li>what you have done,</li>
@@ -140,5 +202,8 @@
 <ol class="incremental" type="1">
 <li>CP630OC project</li>
 <li>https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/</li>
-<li>Assignment 3</li>
+<li>CP630OC Assignment 3</li>
+<li>https://www.baeldung.com/java-org-json</li>
+<li>https://sapui5.hana.ondemand.com/</li>
+<li>https://www.mec.ca/en</li>
 </ol>
