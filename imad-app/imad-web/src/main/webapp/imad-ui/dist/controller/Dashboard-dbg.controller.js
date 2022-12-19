@@ -175,36 +175,25 @@ function (Controller, NumberFormat, DateFormat) {
             var oCard = this.getView().byId("combinedPercentageHistory");
             var oModel = this.getView().getModel("cardModel");
             var oCardData = oModel.getProperty("/combinedPercentageHistory");
-
-            var oHeader = [];
-            var oResults = [];
+            var oHeader = null;
+            var oList = [];
 
             // call REST-API
             $.when(
                 $.ajax({
-                    url: "/imad-rs/rest/card6Header",
-                    dataType: "json",
-                    success: function(result) {
-                        oHeader = result.results;
-                    }
-                }),
-                $.ajax({
                     url: "/imad-rs/rest/card6",
                     dataType: "json",
-                    success: function(result) {
-                        oResults = result.results;
+                    success: function(data) {
+                        oHeader = data.results.header;
+                        oList = data.results.list;
                     }
                 })
             ).then(function(){
                 // assign new values
-                if(oHeader.length > 0 && oResults.length > 0) {
-
+                if(oHeader !== null && oList.length > 0) {
                     oCardData["sap.card"].header.title = "Historical Analysis of Global Combined Percentage";
-                    oCardData["sap.card"].header.data.json["number"] = oHeader[0]["number"];
-                    oCardData["sap.card"].header.data.json["trend"] = oHeader[0]["trend"];
-                    oCardData["sap.card"].header.data.json["state"] = oHeader[0]["state"];
-
-                    oCardData["sap.card"].content.data.json.list = oResults;
+                    oCardData["sap.card"].header.data.json = oHeader
+                    oCardData["sap.card"].content.data.json.list = oList;
                     oModel.setProperty("/combinedPercentageHistory",oCardData);
                     oCard.refresh();
                 }
