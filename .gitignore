@@ -2,5 +2,4 @@ imad-app/imad-ear/target
 imad-app/imad-ejb/target
 imad-app/imad-web/target
 imad-app/imad-rs/target
-imad-app/imad-ws/target
 .DS_Store

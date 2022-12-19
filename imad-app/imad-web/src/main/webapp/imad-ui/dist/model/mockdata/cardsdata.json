@@ -1,0 +1,594 @@
+{
+    "totalStockValue": {
+        "sap.app": {
+            "id": "ec.imad.ui.totalStockValue",
+            "type": "card"
+        },
+        "sap.card": {
+            "type": "Analytical",
+            "header": {
+                "type": "Numeric",
+                "data": {
+                    "json": {
+                        "n": "$12,707",
+                        "u": "CAD",
+                        "trend": "Down",
+                        "valueColor": "Error"
+                    }
+                },
+                "title": "[Mock] Total Stock value",
+                "details": "as of Dec 6, 2022",
+                "mainIndicator": {
+                    "number": "{n}",
+                    "unit": "{u}",
+                    "trend": "{trend}",
+                    "state": "{valueColor}"
+                }
+            },
+            "content": {
+                "chartType": "StackedColumn",
+                "legend": {
+                    "visible": true,
+                    "position": "Bottom",
+                    "alignment": "Left"
+                },
+                "plotArea": {
+                    "dataLabel": {
+                        "visible": false,
+                        "showTotal": false
+                    },
+                    "categoryAxisText": {
+                        "visible": false
+                    },
+                    "valueAxisText": {
+                        "visible": false
+                    }
+                },
+                "title": {
+                    "visible": false
+                },
+                "measureAxis": "valueAxis",
+                "dimensionAxis": "categoryAxis",
+                "data": {
+                    "json": {
+                        "list": [
+                            {
+                                "Category": "Location 1",
+                                "Category1": 999,
+                                "Category2": 550,
+                                "Category3": 300
+                            },
+                            {
+                                "Category": "Location 2",
+                                "Category1": 1000,
+                                "Category2": 550,
+                                "Category3": 400
+                            },
+                            {
+                                "Category": "Location 3",
+                                "Category1": 700,
+                                "Category2": 156,
+                                "Category3": 300
+                            },
+                            {
+                                "Category": "Location 4",
+                                "Category1": 1870,
+                                "Category2": 1328,
+                                "Category3": 1470
+                            },
+                            {
+                                "Category": "Location 5",
+                                "Category1": 1200,
+                                "Category2": 716,
+                                "Category3": 800
+                            },
+                            {
+                                "Category": "Location 6",
+                                "Category1": 90,
+                                "Category2": 110,
+                                "Category3": 168
+                            }
+                        ]
+                    },
+                    "path": "/list"
+                },
+                "dimensions": [
+                    {
+                        "label": "Categories",
+                        "value": "{Category}"
+                    }
+                ],
+                "measures": [
+                    {
+                        "label": "Category 1",
+                        "value": "{Category1}"
+                    },
+                    {
+                        "label": "Category 2",
+                        "value": "{Category2}"
+                    },
+                    {
+                        "label": "Category 3",
+                        "value": "{Category3}"
+                    }
+                ]
+            }
+        }
+    },
+    "totalStockValueByCategory": {
+        "sap.app": {
+            "id": "ec.imad.ui.totalStockValueByCategory",
+            "type": "card"
+        },
+        "sap.card": {
+            "type": "Analytical",
+            "header": {
+                "title": "[Mock] Total Stock by Category"
+            },
+            "content": {
+                "chartType": "Donut",
+                "legend": {
+                    "visible": true,
+                    "position": "Bottom",
+                    "alignment": "Left"
+                },
+                "plotArea": {
+                    "dataLabel": {
+                        "visible": true,
+                        "showTotal": true
+                    }
+                },
+                "title": {
+                    "visible": false
+                },
+                "measureAxis": "size",
+                "dimensionAxis": "color",
+                "data": {
+                    "json": {
+                        "measures": [
+                            {
+                                "measureName": "Category 1",
+                                "value": 5859
+                            },
+                            {
+                                "measureName": "Category 2",
+                                "value": 3410
+                            },
+                            {
+                                "measureName": "Category 3",
+                                "value": 3438
+                            }
+                        ]
+                    },
+                    "path": "/measures"
+                },
+                "dimensions": [
+                    {
+                        "label": "Measure Name",
+                        "value": "{measureName}"
+                    }
+                ],
+                "measures": [
+                    {
+                        "label": "Value",
+                        "value": "{value}"
+                    }
+                ]
+            }
+        }
+    },
+    "top5ProductsSold": {
+        "sap.app": {
+            "id": "ec.imad.ui.top5ProductsSold",
+            "type": "card"
+        },
+        "sap.card": {
+            "type": "Analytical",
+            "header": {
+                "title": "[Mock] Stock Value of Top 5 Products"
+            },
+            "content": {
+                "chartType": "bar",
+                "chartProperties": {
+                    "title": {
+                        "visible": false
+                    },
+                    "legend": {
+                        "visible": false
+                    }
+                },
+                "dimensions": [
+                    {
+                        "name": "Product",
+                        "value": "{Product}"
+                    }
+                ],
+                "measures": [
+                    {
+                        "name": "Stock Value",
+                        "value": "{Stock Value}"
+                    }
+                ],
+                "feeds": [
+                    {
+                        "type": "Dimension",
+                        "uid": "categoryAxis",
+                        "values": [
+                            "Product"
+                        ]
+                    },
+                    {
+                        "type": "Measure",
+                        "uid": "valueAxis",
+                        "values": [
+                            "Stock Value"
+                        ]
+                    }
+                ],
+                "data": {
+                    "json": {
+                        "list": [
+                            {
+                                "Product": "Product 3",
+                                "Stock Value": 15500
+                            },
+                            {
+                                "Product": "Product 7",
+                                "Stock Value": 12000
+                            },
+                            {
+                                "Product": "Product 2",
+                                "Stock Value": 8000
+                            },
+                            {
+                                "Product": "Product 21",
+                                "Stock Value": 8000
+                            },
+                            {
+                                "Product": "Product 1",
+                                "Stock Value": 7600
+                            }
+                        ]
+                    },
+                    "path": "/list"
+                }
+            }
+        }
+    },
+    "overviewStockingIssues": {
+        "sap.app": {
+            "id": "adaptivecard.embedded",
+            "type": "card"
+        },
+        "sap.card": {
+            "header": {
+                "title": "[Mock] Overview of Stocking Issues",
+                "subTitle": "Percentage of Products Currently...",
+                "icon": {
+                    "src": "sap-icon://warning2"
+                }
+            },
+            "type": "AdaptiveCard",
+            "content": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "Out of Stock",
+                                "size": "medium"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "12%",
+                                "size": "extraLarge",
+                                "weight": "bolder"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "Nearly Out of Stock",
+                                "size": "medium"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": []
+                    },
+                    {
+                        "type": "RichTextBlock",
+                        "horizontalAlignment": "center",
+                        "inlines": [
+                            {
+                                "type": "TextRun",
+                                "text": "18%",
+                                "size": "extraLarge",
+                                "weight": "bolder"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "currentStateOfStock": {
+        "sap.app": {
+            "id": "card.explorer.table.card",
+            "type": "card"
+        },
+        "sap.ui": {
+            "technology": "UI5",
+            "icons": {
+                "icon": "sap-icon://table-view"
+            }
+        },
+        "sap.card": {
+            "type": "Table",
+            "header": {
+                "title": "[Mock] Current State of Stock",
+                "subTitle": "Today"
+            },
+            "content": {
+                "data": {
+                    "path": "/results"
+                },
+                "row": {
+                    "columns": [
+                        {
+                            "title": "{/columns/0/title}",
+                            "value": "{productSKU}",
+                            "identifier": "{/columns/0/identifier}",
+                            "visible": "{/columns/0/visibleFlag}"
+                        },
+                        {
+                            "title": "{/columns/1/title}",
+                            "value": "{productName}",
+                            "visible": "{/columns/1/visibleFlag}"
+                        },
+                        {
+                            "title": "{/columns/2/title}",
+                            "value": "{quantity}",
+                            "hAlign": "Right",
+                            "visible": "{/columns/2/visibleFlag}"
+                        },
+                        {
+                            "title": "{/columns/3/title}",
+                            "value": "{status}",
+                            "state": "{statusState}",
+                            "visible": "{/columns/3/visibleFlag}"
+                        }
+                    ]
+                }
+            },
+            "data": {
+                "json": {
+                    "results": [
+                        {
+                            "productSKU": "5000010050",
+                            "productName": "Hawaiian Shirt",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010053",
+                            "productName": "Rubber Boots",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010054",
+                            "productName": "Overalls",
+                            "quantity": "0",
+                            "status": "Out of Stock",
+                            "statusState": "Error"
+                        },
+                        {
+                            "productSKU": "5000010051",
+                            "productName": "Winter Coat",
+                            "quantity": "4",
+                            "status": "Nearly Out",
+                            "statusState": "Warning"
+                        },
+                        {
+                            "productSKU": "5000010052",
+                            "productName": "Rain Coat",
+                            "quantity": "6",
+                            "status": "Nearly Out",
+                            "statusState": "Warning"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Product SKU",
+                            "visibleFlag": true,
+                            "identifier": true
+                        },
+                        {
+                            "title": "Product",
+                            "visibleFlag": true
+                        },
+                        {
+                            "title": "Quantity",
+                            "visibleFlag": true
+                        },
+                        {
+                            "title": "Status",
+                            "visibleFlag": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "productsOutOfStockOrNearlyOutOfStock": {
+        "sap.app": {
+            "id": "card.explorer.line.card",
+            "type": "card"
+        },
+        "sap.ui": {
+            "technology": "UI5",
+            "icons": {
+                "icon": "sap-icon://line-chart"
+            }
+        },
+        "sap.card": {
+            "type": "Analytical",
+            "header": {
+                "type": "Numeric",
+                "data": {
+                    "json":
+                    {
+                        "number": "29",
+                        "unit": "%",
+                        "trend": "Up",
+                        "state": "Error",
+                        "target": {
+                            "number": 14,
+                            "unit": "%"
+                        },
+                        "details": "December 2022 (Predicted)"
+                    }
+                },
+                "title": "[Mock] Products Out of Stock, or Nearly Out of Stock",
+                "subTitle": "Percentage of All Stock",
+                "unitOfMeasurement": "%",
+                "mainIndicator": {
+                    "number": "{number}",
+                    "unit": "{unit}",
+                    "trend": "{trend}",
+                    "state": "{state}"
+                },
+                "details": "{details}",
+                "sideIndicators": [
+                    {
+                        "title": "Target",
+                        "number": "{target/number}",
+                        "unit": "{target/unit}"
+                    }
+                ]
+            },
+            "content": {
+                "chartType": "Line",
+                "chartProperties": {
+                    "title": {
+                        "text": "Historical Trend",
+                        "visible": true,
+                        "alignment": "left"
+                    },
+                    "legend": {
+                        "visible": "{legend/visible}"
+                    },
+                    "legendGroup": {
+                        "layout": {
+                            "position": "{legend/position}",
+                            "alignment": "{legend/alignment}"
+                        }
+                    },
+                    "plotArea": {
+                        "dataLabel": {
+                            "visible": true
+                        }
+                    },
+                    "categoryAxis": {
+                        "title": {
+                            "visible": false
+                        }
+                    },
+                    "valueAxis": {
+                        "title": {
+                            "visible": false
+                        }
+                    }
+                },
+                "data": {
+                    "json": {
+                        "dimensions": {
+                            "monthLabel": "Month"
+                        },
+                        "measures": {
+                            "stockLabel": "Stock"
+                        },
+                        "legend": {
+                            "visible": true,
+                            "position": "bottom",
+                            "alignment": "topLeft"
+                        },
+                        "list": [
+                            {
+                                "Month": "June",
+                                "Stock": 40
+                            },
+                            {
+                                "Month": "July",
+                                "Stock": 40
+                            },
+                            {
+                                "Month": "Aug",
+                                "Stock": 36.36363636
+                            },
+                            {
+                                "Month": "Sep",
+                                "Stock": 40.90909
+                            },
+                            {
+                                "Month": "Oct",
+                                "Stock": 30
+                            },
+                            {
+                                "Month": "Nov",
+                                "Stock": 25.80645
+                            }
+                        ]
+                    },
+                    "path": "/list"
+                },
+                "dimensions": [
+                    {
+                        "name": "{dimensions/monthLabel}",
+                        "value": "{Month}"
+                    }
+                ],
+                "measures": [
+                    {
+                        "name": "{measures/stockLabel}",
+                        "value": "{Stock}"
+                    }
+                ],
+                "feeds": [
+                    {
+                        "uid": "valueAxis",
+                        "type": "Measure",
+                        "values": [
+                            "{measures/stockLabel}"
+                        ]
+                    },
+                    {
+                        "uid": "categoryAxis",
+                        "type": "Dimension",
+                        "values": [
+                            "{dimensions/monthLabel}"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
