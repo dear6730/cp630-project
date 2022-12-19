@@ -7,23 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ejb.EJB;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import ec.imad.jpa.dao.StockDao;
-import ec.imad.jpa.dao.ProductDao;
-import ec.imad.jpa.dao.HistoricalStockDao;
-
-import ec.imad.jpa.model.Stock;
-import ec.imad.jpa.model.Product;
-import ec.imad.jpa.model.HistoricalStock;
-import ec.imad.jpa.model.CombinedOutOfStockPercentage;
-
-import ec.imad.business.util.PercentageHelper;
 import ec.imad.business.model.Quarter;
+import ec.imad.jpa.dao.HistoricalStockDao;
+import ec.imad.jpa.dao.ProductDao;
+import ec.imad.jpa.dao.StockDao;
+import ec.imad.jpa.model.CombinedOutOfStockPercentage;
+import ec.imad.jpa.model.HistoricalStock;
+import ec.imad.jpa.model.Product;
+import ec.imad.jpa.model.Stock;
 
 public class PercentageHelper {
 
@@ -31,8 +22,7 @@ public class PercentageHelper {
     private Map<Integer, Integer> stockMap;
     
     private List<HistoricalStock> allHistoricalStock;
-    private Map<Integer, Integer> historicalStockMap;
-    private Map<Integer, HashMap> monthlyMaps;
+    private Map<Integer, HashMap<Integer, Integer>> monthlyMaps;
 
     private List<Integer> productIds;
     private Map<Integer, Integer> productMap;
@@ -58,8 +48,7 @@ public class PercentageHelper {
 
     // for historical
     public PercentageHelper(Quarter quarter, ProductDao productDao, HistoricalStockDao historicalStockDao, Quarter oneQuarterAgo, Quarter twoQuartersAgo, List<Integer> sixMonthListValues) {
-        historicalStockMap = new HashMap<Integer, Integer>();
-        monthlyMaps = new HashMap<Integer, HashMap>();
+        monthlyMaps = new HashMap<Integer, HashMap<Integer, Integer>>();
         productMap = new HashMap<Integer, Integer>();
         globalProductIds = new ArrayList<Integer>();
 

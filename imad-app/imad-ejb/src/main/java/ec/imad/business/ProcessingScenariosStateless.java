@@ -1,7 +1,6 @@
 package ec.imad.business;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,32 +14,27 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.logging.Logger;
 
-import ec.imad.jpa.dao.StockDao;
-import ec.imad.jpa.dao.Top5ProductsDao;
-import ec.imad.jpa.dao.ProductDao;
-import ec.imad.jpa.dao.HistoricalStockDao;
-
-import ec.imad.jpa.dao.TotalStockCategoryDao;
-import ec.imad.jpa.dao.TotalStockValueDao;
-import ec.imad.jpa.dao.OverviewStockingIssuesDao;
-import ec.imad.jpa.dao.CurrentStateOfStockDao;
+import ec.imad.business.model.Quarter;
+import ec.imad.business.util.PercentageHelper;
 import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
 import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
-
-import ec.imad.jpa.model.Stock;
-import ec.imad.jpa.model.Top5Products;
-import ec.imad.jpa.model.Product;
-import ec.imad.jpa.model.HistoricalStock;
-
-import ec.imad.jpa.model.TotalStockCategory;
-import ec.imad.jpa.model.TotalStockValue;
-import ec.imad.jpa.model.OverviewStockingIssues;
-import ec.imad.jpa.model.CurrentStateOfStock;
+import ec.imad.jpa.dao.CurrentStateOfStockDao;
+import ec.imad.jpa.dao.HistoricalStockDao;
+import ec.imad.jpa.dao.OverviewStockingIssuesDao;
+import ec.imad.jpa.dao.ProductDao;
+import ec.imad.jpa.dao.StockDao;
+import ec.imad.jpa.dao.Top5ProductsDao;
+import ec.imad.jpa.dao.TotalStockCategoryDao;
+import ec.imad.jpa.dao.TotalStockValueDao;
 import ec.imad.jpa.model.CombinedOutOfStockHeader;
 import ec.imad.jpa.model.CombinedOutOfStockPercentage;
-
-import ec.imad.business.util.PercentageHelper;
-import ec.imad.business.model.Quarter;
+import ec.imad.jpa.model.CurrentStateOfStock;
+import ec.imad.jpa.model.OverviewStockingIssues;
+import ec.imad.jpa.model.Product;
+import ec.imad.jpa.model.Stock;
+import ec.imad.jpa.model.Top5Products;
+import ec.imad.jpa.model.TotalStockCategory;
+import ec.imad.jpa.model.TotalStockValue;
 
 @Stateless
 @LocalBean

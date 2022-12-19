@@ -1,7 +1,5 @@
 package ec.imad.jpa.impl;
 
-import java.math.BigDecimal;
-
 import java.util.List;
 
 import javax.ejb.Stateful;
