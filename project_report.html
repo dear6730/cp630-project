@@ -25,7 +25,9 @@
 <h4 id="view-base-ui-with-mock-data">View Base UI (with Mock Data)</h4>
 <p>To view the UI in its default state with <strong><em>mock</em></strong> data (present to confirm the UI is functional), go to:</p>
 <p><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" class="uri">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></p>
+<blockquote>
 <p><strong>Note:</strong> In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.</p>
+</blockquote>
 <figure>
 <img src="images/R0-1_mock_data_execution.png" alt="IMAD UI with Mock data loaded (before analytical data generated)" style="width:70.0%" /><figcaption>IMAD UI with Mock data loaded (before analytical data generated)</figcaption>
 </figure>
@@ -33,8 +35,10 @@
 <p>To generate the analytical data and populate the analytical tables go to:</p>
 <p><a href="http://localhost:8080/imad-rs/rest/cardProcessing" class="uri">http://localhost:8080/imad-rs/rest/cardProcessing</a></p>
 <p>This RESTful call returns a simple confirmation message data generation process has begun. The response looks like: <code>{&quot;results&quot;: &quot;process started&quot;}</code></p>
-<p>The result of running this command is generating all of the analytical data and populating the</p>
-<p><strong>NOTE:</strong> Only run this data loading command <strong><em>once</em></strong> in order to see the intended demonstration.</p>
+<p>The result of running this command is generating all of the analytical data and populating the Analytical tables with data.</p>
+<blockquote>
+<p><strong>NOTE:</strong> Only run this data loading command <strong><em>ONE TIME</em></strong> in order to see the intended demonstration.</p>
+</blockquote>
 <h4 id="view-the-analytical-data-in-dashboard-ui">View the Analytical Data in Dashboard UI</h4>
 <p>To view the UI with the analytical data populated, refresh the UI index page, or go to:</p>
 <p><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" class="uri">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></p>
@@ -113,7 +117,7 @@
 </figure>
 <h4 id="r5-overview">R5 Overview</h4>
 <p>The IMAD application is well-layered, following the separation of concerns design pattern. The persistence layer (<code>imad-ejb</code>, <code>jpa</code>), business logic (<code>imad-ejb</code>, <code>business</code>), web services (<code>imad-rs</code>), and web interface (<code>imad-web</code>) are all packageable as <code>imad-app</code> wrapper.</p>
-<p>We used maven to manage the build process and to make it easy to deploy the package to any J2EE application, not just this project.</p>
+<p>We used maven to manage the build process and to make it easy to deploy the package to any JEE application, not just this project.</p>
 <p>The UI is also prepared for a production-ready environment (see <strong>R8 Overview</strong>) using <code>npm</code>.</p>
 <h3 id="r6-deploy-service-components-onto-enterprise-application-servers.">R6 Deploy service components onto enterprise application servers.</h3>
 <p>Complete? Yes</p>
@@ -201,9 +205,9 @@
 <p><strong>References</strong></p>
 <ol class="incremental" type="1">
 <li>CP630OC project</li>
-<li>https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/</li>
+<li><a href="https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/" class="uri">https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/</a></li>
 <li>CP630OC Assignment 3</li>
-<li>https://www.baeldung.com/java-org-json</li>
-<li>https://sapui5.hana.ondemand.com/</li>
-<li>https://www.mec.ca/en</li>
+<li><a href="https://www.baeldung.com/java-org-json" class="uri">https://www.baeldung.com/java-org-json</a></li>
+<li><a href="https://sapui5.hana.ondemand.com/" class="uri">https://sapui5.hana.ondemand.com/</a></li>
+<li><a href="https://www.mec.ca/en" class="uri">https://www.mec.ca/en</a></li>
 </ol>

@@ -41,7 +41,7 @@ To view the UI in its default state with ***mock*** data (present to confirm the
 
 [http://localhost:8080/imad-web/imad-ui/dist/index.html](http://localhost:8080/imad-web/imad-ui/dist/index.html)
 
-**Note:** In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.
+> **Note:** In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.
 
 ![IMAD UI with Mock data loaded (before analytical data generated)](images/R0-1_mock_data_execution.png){width=70%}
 
@@ -50,12 +50,11 @@ To generate the analytical data and populate the analytical tables go to:
 
 [http://localhost:8080/imad-rs/rest/cardProcessing](http://localhost:8080/imad-rs/rest/cardProcessing)
 
-This RESTful call returns a simple confirmation message data generation process has begun. The response looks like:
-`{"results": "process started"}`
+This RESTful call returns a simple confirmation message data generation process has begun. The response looks like: `{"results": "process started"}`
 
-The result of running this command is generating all of the analytical data and populating the 
+The result of running this command is generating all of the analytical data and populating the Analytical tables with data.
 
-**NOTE:** Only run this data loading command ***once*** in order to see the intended demonstration.
+> **NOTE:** Only run this data loading command ***ONE TIME*** in order to see the intended demonstration.
 
 #### View the Analytical Data in Dashboard UI
 To view the UI with the analytical data populated, refresh the UI index page, or go to:
@@ -184,7 +183,7 @@ Complete? Yes
 
 The IMAD application is well-layered, following the separation of concerns design pattern. The persistence layer (`imad-ejb`, `jpa`), business logic (`imad-ejb`, `business`), web services (`imad-rs`), and web interface (`imad-web`) are all packageable as `imad-app` wrapper.
 
-We used maven to manage the build process and to make it easy to deploy the package to any J2EE application, not just this project.
+We used maven to manage the build process and to make it easy to deploy the package to any JEE application, not just this project.
 
 The UI is also prepared for a production-ready environment (see **R8 Overview**) using `npm`. 
 
@@ -313,8 +312,8 @@ If Yes, briefly describe:
 **References**
 
 1. CP630OC project
-2. https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/
+2. [https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/](https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/)
 3. CP630OC Assignment 3
-4. https://www.baeldung.com/java-org-json
-5. https://sapui5.hana.ondemand.com/
-6. https://www.mec.ca/en
+4. [https://www.baeldung.com/java-org-json](https://www.baeldung.com/java-org-json)
+5. [https://sapui5.hana.ondemand.com/](https://sapui5.hana.ondemand.com/)
+6. [https://www.mec.ca/en](https://www.mec.ca/en)
