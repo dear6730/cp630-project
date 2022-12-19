@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "caf82b32-38d4-4367-8f0e-4b589191085e",
+		"name": "3-CP630 Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "IMAD - Process Cards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imad-rs/rest/cardProcessing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imad-rs",
+						"rest",
+						"cardProcessing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IMAD - Card 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test header contains total stock value: 729052.5\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"729052.5\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Category contains Cycling\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cycling\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Location contains Barrie\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Barrie\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imad-rs/rest/card1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imad-rs",
+						"rest",
+						"card1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IMAD - Card 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test measure contains specific value\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"216882.45\");\r",
+							"});\r",
+							"\r",
+							"var results = pm.response.json().results;\r",
+							"pm.test('Number of measures = ' + results.length, function () {\r",
+							"    pm.expect(results.length).to.equal(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imad-rs/rest/card2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imad-rs",
+						"rest",
+						"card2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IMAD - Card 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test product contains stock value: 97444.35\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"97444.35\");\r",
+							"});\r",
+							"\r",
+							"var results = pm.response.json().results;\r",
+							"pm.test('Number of products = ' + results.length, function () {\r",
+							"    pm.expect(results.length).to.equal(5);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imad-rs/rest/card3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imad-rs",
+						"rest",
+						"card3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IMAD - Card 4",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imad-rs/rest/card4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imad-rs",
+						"rest",
+						"card4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IMAD - Card 5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test product contains SKU: 50004\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"50004\");\r",
+							"});\r",
+							"\r",
+							"var results = pm.response.json().results;\r",
+							"pm.test('Number of products > 1 = ' + results.length, function () {\r",
+							"    pm.expect(results.length).to.greaterThan(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imad-rs/rest/card5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imad-rs",
+						"rest",
+						"card5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IMAD - Card 6",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imad-rs/rest/card6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imad-rs",
+						"rest",
+						"card6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
