@@ -38,14 +38,13 @@ public class ImadDBInsert {
 			insertStock();
 			insertOrder(TOTAL_RECORDS);
 			insertOrderItem(TOTAL_RECORDS);
-
 			insertHistoricalStock();
 
 			ps.close();
 			logger.info("Ending------------------------------------------------");
-		} catch (SQLException e) { // Handle errors for JDBC
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (Exception e) { // Handle errors for Class.forName
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally { 
 			ConnectionFactory.getInstance().closeConnection(connection);
@@ -424,112 +423,6 @@ public class ImadDBInsert {
 		}
 		iModelUpdated = ps.executeBatch();
 		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_TORDER_ITEM");
-	}
-
-
-	private void insertMockTotalStockCategory(int totalRecords) throws SQLException {
-		String sql = "INSERT INTO IMAD_ATOTAL_STOCK_CATEGORY (NAME,VALUE) VALUES (?,?)";
-		ps = (PreparedStatement) connection.prepareStatement(sql);
-		Random randomGenerator = new Random();
-
-		for (int i = 1; i <= totalRecords; i++) {	
-			ps.setString(1, "Category " + i);
-			ps.setInt(2, randomGenerator.nextInt(1000) + 1);
-			ps.addBatch();
-		}
-		iModelUpdated = ps.executeBatch();
-		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOTAL_STOCK_CATEGORY");
-	}
-
-	private void insertMockTotalStockValue() throws SQLException {
-		String sql1= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 1','Category1',"+new BigDecimal(999)+")";
-		String sql2= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 1','Category2',"+new BigDecimal(550)+")";
-		String sql3= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 1','Category3',"+new BigDecimal(300)+")";
-
-		String sql4= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 2','Category1',"+new BigDecimal(1000)+")";
-		String sql5= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 2','Category2',"+new BigDecimal(550)+")";
-		String sql6= "INSERT INTO IMAD_ATOTAL_STOCK_VALUE (CITY,category_name,total_category) VALUES ('Location 2','Category3',"+new BigDecimal(400)+")";
-		
-		Statement statement = connection.createStatement();
-		statement.addBatch(sql1);
-		statement.addBatch(sql2);
-		statement.addBatch(sql3);
-		statement.addBatch(sql4);
-		statement.addBatch(sql5);
-		statement.addBatch(sql6);
-		iModelUpdated =  statement.executeBatch();
-		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOTAL_STOCK_VALUE");
-	}
-
-	private void insertMockTop5Products() throws SQLException {
-
-		// mock the SORTED results going into the A table
-		String sql1= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 7', '3234.56')";
-		String sql2= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 2', '2334.56')";
-		String sql3= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 1', '1234.56')";
-		String sql4= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 5', '934.56')";
-		String sql5= "INSERT INTO IMAD_ATOP_5_PRODUCTS (NAME,VALUE) VALUES ('Product 17', '834.56')";
-
-		Statement statement = connection.createStatement();
-		statement.addBatch(sql1);
-		statement.addBatch(sql2);
-		statement.addBatch(sql3);
-		statement.addBatch(sql4);
-		statement.addBatch(sql5);
-
-		iModelUpdated =  statement.executeBatch();
-		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ATOP_5_PRODUCTS");
-	}
-
-	private void insertMockOverviewStockingIssues() throws SQLException {
-		String sql = "INSERT INTO IMAD_ASTOCK_ISSUES (percentage_out_of_stock, percentage_nearly_out_of_stock) VALUES (?,?)";
-		ps = (PreparedStatement) connection.prepareStatement(sql);
-		Random randomGenerator = new Random();
-
-		Integer num = 100;
-		Integer oos = randomGenerator.nextInt(num);
-		num -= oos;
-		Integer noos = randomGenerator.nextInt(num);
-
-		ps.setBigDecimal(1, new BigDecimal(oos));
-		ps.setBigDecimal(2, new BigDecimal(noos));
-		ps.addBatch();
-
-		iModelUpdated = ps.executeBatch();
-		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ASTOCK_ISSUES");
-	}
-
-	private void insertMockCurrentStateOfStock(int totalRecords) throws SQLException {
-
-		String sql = "INSERT INTO IMAD_ACURRENT_STATE_OF_STOCK (SKU,NAME,QUANTITY,STATUS,STATUS_STATE) VALUES (?,?,?,?,?)";
-		ps = (PreparedStatement) connection.prepareStatement(sql);
-		Random randomGenerator = new Random();
-
-		for (int i = 1; i <= totalRecords; i++) {	
-
-			int val = randomGenerator.nextInt(15);
-			if(val % 5 == 0) { // increase the chance of 0
-				val = 0;
-			}
-
-			if( val < 8) { // ignoring things with decent stock
-
-				ps.setInt(1, i+50050);
-				ps.setString(2, "Product " + i);
-				ps.setInt(3, val);
-				if(val == 0) {
-					ps.setString(4, "Out of Stock");
-					ps.setString(5, "Error");
-				} else {
-					ps.setString(4, "Nearly Out");
-					ps.setString(5, "Warning");
-				}
-
-				ps.addBatch();
-			}
-		}
-		iModelUpdated = ps.executeBatch();
-		logger.info("Inserting new " + iModelUpdated.length + " rows at IMAD_ACURRENT_STATE_OF_STOCK");
 	}
 
 	//productsOutOfStockOrNearlyOutOfStock

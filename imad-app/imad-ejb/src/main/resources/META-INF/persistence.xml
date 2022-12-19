@@ -13,7 +13,7 @@
         <properties>
             <!-- Properties for Hibernate, create, create-drop, update -->
             <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.show_sql" value="false" />
         </properties>
     </persistence-unit>
 </persistence>
