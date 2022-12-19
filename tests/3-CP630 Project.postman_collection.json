@@ -189,6 +189,35 @@
 		},
 		{
 			"name": "IMAD - Card 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test outOfStockPercentage contains value: 4.76\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"4.76\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test nearlyOutOfStockPercentage contains value: 9.52\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"9.52\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test combinedPercentage contains value: 14.28\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"14.28\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -257,6 +286,40 @@
 		},
 		{
 			"name": "IMAD - Card 6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test header contains number: 14.28\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"14.28\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Month contains Apr\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Apr\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Stock contains value 42.85\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"42.85\");\r",
+							"});\r",
+							"\r",
+							"var list = pm.response.json().results.list;\r",
+							"pm.test('Number of list items is equal to ' + list.length, function () {\r",
+							"    pm.expect(list.length).to.equal(6);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
