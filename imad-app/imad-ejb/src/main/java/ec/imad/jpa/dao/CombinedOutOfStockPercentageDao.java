@@ -10,4 +10,5 @@ import ec.imad.jpa.model.CombinedOutOfStockPercentage;
 public interface CombinedOutOfStockPercentageDao {
     public void saveModel(CombinedOutOfStockPercentage combinedOutOfStockPercentage);
     public List<CombinedOutOfStockPercentage> getAll();
+    public void saveModel(List<CombinedOutOfStockPercentage> combinedOutOfStockPercentageList);
 }

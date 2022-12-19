@@ -21,11 +21,11 @@ import ec.imad.jpa.dao.CombinedOutOfStockHeaderDao;
 import ec.imad.jpa.dao.CombinedOutOfStockPercentageDao;
 import ec.imad.jpa.dao.CurrentStateOfStockDao;
 import ec.imad.jpa.dao.OverviewStockingIssuesDao;
-import ec.imad.jpa.dao.ProductDao;
-import ec.imad.jpa.dao.StockDao;
 import ec.imad.jpa.dao.Top5ProductsDao;
 import ec.imad.jpa.dao.TotalStockCategoryDao;
 import ec.imad.jpa.dao.TotalStockValueDao;
+import ec.imad.jpa.model.CombinedOutOfStockHeader;
+import ec.imad.jpa.model.CombinedOutOfStockPercentage;
 import ec.imad.jpa.model.TotalStockCategory;
 import ec.imad.jpa.model.TotalStockValue;
 
@@ -55,12 +55,6 @@ public class CardsService {
     private TotalStockValueDao totalStockValueDao;
 
     @EJB
-    private StockDao stockDao;
-
-    @EJB
-    private ProductDao productDao;
-
-    @EJB
     private ProcessingScenariosStatelessLocal processingScenariosStatelessLocal;
 
     @GET
@@ -72,19 +66,9 @@ public class CardsService {
         processingScenariosStatelessLocal.calculateTop5StockValueProducts();
         processingScenariosStatelessLocal.calculateOverviewStockingIssues();
         processingScenariosStatelessLocal.generateCurrentStateOfStockList();
+        processingScenariosStatelessLocal.calculateCombinedPercentageHistory();
 
         return "{\"results\": \"process started\"}";
-    }
-
-    /*
-     * We should delete later.  
-     */
-    @GET
-    @Path("/cardX")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String testingJPA() {
-
-        return "{nothing to see here}";
     }
 
     @GET
@@ -94,6 +78,10 @@ public class CardsService {
         
         List<TotalStockValue> totalStockValues = totalStockValueDao.getAll();
         Map<String, Map<String, BigDecimal>> locationMap = new HashMap<String, Map<String, BigDecimal>>();
+
+        if(totalStockValues == null || totalStockValues.size() == 0){
+            return this.returnEmpty();
+        } 
 
         // 1- set list ******************
         //get all locations
@@ -187,13 +175,43 @@ public class CardsService {
     @Path("/card6")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCombinedOutOfStockPercentage() {
-        return "{\"results\":" + combinedOutOfStockPercentageDao.getAll() + "}";
+        List<CombinedOutOfStockHeader> outOfStockHeaders = combinedOutOfStockHeaderDao.getAll();
+        List<CombinedOutOfStockPercentage> outOfStockPercentages = combinedOutOfStockPercentageDao.getAll();
+
+        if(outOfStockHeaders == null || outOfStockHeaders.size() == 0){
+            return this.returnEmpty();
+        }
+        CombinedOutOfStockHeader outOfStockHeader = outOfStockHeaders.get(0);
+
+        // transform from Java to JSON
+        JSONObject header = new JSONObject();
+        header.put("number", outOfStockHeader.getNumber());
+        header.put("unit", "%");
+        header.put("trend", outOfStockHeader.getTrend());
+        header.put("state", outOfStockHeader.getState());
+        header.put("details", "Current Combined Percentage");
+
+        JSONArray list = new JSONArray();
+        for (CombinedOutOfStockPercentage percentage : outOfStockPercentages) {
+            JSONObject item = new JSONObject();
+            item.put("Month", percentage.getMonth());
+            item.put("Stock", percentage.getStock());
+            list.put(item);
+        }
+
+        // sety body: 2, 1, 3
+        JSONObject body = new JSONObject();
+        body.put("header", header);
+        body.put("list", list);
+
+        JSONObject results = new JSONObject();
+        results.put("results", body);
+        return results.toString();
     }
 
-    @GET
-    @Path("/card6Header")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getCombinedOutOfStockHeader() {
-        return "{\"results\":" + combinedOutOfStockHeaderDao.getAll() + "}";
+    private String returnEmpty() {
+        JSONObject results = new JSONObject();
+        results.put("results", "");
+        return results.toString();
     }
 }

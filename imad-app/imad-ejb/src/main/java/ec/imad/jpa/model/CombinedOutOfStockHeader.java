@@ -18,22 +18,18 @@ public class CombinedOutOfStockHeader implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private BigDecimal number; // predicted percentage
+    private BigDecimal number; // current value
     private String trend; // "Up", "Down", "None"
     private String state; // "Good", "Warning", "Error"
-    private String details; // sub-title type label for the predicted percentage/header area
-    private BigDecimal target; // target percentage
 
 
     public CombinedOutOfStockHeader() {
     }
 
-    public CombinedOutOfStockHeader(BigDecimal number, String trend, String state, String details, BigDecimal target) {
+    public CombinedOutOfStockHeader(BigDecimal number, String trend, String state) {
         this.number = number;
         this.trend = trend;
         this.state = state;
-        this.details = details;
-        this.target = target;
     }
 
     public Integer getId() {
@@ -68,36 +64,12 @@ public class CombinedOutOfStockHeader implements Serializable {
         this.state = state;
     }
 
-    public String getDetails() {
-        return this.details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public BigDecimal getTarget() {
-        return this.target;
-    }
-
-    public void setTarget(BigDecimal target) {
-        this.target = target;
-    }
-
     @Override
     public String toString() {
-        // return "{\"number\": \"" + getNumber()
-        //     + "\",\"trend\":" + getTrend() 
-        //     + "\",\"state\":" + getState() 
-        //     + "\",\"details\":" + getDetails() 
-        //     + "\",\"target\":" + getTarget() 
-        //     + "}";
 
         return "{\"number\": \"" + getNumber()
-            + "\",\"unit\": \"%\",\"trend\": \"" + getTrend()
+            + "\",\"trend\": \"" + getTrend()
             + "\",\"state\": \"" + getState()
-            + "\",\"target\": {\"number\": " + getTarget()
-            + ",\"unit\": \"%\"},\"details\": \"" + getDetails()
             + "\"}";
     }
 }

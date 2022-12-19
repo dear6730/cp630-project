@@ -9,4 +9,5 @@ public interface ProcessingScenariosStatelessRemote {
     public void calculateTop5StockValueProducts();
     public void calculateOverviewStockingIssues();
     public void generateCurrentStateOfStockList();
+    public void calculateCombinedPercentageHistory();
 }
