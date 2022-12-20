@@ -13,6 +13,26 @@
 <li>MySQL is running, with the same user and ‘test’ database as course assignments.</li>
 <li>JBoss is installed.</li>
 </ul>
+<h4 id="important-notes">Important Notes:</h4>
+<ul class="incremental">
+<li>The build process uses a <code>create-drop</code> persistence strategy for entity beans. As a result, all tables will be dropped and created during deployment or undeployment.</li>
+<li>Please ignore the deployment errors regarding <code>ALTER TABLES</code> during the deployment, as they are related to the <code>create-drop</code> strategy.</li>
+<li><strong>To run the simulation again</strong>, please re-deploy the application. The deployment will recreate all of the tables.</li>
+</ul>
+<h4 id="summary-of-steps">Summary of Steps</h4>
+<p>For complete details regarding these steps, please see below.</p>
+<ol class="incremental" type="1">
+<li><code>standalone.bat -c standalone-full.xml</code></li>
+<li><code>mvn clean package wildfly:deploy</code></li>
+<li><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" class="uri">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></li>
+<li>Check “A” Tables</li>
+<li><a href="http://localhost:8080/imad-rs/rest/cardProcessing" class="uri">http://localhost:8080/imad-rs/rest/cardProcessing</a></li>
+<li>Check “A” Tables again</li>
+<li><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" class="uri">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></li>
+<li>Show deskop, iPad, iPhone form factors</li>
+<li><code>mvn wildfly:undeploy</code></li>
+<li>Check “T” and “A” Tables</li>
+</ol>
 <h4 id="start-jboss-web-application-server">Start JBoss web application server</h4>
 <p>From <code>C:\enterprise\workspace\project</code> run:</p>
 <p><code>standalone.bat -c standalone-full.xml</code></p>
@@ -25,9 +45,7 @@
 <h4 id="view-base-ui-with-mock-data">View Base UI (with Mock Data)</h4>
 <p>To view the UI in its default state with <strong><em>mock</em></strong> data (present to confirm the UI is functional), go to:</p>
 <p><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" class="uri">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></p>
-<blockquote>
 <p><strong>Note:</strong> In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.</p>
-</blockquote>
 <figure>
 <img src="images/R0-1_mock_data_execution.png" alt="IMAD UI with Mock data loaded (before analytical data generated)" style="width:70.0%" /><figcaption>IMAD UI with Mock data loaded (before analytical data generated)</figcaption>
 </figure>
@@ -49,6 +67,9 @@
 <p>To view and call the direct service calls used by the various cards on the dashboard, go to:</p>
 <p><a href="http://localhost:8080/imad-rs/" class="uri">http://localhost:8080/imad-rs/</a></p>
 <p>Clicking on each button will open a new browser window and show the JSON response to the RESTful web service call. Note, these are the calls made and the data consumed directly by the IMAD dashboard UI. The results seen in these calls are the results presented on the dashboard.</p>
+<h4 id="undeploy-the-web-application">Undeploy the Web Application</h4>
+<p>To undeploy the IMAD web application, from <code>C:\enterprise\workspace\project</code> run:</p>
+<p><code>mvn wildfly:undeploy</code></p>
 <h2 id="r1-requirements-project">R1 Requirements (project)</h2>
 <h3 id="r1-write-a-project-proposal-2-3-pages.">R1 Write a project proposal (2-3 pages).</h3>
 <p>Complete? Yes</p>
@@ -190,23 +211,15 @@
 <p>Additionally, the services were verified using automated Postman tests. These are located in the project folder <code>C:\enterprise\workspace\project\tests</code>, and can be imported into Postman to run.</p>
 <p>All called services are logged by the JBoss logger and important methods and key steps are documented throughout the project code.</p>
 <h3 id="r10-demonstrate-your-term-project-in-final-project-presentation-slides-short-video.">R10 Demonstrate your term project in final project presentation, slides, short video.</h3>
-<p><strong>DELETE LATER</strong> Video script for Donna: 1-shows the IMAD dashboard showing the A tables data (maybe browser should be at 90%) 2-minimize the browser, it shows Github CP630 project home on right side. Shows the dev plan on the left side (or not…it is up to you. If you decide on it, shows git hub as full screen.) 3-shows VS code, move over the modules: ejb, rs, web, etc. (Jboss is already up) Run mvn clean package wildfly:deploy. shows the MVN success log. shows the Jboss success deploy and the singleton running and loadind data. 4-Shows this project report on browser and mover over on process cards link and the ui link. 5-Shows the Dashboard in desktop mode, another browser in ipad mode.</p>
-<p>Summary: 1-imad dashboard 2-Github (and Dev Plan) 3-VS Code (packaging and deploy) 4-Dashboard in Desktop, Tablet and Phone. Landscape is already better than portrait for phones.</p>
-<p>Should we show the MySQL tables?****</p>
-<p>Please let me know any questions and we can discuss the details. Also, please add or remove anything you want to.</p>
 <p>Complete? (Yes/No)</p>
 <h4 id="r10-overview">R10 Overview</h4>
-<p>If Yes, briefly describe:</p>
-<ol class="incremental" type="1">
-<li>what you have done,</li>
-<li>what are the new features.</li>
-<li>Take some screen to demonstrate the features if applicable.</li>
-</ol>
+<p>Our CP630 final project demonstration video can be accessed at: <a href=""></a></p>
+<p>This video shows … highlights … etc…</p>
 <p><strong>References</strong></p>
 <ol class="incremental" type="1">
 <li>CP630OC project</li>
-<li><a href="https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/" class="uri">https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/</a></li>
 <li>CP630OC Assignment 3</li>
+<li><a href="https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/" class="uri">https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/</a></li>
 <li><a href="https://www.baeldung.com/java-org-json" class="uri">https://www.baeldung.com/java-org-json</a></li>
 <li><a href="https://sapui5.hana.ondemand.com/" class="uri">https://sapui5.hana.ondemand.com/</a></li>
 <li><a href="https://www.mec.ca/en" class="uri">https://www.mec.ca/en</a></li>

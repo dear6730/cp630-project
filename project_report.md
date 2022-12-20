@@ -21,6 +21,25 @@ In this section, we describe how to run and view different aspects of the projec
 - MySQL is running, with the same user and 'test' database as course assignments.
 - JBoss is installed.
 
+#### Important Notes:
+- The build process uses a `create-drop` persistence strategy for entity beans. As a result, all tables will be dropped and created during deployment or undeployment.
+- Please ignore the deployment errors regarding `ALTER TABLES` during the deployment, as they are related to the `create-drop` strategy.
+- **To run the simulation again**, please re-deploy the application. The deployment will recreate all of the tables.
+
+#### Summary of Steps
+For complete details regarding these steps, please see below.
+
+1. `standalone.bat -c standalone-full.xml`
+2. `mvn clean package wildfly:deploy`
+3. [http://localhost:8080/imad-web/imad-ui/dist/index.html](http://localhost:8080/imad-web/imad-ui/dist/index.html)
+4. Check "A" Tables
+5. [http://localhost:8080/imad-rs/rest/cardProcessing](http://localhost:8080/imad-rs/rest/cardProcessing)
+6. Check "A" Tables again
+7. [http://localhost:8080/imad-web/imad-ui/dist/index.html](http://localhost:8080/imad-web/imad-ui/dist/index.html)
+8. Show deskop, iPad, iPhone form factors
+9. `mvn wildfly:undeploy`
+10. Check "T" and "A" Tables
+
 #### Start JBoss web application server
 From `C:\enterprise\workspace\project` run:
 
@@ -41,7 +60,7 @@ To view the UI in its default state with ***mock*** data (present to confirm the
 
 [http://localhost:8080/imad-web/imad-ui/dist/index.html](http://localhost:8080/imad-web/imad-ui/dist/index.html)
 
-> **Note:** In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.
+**Note:** In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.
 
 ![IMAD UI with Mock data loaded (before analytical data generated)](images/R0-1_mock_data_execution.png){width=70%}
 
@@ -70,6 +89,11 @@ To view and call the direct service calls used by the various cards on the dashb
 
 Clicking on each button will open a new browser window and show the JSON response to the RESTful web service call. Note, these are the calls made and the data consumed directly by the IMAD dashboard UI. The results seen in these calls are the results presented on the dashboard.
   
+#### Undeploy the Web Application
+To undeploy the IMAD web application, from `C:\enterprise\workspace\project` run:
+
+`mvn wildfly:undeploy`
+
   
 ## R1 Requirements (project)
 
@@ -278,42 +302,21 @@ All called services are logged by the JBoss logger and important methods and key
 
 
 ### R10 Demonstrate your term project in final project presentation, slides, short video.
-
-**DELETE LATER** Video script for Donna:
-1-shows the IMAD dashboard showing the A tables data (maybe browser should be at 90%)
-2-minimize the browser, it shows Github CP630 project home on right side. Shows the dev plan on the left side (or not...it is up to you. If you decide on it, shows git hub as full screen.)
-3-shows VS code, move over the modules: ejb, rs, web, etc. (Jboss is already up) Run mvn clean package wildfly:deploy. shows the MVN success log. shows the Jboss success deploy and the singleton running and loadind data.
-4-Shows this project report on browser and mover over on process cards link and the ui link.
-5-Shows the Dashboard in desktop mode, another browser in ipad mode.
-
-Summary:
-1-imad dashboard
-2-Github (and Dev Plan)
-3-VS Code (packaging and deploy)
-4-Dashboard in Desktop, Tablet and Phone. Landscape is already better than portrait for phones.
-
-Should we show the MySQL tables?****
-
-Please let me know any questions and we can discuss the details.
-Also, please add or remove anything you want to.
  
 Complete? (Yes/No) 
 
 #### R10 Overview
 
-If Yes, briefly describe: 
+Our CP630 final project demonstration video can be accessed at: []()
 
-1. what you have done, 
-2. what are the new features. 
-3. Take some screen to demonstrate the features if applicable. 
-
+This video shows ... highlights ... etc...
 
 
 **References**
 
 1. CP630OC project
-2. [https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/](https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/)
-3. CP630OC Assignment 3
+2. CP630OC Assignment 3
+3. [https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/](https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/)
 4. [https://www.baeldung.com/java-org-json](https://www.baeldung.com/java-org-json)
 5. [https://sapui5.hana.ondemand.com/](https://sapui5.hana.ondemand.com/)
 6. [https://www.mec.ca/en](https://www.mec.ca/en)
