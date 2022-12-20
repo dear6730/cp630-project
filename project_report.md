@@ -31,34 +31,29 @@ For complete details regarding these steps, please see below.
 
 1. `standalone.bat -c standalone-full.xml`
 2. `mvn clean package wildfly:deploy`
-3. [http://localhost:8080/imad-web/imad-ui/dist/index.html](http://localhost:8080/imad-web/imad-ui/dist/index.html)
+3. <a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a>
 4. Check "A" Tables
-5. [http://localhost:8080/imad-rs/rest/cardProcessing](http://localhost:8080/imad-rs/rest/cardProcessing)
+5. <a href="http://localhost:8080/imad-rs/rest/cardProcessing" target="_blank">http://localhost:8080/imad-rs/rest/cardProcessing</a>
 6. Check "A" Tables again
-7. [http://localhost:8080/imad-web/imad-ui/dist/index.html](http://localhost:8080/imad-web/imad-ui/dist/index.html)
+7. <a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a>
 8. Show deskop, iPad, iPhone form factors
 9. `mvn wildfly:undeploy`
 10. Check "T" and "A" Tables
 
 #### Start JBoss web application server
-From `C:\enterprise\workspace\project` run:
+From `C:\enterprise\workspace\project\imad-app>` run:
 
 `standalone.bat -c standalone-full.xml`
 
-#### Package the IMAD web application for use by JEE environment
-From `C:\enterprise\workspace\project` run:
+#### Package and Deploy the IMAD web application for use by JEE environment
+From `C:\enterprise\workspace\project\imad-app>` run:
 
-`mvn clean package`
-
-#### Deploy the Web Application
-To deploy the IMAD web application to JBoss, from `C:\enterprise\workspace\project` run:
-
-`mvn wildfly:deploy`
+`mvn clean package wildfly:deploy`
 
 #### View Base UI (with Mock Data)
 To view the UI in its default state with ***mock*** data (present to confirm the UI is functional), go to:
 
-[http://localhost:8080/imad-web/imad-ui/dist/index.html](http://localhost:8080/imad-web/imad-ui/dist/index.html)
+<a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a>
 
 **Note:** In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.
 
@@ -67,7 +62,7 @@ To view the UI in its default state with ***mock*** data (present to confirm the
 #### Generate Analytical Data
 To generate the analytical data and populate the analytical tables go to:
 
-[http://localhost:8080/imad-rs/rest/cardProcessing](http://localhost:8080/imad-rs/rest/cardProcessing)
+<a href="http://localhost:8080/imad-rs/rest/cardProcessing" target="_blank">http://localhost:8080/imad-rs/rest/cardProcessing</a>
 
 This RESTful call returns a simple confirmation message data generation process has begun. The response looks like: `{"results": "process started"}`
 
@@ -78,19 +73,19 @@ The result of running this command is generating all of the analytical data and 
 #### View the Analytical Data in Dashboard UI
 To view the UI with the analytical data populated, refresh the UI index page, or go to:
 
-[http://localhost:8080/imad-web/imad-ui/dist/index.html](http://localhost:8080/imad-web/imad-ui/dist/index.html)
+<a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a>
 
 ![IMAD UI with Real data loaded (after analytical data generated)](images/R0-2_processed_data_execution.png){width=70%}
 
 #### Call Individual REST Service Calls (Test Page)
 To view and call the direct service calls used by the various cards on the dashboard, go to:
 
-[http://localhost:8080/imad-rs/](http://localhost:8080/imad-rs/)
+<a href="http://localhost:8080/imad-rs/" target="_blank">http://localhost:8080/imad-rs/</a>
 
 Clicking on each button will open a new browser window and show the JSON response to the RESTful web service call. Note, these are the calls made and the data consumed directly by the IMAD dashboard UI. The results seen in these calls are the results presented on the dashboard.
   
 #### Undeploy the Web Application
-To undeploy the IMAD web application, from `C:\enterprise\workspace\project` run:
+To undeploy the IMAD web application, from `C:\enterprise\workspace\project\imad-app>` run:
 
 `mvn wildfly:undeploy`
 
@@ -225,7 +220,7 @@ Complete? Yes
 
 #### R6 Overview
 
-Using the `mvn wildfly:deploy` command, the application is successfully deployed to the JBoss web server (locally hosted). The log and console views show the `.ear` package deployed.
+Using the `mvn clean package wildfly:deploy` command, the application is successfully deployed to the JBoss web server (locally hosted). The log and console views show the `.ear` package deployed.
 
 
 ### R7 Create web services (SOAP, RESTful) to use the data service components.
@@ -239,7 +234,7 @@ Complete? Yes
 
 The conscious decision was made to use RESTful web services to support the dashboard interface. This was a result of using the chosen user interface library, SAPUI5. (See **R8 Overview**.) SAPUI5 is designed to be used with RESTful web services and supports those best.
 
-The RESTful calls used by the UI can be called directly from a services test page: [http://localhost:8080/imad-rs/](http://localhost:8080/imad-rs/). All of the web services return a JSON response. The most complex cards leverage a JSON library, `JSON-Java` (`org.json`). (See: [https://www.baeldung.com/java-org-json](https://www.baeldung.com/java-org-json).) The `JSONObject` provides a more friendly way to work with JSON data in Java over directly building and manipulating `String` data.
+The RESTful calls used by the UI can be called directly from a services test page: <a href="http://localhost:8080/imad-rs/" target="_blank">http://localhost:8080/imad-rs/</a>. All of the web services return a JSON response. The most complex cards leverage a JSON library, `JSON-Java` (`org.json`). (See: <a href="https://www.baeldung.com/java-org-json" target="_blank">https://www.baeldung.com/java-org-json</a>.) The `JSONObject` provides a more friendly way to work with JSON data in Java over directly building and manipulating `String` data.
 
 The calls are made from the `webapp` JavaScript dashboard and the response is consumed and presented in the UI.
 
@@ -303,7 +298,7 @@ All called services are logged by the JBoss logger and important methods and key
 
 ### R10 Demonstrate your term project in final project presentation, slides, short video.
  
-Complete? (Yes/No) 
+Complete? Yes
 
 #### R10 Overview
 
@@ -316,7 +311,7 @@ This video shows ... highlights ... etc...
 
 1. CP630OC project
 2. CP630OC Assignment 3
-3. [https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/](https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/)
-4. [https://www.baeldung.com/java-org-json](https://www.baeldung.com/java-org-json)
-5. [https://sapui5.hana.ondemand.com/](https://sapui5.hana.ondemand.com/)
-6. [https://www.mec.ca/en](https://www.mec.ca/en)
+3. <a href="https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/" target="_blank">https://news.sap.com/2022/10/sap-nhl-develop-nhl-venue-metrics/</a>
+4. <a href="https://www.baeldung.com/java-org-json" target="_blank">https://www.baeldung.com/java-org-json</a>
+5. <a href="https://sapui5.hana.ondemand.com/" target="_blank">https://sapui5.hana.ondemand.com/</a>
+6. <a href="https://www.mec.ca/en" target="_blank">https://www.mec.ca/en</a>
