@@ -37,8 +37,9 @@ For complete details regarding these steps, please see below.
 6. Check "A" Tables again
 7. <a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a>
 8. Show deskop, iPad, iPhone form factors
-9. `mvn wildfly:undeploy`
-10. Check "T" and "A" Tables
+9. <a href="http://localhost:8080/imad-rs/" target="_blank">http://localhost:8080/imad-rs/</a>
+10. `mvn wildfly:undeploy`
+11. Check "T" and "A" Tables
 
 #### Start JBoss web application server
 From `C:\enterprise\workspace\project\imad-app>` run:
@@ -55,7 +56,7 @@ To view the UI in its default state with ***mock*** data (present to confirm the
 
 <a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a>
 
-**Note:** In order to see the IMAD app in action, the analytical data must be created from the raw transactional data.
+**Note:** In order to see the IMAD web application in action, the analytical data must be created from the raw transactional data.
 
 ![IMAD UI with Mock data loaded (before analytical data generated)](images/R0-1_mock_data_execution.png){width=70%}
 
@@ -260,7 +261,7 @@ Complete? Yes
 
 #### R8 Overview
 
-The IMAD user interface is built using the professional framework SAPUI5. (Reference: [https://sapui5.hana.ondemand.com/](https://sapui5.hana.ondemand.com/) Leveraging this powerful UI library allowed us to build cards that were meaningful and attractive with a minimum of development work. The cards in the framework themselves are JSON-based. As a result, this informed much of the data modeling and web services work for the Analytical data.
+The IMAD user interface is built using the professional framework SAPUI5. (Reference: <a href="https://sapui5.hana.ondemand.com/" target="_blank">https://sapui5.hana.ondemand.com/</a>) Leveraging this powerful UI library allowed us to build cards that were meaningful and attractive with a minimum of development work. The cards in the framework themselves are JSON-based. As a result, this informed much of the data modeling and web services work for the Analytical data.
 
 From the user's perspective, this is the end point of the ETL process, where the prepared analytical data is loaded into a visual UI.
 
@@ -269,7 +270,6 @@ The SAPUI5 library was built on responsive design principles, allowing the IMAD 
 From a development perspective, the UI follows MVC principles, with a controller for the dashboard which is driven by the model data and is presented (again on the dashboard) in the various card views.
 
 The website itself is built to be production-ready, using `npm` and its build process, which minifies the code for the most efficient loading. The default view of the project website uses this minified code.
-
 
 
 ### R9 Test your services, log your services, and document your term project.
@@ -302,9 +302,11 @@ Complete? Yes
 
 #### R10 Overview
 
-Our CP630 final project demonstration video can be accessed at: []()
+Our CP630 final project demonstration video can be accessed at: <a href="https://youtu.be/RHuGID6NcQ8" target="_blank">https://youtu.be/RHuGID6NcQ8</a>.
 
-This video shows ... highlights ... etc...
+The video shows our collaborative efforts and, by following the the Summary of Steps, walks through the IMAD web application. The Analytical tables and web services are highlighted.
+
+Please note, this video has no sound. It is narrated by text and images.
 
 
 **References**
