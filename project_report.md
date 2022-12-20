@@ -23,7 +23,7 @@ In this section, we describe how to run and view different aspects of the projec
 
 #### Important Notes:
 - The build process uses a `create-drop` persistence strategy for entity beans. As a result, all tables will be dropped and created during deployment or undeployment.
-- Please ignore the deployment errors regarding `ALTER TABLES` during the deployment, as they are related to the `create-drop` strategy.
+- Please ignore the deployment errors regarding `ALTER TABLES`, as they are related to the `create-drop` strategy.
 - **To run the simulation again**, please re-deploy the application. The deployment will recreate all of the tables.
 
 #### Summary of Steps
@@ -33,7 +33,7 @@ For complete details regarding these steps, please see below.
 2. `mvn clean package wildfly:deploy`
 3. <a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a>
 4. Check "A" Tables
-5. <a href="http://localhost:8080/imad-rs/rest/cardProcessing" target="_blank">http://localhost:8080/imad-rs/rest/cardProcessing</a>
+5. <a href="http://localhost:8080/imad-rs/rest/cardProcessing" target="_blank">http://localhost:8080/imad-rs/rest/cardProcessing</a> **(only run once)**
 6. Check "A" Tables again
 7. <a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a>
 8. Show deskop, iPad, iPhone form factors

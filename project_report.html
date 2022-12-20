@@ -16,7 +16,7 @@
 <h4 id="important-notes">Important Notes:</h4>
 <ul class="incremental">
 <li>The build process uses a <code>create-drop</code> persistence strategy for entity beans. As a result, all tables will be dropped and created during deployment or undeployment.</li>
-<li>Please ignore the deployment errors regarding <code>ALTER TABLES</code> during the deployment, as they are related to the <code>create-drop</code> strategy.</li>
+<li>Please ignore the deployment errors regarding <code>ALTER TABLES</code>, as they are related to the <code>create-drop</code> strategy.</li>
 <li><strong>To run the simulation again</strong>, please re-deploy the application. The deployment will recreate all of the tables.</li>
 </ul>
 <h4 id="summary-of-steps">Summary of Steps</h4>
@@ -26,7 +26,7 @@
 <li><code>mvn clean package wildfly:deploy</code></li>
 <li><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></li>
 <li>Check “A” Tables</li>
-<li><a href="http://localhost:8080/imad-rs/rest/cardProcessing" target="_blank">http://localhost:8080/imad-rs/rest/cardProcessing</a></li>
+<li><a href="http://localhost:8080/imad-rs/rest/cardProcessing" target="_blank">http://localhost:8080/imad-rs/rest/cardProcessing</a> <strong>(only run once)</strong></li>
 <li>Check “A” Tables again</li>
 <li><a href="http://localhost:8080/imad-web/imad-ui/dist/index.html" target="_blank">http://localhost:8080/imad-web/imad-ui/dist/index.html</a></li>
 <li>Show deskop, iPad, iPhone form factors</li>
